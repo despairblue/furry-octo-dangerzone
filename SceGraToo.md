@@ -1,22 +1,35 @@
 [toc]
 # SceGraToo
 ## Prelude
-The goal of the thesis is to create a 3d editor, using web technologies, which enables the user to postprocess x3d scenes.
+The goal of the thesis is to create a 3D editor, using web technologies, which enables its users to postprocess x3d scenes.
 These scenes are the result of a tool which was implemented as part of the DFG research project [Roundtrip3D](http://elrond.informatik.tu-freiberg.de/Roundtrip3D/).
+The scene are automatically derived from software models ...
 
 ### Motivation
-As part of the Roundtrip3D project an application (hereafter referred to as *R3D*) was built containing an editor that enabled the user to describe 3D scenes in a visual UML-like language.
-Then the R3D can be used to generate boilerplate code for multiple programming languages and an X3D file describing the scene.
+As part of the Roundtrip3D project, a round-trip framework (hereafter referred to as *R3D*) was developed. This framework also includes a graphical editor for SSIML models, to describe 3D applications.
+<!-- TODO: csrd paper -->
+Then the R3D can be used to generate boilerplate code for multiple programming languages, such as JavaScript, Java or C++, and an X3D file describing the scene.
 The X3D file may contain references to other X3D files containing the actual 3D data (e.g. a car and the corresponding tires), hereafter called *inlines* .
 These files are created by exporting objects from a 3D computer graphics software (e.g. [Blender](https://www.blender.org/), [Maya](http://www.autodesk.com/products/maya/overview) or [3DS Max](http://www.autodesk.com/products/3ds-max/overview)).  
-The problem that arises is that each object is usually in the center of it's own coordinate system. So they need to be translated, rotated and maybe even scaled to result in desired scene structure (e.g. a car where the tires are in the places they belong to and not in the center of the chassis).  
+The problem that arises is that each object is usually in the center of it's own coordinate system. So they need to be translated, rotated and maybe even scaled to result in desired scene (e.g. a car where the tires are in the places they belong to and not in the center of the chassis). The structure is mostly generated. Attribute values of respective nodes, such as transformation nodes need to be adjusted in order to compose the overall 3D scene.
 
 ![Picture of a car with the tires in the center]()  
 ![Picture of a car with the tires where they belong to]()  
 
 
-This can be achieved by adding *translate*, *rotate* and *scale* properties to the transformation node containing the individual objects.
-To exacerbate this problem further, the orientation the 3d artists chose for it's object is simply unknown. The following pictures demonstrate the problem:
+This can be achieved by adjusting *translate*, *rotate* and *scale* properties to arrange 3D objects.
+To exacerbate this problem further, the orientation the 3D artists chose for it's object is simply unknown, if their is no convention for 3D modeling.
+~~Usually their is a convention about origin of coord system, scaling and orientation.~~ (no there isn't)
+However, we cannot assume that these conventions are always met.
+The main problem is, that 3D transformations, such as translation, orientation and scale of single 3D geometries, need to be adjusted.
+So far, there is no graphical tool that meets both of these requirements:
+
+* user friendly and straight forward compose functionalities of X3D scenes
+* and preservation of (generated) information, such as node names or comments (necessary to merge the changed files back into the source model)
+
+The transformations can be adjusted via SceGraToo.
+
+The following pictures demonstrate the problem:
 
 ![wheel1](https://www.dropbox.com/s/xhs8gbur6pa8lgd/wheel1.png?dl=1)
 ![wheel2](https://www.dropbox.com/s/0gyfkmpam5o8riq/wheel2.png?dl=1)
@@ -49,7 +62,7 @@ Roundtrip3D was research project that resulted in an editor implementing [SSIML]
 ![SSIML-Diagram](https://www.dropbox.com/s/v7tpvhvqdqbw4mi/SSIML.png?dl=1)
 
 ### X3D
-X3D is the [XML](https://en.wikipedia.org/wiki/XML) represntation of [VRML](https://en.wikipedia.org/wiki/VRML) which was designed as a universal interactive 3d exchange format, much like html is for written documents or svg for vector graphics.
+X3D is the [XML](https://en.wikipedia.org/wiki/XML) represntation of [VRML](https://en.wikipedia.org/wiki/VRML) which was designed as a universal interactive 3D exchange format, much like html is for written documents or svg for vector graphics.
 Due to its XML structure it can be integrated in html documents, thus the Frauenhofer Institute pursued to implement a runtime that could interpret and visualize x3d in the browser. It's called [x3dom](http://www.x3dom.org/) and it's exensively used by SceGraToo, the tool that arose from this thesis.
 
 #### x3dom
@@ -79,21 +92,33 @@ That made it possible to use the X3D node of the DOM as the only source of truth
 #### states
 Using something imperative like backbone it would be necessary to create a model (copying the information already in the DOM), a view (rendering that information to the DOM again) and a controller keeping track of the state changing the model where necessary and rerendering the view, and also keeping track of all it's children and removing them when they disappear or creating new ones whenever a new X3D element appears.
 
-#### functional programming
+#### Functional Programming
 React enables one to represent the view as a function of its input, which is the X3D node.
-All SceGraToo does is listening to changes of the X3D node and whenever it changes, may it be an attribute that changes or nodes that are added or removed, it calls one function that evalute the X3D node and return the new structure.
-That structre is diffed against the tree view that is already in the DOM and react calculates the minimal changes necessary to make the tree view coherent with the X3D node again.
+All SceGraToo does is listen to changes of the X3D node and whenever it changes, may it be an attribute that changes or nodes that are added or removed, it calls one function that evaluates the X3D node (basically traversing it) and return the new structure.
+That structure is diffed against the tree view that is already in the DOM and react calculates the minimal changes necessary to make the tree view's old structure coherent with the newly calculated one.
 
 
-### koa
+### Koa
+Koa is pretty much boring unless I'd explain node.js's take on asynchronicity, callbacks, promises and then generators. Still, the server is way to simple to be of any interest for this project.
+
 ### moaarrr stuff that needs explaining
+
 ## Related Work
+
 ### Collaborative Work
+#### [3D Meteor](http://3d.meteor.com/)
+![3dmeteor](https://www.dropbox.com/s/173i8xo8xkxdmq7/3dmeteor.png?dl=1)
+
+#### [Blender Plugin](http://www.researchgate.net/publication/221610780_A_Blender_Plugin_for_Collaborative_Work_on_the_Articiel_Platform)
+
+
 ### 3D Widgets
 #### [Tilt Brush](http://www.tiltbrush.com/)
+Tilt Brush was lauded for t
+
 #### x3d gizmos
+
 ### [Component Editor](https://github.com/x3dom/component-editor)
-### [3D Meteor](http://3d.meteor.com/)
 ## Concept
 ### How
 #### Server
