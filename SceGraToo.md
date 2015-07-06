@@ -27,45 +27,47 @@ So far, there is no graphical tool that meets both of these requirements:
 * user friendly and straight forward compose functionalities of X3D scenes
 * and preservation of (generated) information, such as node names or comments (necessary to merge the changed files back into the source model)
 
-The transformations can be adjusted via SceGraToo.
-
-The following pictures demonstrate the problem:
-
+The following pictures demonstrate the problem:  
 ![wheel1](https://www.dropbox.com/s/xhs8gbur6pa8lgd/wheel1.png?dl=1)
 ![wheel2](https://www.dropbox.com/s/0gyfkmpam5o8riq/wheel2.png?dl=1)
-![wheel3](https://www.dropbox.com/s/gg362w2h9p93wdz/wheel3.png?dl=1)  
-These are common orientations, since it's disputable which of these would be normal.
+![wheel3](https://www.dropbox.com/s/gg362w2h9p93wdz/wheel3.png?dl=1)
+
+These are common orientations, since it's disputable which of these could be considered be the norm.  
 But if one depends on art from 3rd parties, the orientation and position could be completely arbitrary:
 ![wheel4](https://www.dropbox.com/s/nuoge1q1bxv8ygj/wheel4.png?dl=1)  
 
-These properties can be added in R3D application through a property list/table view, but the resulting workflow is less than ideal:
+These properties could be added and adjusted via any text editor by opening the generated x3d file, but the resulting workflow isn't user-friendly:
 
-1. generate the scene (takes a couple of minutes)
-2. evaluate the scene and think about what objects need to go where and whether they need to be scaled
-3. type random translation, rotation and scale
-4. regenerate the scene
-5. evaluate whether the transformations did the right thing (since one does not know anything about the orientation of the object)
-6. go back to 3. until all objects are placed correctly
+1. model 3D application, including 3D scene structure
+2. generate 3D scene and application code
+3. run application and evaluate the scene and think about what objects need to go where and whether they need to be scaled
+4. type random translation, rotation and scale
+5. run the application again and evaluate whether the transformations did the right thing (since one does not know anything about the orientation of the object)
+6. go back to 4. until all objects are placed correctly
 
-The tool I build as part of this thesis addresses this usability issue by making it possible to load the root X3D file and change all transformations, containing the inlines, by using the mouse as well. For fine grained placement a tree view still exists to visualize the structure of the scene and allow the input of exact coordinates.
-![treeview](https://www.dropbox.com/s/985tkrkpx67nyuk/treeview.png?dl=1)
+Tools like Maya or Blender could also be used for this, but their import and export filter discard important metadata that is necessary for the round-trip transformation.
+This is what SceGraToo is meant to be.
 
-![Picture of the R3D property list view]()  
+SceGraToo addresses both of these issues.
+It allows for loading the root X3D file and changing all transformations, containing the inline nodes, using mouse interactions. For fine grained control SceGraToo also contains a tree view that allows the user to input exact attributes for translations, rotations and scale.
+<!-- ![treeview](https://www.dropbox.com/s/985tkrkpx67nyuk/treeview.png?dl=1) -->
+
+### Scope
+This thesis addresses two issues:
+
+1. allowing for composing generated X3D scenes (with focus on usability). E. g., besides a 3D view,
+a tree view for fine grained editing should not only visualize the 3D scene's structure, but also allow for entering concrete coordinate values.
+2. during the editing process, the preservation of all information/metadata must be guaranteed.
 
 ## Basics
 ### Scene Graph
 **what is a scene graph why is it usefull**
 
-### Roundtrip 3D
-Roundtrip3D was research project that resulted in an editor implementing [SSIML](http://edoc.ub.uni-muenchen.de/9459/). SSIML stands for *Scene Structure and Integration Modeling Language* and is a visual UML-like language for describing 3D scene as a [scene-graph](https://en.wikipedia.org/wiki/Scene_graph). A scene starts with a scene node that is the parent of describing attributes like the viewpoint or the light and also contains all object the scene contains.
+#### X3D
+X3D is the [XML](https://en.wikipedia.org/wiki/XML) representation of [VRML](https://en.wikipedia.org/wiki/VRML) which was designed as a universal interactive 3D exchange format, much like html is for written documents or SVG for vector graphics.
+Due to its XML structure it can be integrated in html documents, thus the Frauenhofer Institute pursued to implement a runtime that could interpret and visualize x3d in the browser. It's called [x3dom](http://www.x3dom.org/) and it's extensively used by SceGraToo, the tool that arose from this thesis.
 
-![SSIML-Diagram](https://www.dropbox.com/s/v7tpvhvqdqbw4mi/SSIML.png?dl=1)
-
-### X3D
-X3D is the [XML](https://en.wikipedia.org/wiki/XML) represntation of [VRML](https://en.wikipedia.org/wiki/VRML) which was designed as a universal interactive 3D exchange format, much like html is for written documents or svg for vector graphics.
-Due to its XML structure it can be integrated in html documents, thus the Frauenhofer Institute pursued to implement a runtime that could interpret and visualize x3d in the browser. It's called [x3dom](http://www.x3dom.org/) and it's exensively used by SceGraToo, the tool that arose from this thesis.
-
-#### x3dom
+##### x3dom
 As said in the previous chapter x3dom was developed by the Frauenhofer Institute to realize the vision that started VRML in the first place: *mark up interactive 3D content for the web*. On the web there are to entirely different approaches to describe the same thing:
 * imperative
 * declerative
@@ -79,7 +81,26 @@ The following matrix classifies x3dom together with other common web technologie
 
 As can be seen x3dom complements the already existing technologies perfectly
 
+### SSIML
+TODO: web3d paper
+
+### Roundtrip 3D
+TODO: csrd paper
+
+Roundtrip3D was research project that, amongst others, resulted in a graphical editor for [SSIML](http://edoc.ub.uni-muenchen.de/9459/) models.
+SSIML stands for *Scene Structure and Integration Modeling Language* and graphical DSL to model 3D applications as a scene-graph.
+A scene's root node is a scene node that is the parent of describing attributes like the viewpoint or the light and also contains all object the scene contains.
+
+![SSIML-Diagram](https://www.dropbox.com/s/v7tpvhvqdqbw4mi/SSIML.png?dl=1)
+
 ### [React](https://facebook.github.io/react/)
+As part of SceGraToo a treeview
+
+TODO:
+1. Objective description of the problem
+2. Why some approaches might not work
+3. Why the chosen approach will work
+
 After trying different solutions it turned out the a declarative solution would also suit SceGraToo the best.
 First Chaplin (a backbone successor) was used to implement SceGraToo, but soon it suffocated under it's own complexity (probably also due to the incompetence of its inventor - me).
 It turned out that MVC had serious flaws when trying to use it to describe an ever changing declarative scene graph.
@@ -90,6 +111,8 @@ React solves this issue quite elegantly by creating the dom structure in javascr
 That made it possible to use the X3D node of the DOM as the only source of truth and minimize the state that needs to be kept to make the tree view work.
 
 #### states
+TODO: explain the DOM
+
 Using something imperative like backbone it would be necessary to create a model (copying the information already in the DOM), a view (rendering that information to the DOM again) and a controller keeping track of the state changing the model where necessary and rerendering the view, and also keeping track of all it's children and removing them when they disappear or creating new ones whenever a new X3D element appears.
 
 #### Functional Programming
@@ -106,10 +129,10 @@ Koa is pretty much boring unless I'd explain node.js's take on asynchronicity, c
 ## Related Work
 
 ### Collaborative Work
-#### [3D Meteor](http://3d.meteor.com/)
+### [3D Meteor](http://3d.meteor.com/)
 ![3dmeteor](https://www.dropbox.com/s/173i8xo8xkxdmq7/3dmeteor.png?dl=1)
 
-#### [Blender Plugin](http://www.researchgate.net/publication/221610780_A_Blender_Plugin_for_Collaborative_Work_on_the_Articiel_Platform)
+### [Blender Plugin](http://www.researchgate.net/publication/221610780_A_Blender_Plugin_for_Collaborative_Work_on_the_Articiel_Platform)
 
 
 ### 3D Widgets
