@@ -2,7 +2,7 @@
 # SceGraToo
 ## Prelude
 The goal of the thesis is to create a 3D editor, using web technologies, which enables its users to postprocess x3d scenes.
-These scenes are the result of a tool which was implemented as part of the DFG research project [Roundtrip3D](http://elrond.informatik.tu-freiberg.de/Roundtrip3D/).
+These scenes are the result of a tool which was implemented as part of the DFG research project [Roundtrip3D].
 The scene are automatically derived from software models ...
 
 ### Motivation
@@ -10,7 +10,7 @@ As part of the Roundtrip3D project, a round-trip framework (hereafter referred t
 <!-- TODO: csrd paper -->
 Then the R3D can be used to generate boilerplate code for multiple programming languages, such as JavaScript, Java or C++, and an X3D file describing the scene.
 The X3D file may contain references to other X3D files containing the actual 3D data (e.g. a car and the corresponding tires), hereafter called *inlines* .
-These files are created by exporting objects from a 3D computer graphics software (e.g. [Blender](https://www.blender.org/), [Maya](http://www.autodesk.com/products/maya/overview) or [3DS Max](http://www.autodesk.com/products/3ds-max/overview)).  
+These files are created by exporting objects from a 3D computer graphics software (e.g. [Blender], [Maya] or [3DS Max]).  
 The problem that arises is that each object is usually in the center of it's own coordinate system. So they need to be translated, rotated and maybe even scaled to result in desired scene (e.g. a car where the tires are in the places they belong to and not in the center of the chassis). The structure is mostly generated. Attribute values of respective nodes, such as transformation nodes need to be adjusted in order to compose the overall 3D scene.
 
 ![Picture of a car with the tires in the center]()  
@@ -50,7 +50,6 @@ This is what SceGraToo is meant to be.
 
 SceGraToo addresses both of these issues.
 It allows for loading the root X3D file and changing all transformations, containing the inline nodes, using mouse interactions. For fine grained control SceGraToo also contains a tree view that allows the user to input exact attributes for translations, rotations and scale.
-<!-- ![treeview](https://www.dropbox.com/s/985tkrkpx67nyuk/treeview.png?dl=1) -->
 
 ### Scope
 This thesis addresses two issues:
@@ -64,8 +63,8 @@ a tree view for fine grained editing should not only visualize the 3D scene's st
 **what is a scene graph why is it usefull**
 
 #### X3D
-X3D is the [XML](https://en.wikipedia.org/wiki/XML) representation of [VRML](https://en.wikipedia.org/wiki/VRML) which was designed as a universal interactive 3D exchange format, much like html is for written documents or SVG for vector graphics.
-Due to its XML structure it can be integrated in html documents, thus the Frauenhofer Institute pursued to implement a runtime that could interpret and visualize x3d in the browser. It's called [x3dom](http://www.x3dom.org/) and it's extensively used by SceGraToo, the tool that arose from this thesis.
+X3D is the [XML] representation of [VRML] which was designed as a universal interactive 3D exchange format, much like html is for written documents or SVG for vector graphics.
+Due to its XML structure it can be integrated in html documents, thus the Frauenhofer Institute pursued to implement a runtime that could interpret and visualize x3d in the browser, by using a [WebGL] context. It's called [x3dom](http://www.x3dom.org/) and it's extensively used by SceGraToo, the tool that arose from this thesis.
 
 ##### x3dom
 As said in the previous chapter x3dom was developed by the Frauenhofer Institute to realize the vision that started VRML in the first place: *mark up interactive 3D content for the web*. On the web there are to entirely different approaches to describe the same thing:
@@ -76,8 +75,8 @@ The following matrix classifies x3dom together with other common web technologie
 
 |                | 2D       | 3D    |
 | :------------- | :------- | :---- |
-| Declerative    | [SVG]    | X3DOM |
-| Imperative     | [Canvas] | WebGL |
+| Declerative    | [SVG]    | [X3DOM] |
+| Imperative     | [Canvas] | [WebGL] |
 
 As can be seen x3dom complements the already existing technologies perfectly
 
@@ -87,13 +86,13 @@ TODO: web3d paper
 ### Roundtrip 3D
 TODO: csrd paper
 
-Roundtrip3D was research project that, amongst others, resulted in a graphical editor for [SSIML](http://edoc.ub.uni-muenchen.de/9459/) models.
+Roundtrip3D was research project that, amongst others, resulted in a graphical editor for [SSIML] models.
 SSIML stands for *Scene Structure and Integration Modeling Language* and graphical DSL to model 3D applications as a scene-graph.
 A scene's root node is a scene node that is the parent of describing attributes like the viewpoint or the light and also contains all object the scene contains.
 
 ![SSIML-Diagram](https://www.dropbox.com/s/v7tpvhvqdqbw4mi/SSIML.png?dl=1)
 
-### [React](https://facebook.github.io/react/)
+### [React]
 As part of SceGraToo a treeview
 
 TODO:
@@ -107,7 +106,7 @@ It turned out that MVC had serious flaws when trying to use it to describe an ev
 The naive solution would be to observe the X3D node and rerender the whole tree structure whenever it changed, that would also mean to rerender every time an attribute is changed.
 To make that clear, that means rerendering everytime an object is moved with the mouse, since the translation is an attribute.
 This thesis will not contain any benchmarks proving that manipulating the DOM from javascript is slow, rather than that it is left as an exercise to the reader to research it if she wants.
-React solves this issue quite elegantly by creating the dom structure in javascript and diffing it with the [DOM](https://en.wikipedia.org/wiki/Document_Object_Model), only applying the minimum of changes to the DOM to realize the corresponding result.
+React solves this issue quite elegantly by creating the dom structure in javascript and diffing it with the [DOM], only applying the minimum of changes to the DOM to realize the corresponding result.
 That made it possible to use the X3D node of the DOM as the only source of truth and minimize the state that needs to be kept to make the tree view work.
 
 #### states
@@ -129,23 +128,25 @@ Koa is pretty much boring unless I'd explain node.js's take on asynchronicity, c
 ## Related Work
 
 ### Collaborative Work
-### [3D Meteor](http://3d.meteor.com/)
+### [3D Meteor][0]
 ![3dmeteor](https://www.dropbox.com/s/173i8xo8xkxdmq7/3dmeteor.png?dl=1)
 
-### [Blender Plugin](http://www.researchgate.net/publication/221610780_A_Blender_Plugin_for_Collaborative_Work_on_the_Articiel_Platform)
+### [Blender Plugin][10]
 
 
 ### 3D Widgets
-#### [Tilt Brush](http://www.tiltbrush.com/)
+#### [Tilt Brush][20]
 Tilt Brush was lauded for t
 
 #### x3d gizmos
 
-### [Component Editor](https://github.com/x3dom/component-editor)
+### [Component Editor][30]
 ## Concept
 ### How
 #### Server
 #### Client
+![treeview](https://www.dropbox.com/s/985tkrkpx67nyuk/treeview.png?dl=1)
+
 #### Interaction
 ### Problems
 ### How to solve
@@ -159,3 +160,27 @@ Tilt Brush was lauded for t
 ### Results
 ## Results
 ### Why Scegratoo is the best since sliced Bread
+
+
+
+
+
+[Roundtrip3D]: http://elrond.informatik.tu-freiberg.de/Roundtrip3D/
+[Blender]: https://www.blender.org/
+[Maya]: http://www.autodesk.com/products/maya/overview
+[3DS Max]: http://www.autodesk.com/products/3ds-max/overview
+[XML]: http://www.w3.org/TR/REC-xml/
+[X3D]: http://www.web3d.org/standards
+[VRML]: http://www.web3d.org/standards
+[SSIML]: https://dl.acm.org/citation.cfm?id=1122591.1122610
+[React]: https://facebook.github.io/react
+[DOM]: http://www.w3.org/TR/dom/
+[SVG]: http://www.w3.org/TR/SVG11/
+[WebGL]: https://www.khronos.org/registry/webgl/specs/latest/2.0/
+[X3DOM]: http://www.x3dom.org/
+[Canvas]: https://html.spec.whatwg.org/multipage/scripting.html#the-canvas-element
+
+[0]: http://3d.meteor.com/
+[10]: http://www.researchgate.net/publication/221610780_A_Blender_Plugin_for_Collaborative_Work_on_the_Articiel_Platform
+[20]: http://www.tiltbrush.com/
+[30]: https://github.com/x3dom/component-editor
