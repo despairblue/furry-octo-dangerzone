@@ -69,7 +69,7 @@ Due to its XML structure it can be integrated in html documents, thus the Frauen
 ##### x3dom
 As said in the previous chapter x3dom was developed by the Frauenhofer Institute to realize the vision that started VRML in the first place: *mark up interactive 3D content for the web*. On the web there are to entirely different approaches to describe the same thing:
 * imperative
-* declerative
+* declarative
 
 The following matrix classifies x3dom together with other common web technologies:
 
