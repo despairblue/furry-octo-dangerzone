@@ -33,7 +33,7 @@ The following pictures demonstrate the problem:
 ![wheel3](https://www.dropbox.com/s/gg362w2h9p93wdz/wheel3.png?dl=1)
 
 These are common orientations, since it's disputable which of these could be considered be the norm.  
-But if one depends on art from 3rd parties, the orientation and position could be completely arbitrary:
+But if one depends on art from 3rd parties, the orientation and position could be completely arbitrary:  
 ![wheel4](https://www.dropbox.com/s/nuoge1q1bxv8ygj/wheel4.png?dl=1)  
 
 These properties could be added and adjusted via any text editor by opening the generated x3d file, but the resulting workflow isn't user-friendly:
