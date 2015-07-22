@@ -19,7 +19,7 @@ The problem that arises is that each object is usually in the center of it's own
 
 This can be achieved by adjusting *translate*, *rotate* and *scale* properties to arrange 3D objects.
 To exacerbate this problem further, the orientation the 3D artists chose for it's object is simply unknown, if their is no convention for 3D modeling.
-~~Usually their is a convention about origin of coord system, scaling and orientation.~~ (no there isn't)
+~~Usually their is a convention about origin of coord system, scaling and orientation~~ (no there isn't).
 However, we cannot assume that these conventions are always met.
 The main problem is, that 3D transformations, such as translation, orientation and scale of single 3D geometries, need to be adjusted.
 So far, there is no graphical tool that meets both of these requirements:
