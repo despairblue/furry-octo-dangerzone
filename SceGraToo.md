@@ -60,7 +60,6 @@ a tree view for fine grained editing should not only visualize the 3D scene's st
 
 ## Basics
 ### Scene Graph
-**what is a scene graph why is it usefull**
 Scene graphs are a way to organize 3d objects and concerning transformations in a treelike structure, mostly a directed acyclic graph (DAG). It stats with a root node that is associated with one or more children. Each child can be an object or a group, again containing more children. A group can contain associated transformation information, like *translation*, *rotation* or *scaling*. This structure has certain advantages compared applying all transformations to the the raw meshes and sending everything to the [GPU].
 
 #### Culling
