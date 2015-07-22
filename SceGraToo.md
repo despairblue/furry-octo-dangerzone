@@ -81,8 +81,8 @@ As said in the previous chapter x3dom was developed by the Frauenhofer Institute
 
 The following matrix classifies x3dom together with other common web technologies:
 
-|                | 2D       | 3D    |
-| :------------- | :------- | :---- |
+|                | 2D       | 3D      |
+| :------------- | :------- | :------ |
 | Declerative    | [SVG]    | [X3DOM] |
 | Imperative     | [Canvas] | [WebGL] |
 
