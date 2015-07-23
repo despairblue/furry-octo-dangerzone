@@ -105,12 +105,14 @@ a tree view for fine grained editing should not only visualize the 3D scene's st
 
 ## Basics
 ### Scene Graph
-Scene graphs are a way to organize 3d objects and concerning transformations in a treelike structure, mostly a directed acyclic graph (DAG). It stats with a root node that is associated with one or more children. Each child can be an object or a group, again containing more children. A group can contain associated transformation information, like *translation*, *rotation* or *scaling*. This structure has certain advantages compared applying all transformations to the the raw meshes and sending everything to the [GPU].
+Scene graphs are a way to organize 3d objects and concerning transformations in a treelike structure, mostly a directed acyclic graph (DAG).
+It starts with a root node that is associated with one or more children. Each child can be an object or a group, again containing more children.
+A group can contain associated transformation information, like *translation*, *rotation* or *scaling*. This structure has certain advantages compared to applying all transformations to the the raw meshes and sending everything to the [GPU].
 
 #### Culling
 Before using structures like scene graphs, all polygon would be sent to the [GPU] and the [GPU] would need to test what polygons are actually in the view and thus need to be rendered. The problem with that approach was that this information was only known after doing a lot of calculations for every polygon already.  
-With a scene graph it's possible to start from the root and traverse the graph, testing the bounding box of each group and only sending it to the GPU it it's completely visible. If it ain't, the whole subtree isn't sent to the GPU. If it's partially visible the same process is applied to the subtree.  
-By using a structure that retains more information about what it represents it's possible to let the CPU do more of the heavy lifting and unburden the GPU.
+With a scene graph it's possible to start from the root and traverse the graph, testing the bounding box of each group and only sending it to the [GPU] it it's completely visible. If it ain't, the whole subtree isn't sent to the [GPU]. If it's partially visible the same process is applied to the subtree.  
+By using a structure that retains more information about what it represents it's possible to let the [CPU] do more of the heavy lifting and unburden the [GPU].
 
 #### Transformations
 Another advantage is the way transformations work. Instead of applying them to the meshes directly, and keeping track of what meshes belong to the same object (like the chassis and the tires and the windows of a car), they can simply be nested under the same transformation group. The transformation thus applies to all objects associated with that group.
