@@ -165,7 +165,7 @@ Roundtrip3D was research project that, amongst others, resulted in a graphical e
 SSIML stands for *Scene Structure and Integration Modeling Language* and graphical DSL to model 3D applications as a scene-graph.
 A scene's root node is a scene node that is the parent of describing attributes like the viewpoint or the light and also contains all object the scene contains.
 
-![SSIML-Diagram](https://www.dropbox.com/s/v7tpvhvqdqbw4mi/SSIML.png?dl=1)
+![Roundtrip Process](https://www.dropbox.com/s/komaipe44oguh9q/csrd2014.svg?dl=1)
 
 ### [React](https://facebook.github.io/react)
 As part of SceGraToo a treeview
