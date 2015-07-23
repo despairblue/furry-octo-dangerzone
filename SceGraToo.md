@@ -130,7 +130,7 @@ The following matrix classifies x3dom together with other common web technologie
 
 |                | 2D       | 3D      |
 | :------------- | :------- | :------ |
-| Declerative    | [SVG]    | [X3DOM] |
+| Declarative    | [SVG]    | [X3DOM] |
 | Imperative     | [Canvas] | [WebGL] |
 
 As can be seen x3dom complements the already existing technologies perfectly
@@ -171,7 +171,7 @@ A scene's root node is a scene node that is the parent of describing attributes 
 ![Roundtrip Process](https://www.dropbox.com/s/komaipe44oguh9q/csrd2014.svg?dl=1)
 
 ### [React](https://facebook.github.io/react)
-As part of SceGraToo a treeview
+As part of SceGraToo a tree view
 
 TODO:
 1. Objective description of the problem
