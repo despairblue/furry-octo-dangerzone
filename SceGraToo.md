@@ -141,7 +141,10 @@ As can be seen x3dom complements the already existing technologies perfectly
 2. Why some approaches might not work
 3. Why the chosen approach will work
 
-When multiple developers take part in the process of developing an application, the different mental models each developer has on their own can lead to subtle bugs. These bugs are mostly inconsistency of naming things or method signatures. They are the result of applications that are too big to be understood as a whole by one person. Each developer has certain expectations of how to interface with modules other people developed. These expectations don't necessarily need to match those of the person responsible for developing that specific module.
+When multiple developers take part in the process of developing an application, the different mental models each developer has on their own can lead to subtle bugs.
+These bugs are mostly inconsistency of naming things or method signatures.
+They are the result of applications that are too big to be understood as a whole by one person. Each developer has certain expectations of how to interface with modules other people developed.
+These expectations don't necessarily need to match those of the person responsible for developing that specific module.
 
 Instead of every person having their own mental model, the model could be formalized in written of graphical form.
 For software a well known approach is UML.
