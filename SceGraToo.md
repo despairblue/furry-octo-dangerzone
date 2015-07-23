@@ -107,15 +107,40 @@ a tree view for fine grained editing should not only visualize the 3D scene's st
 ### Scene Graph
 Scene graphs are a way to organize 3d objects and concerning transformations in a treelike structure, mostly a directed acyclic graph (DAG).
 It starts with a root node that is associated with one or more children. Each child can be an object or a group, again containing more children.
-A group can contain associated transformation information, like *translation*, *rotation* or *scaling*. This structure has certain advantages compared to applying all transformations to the the raw meshes and sending everything to the [GPU].
+A group can contain associated transformation information, like *translation*, *rotation* or *scaling*. This structure has certain advantages compared to applying all transformations to the the raw meshes and sending everything to the [GPU].<sup>[50] (2015-07-23 15:59)</sup>
+
+[SSIML] scene graphs differ from above definition scene graph: Usually, there are three types of nodes:
+- transform
+- geometry
+- group
 
 #### Culling
 Before using structures like scene graphs, all polygon would be sent to the [GPU] and the [GPU] would need to test what polygons are actually in the view and thus need to be rendered. The problem with that approach was that this information was only known after doing a lot of calculations for every polygon already.  
 With a scene graph it's possible to start from the root and traverse the graph, testing the bounding box of each group and only sending it to the [GPU] it it's completely visible. If it ain't, the whole subtree isn't sent to the [GPU]. If it's partially visible the same process is applied to the subtree.  
 By using a structure that retains more information about what it represents it's possible to let the [CPU] do more of the heavy lifting and unburden the [GPU].
 
+>Rather than do the heavy work at the OpenGL and polygon level, scenegraph architects realized they could better perform culling at higher level abstractions for greater efficiency. If we can remove the invisible objects first, then we make the hardware do less work and generally improve performance and the all-important frame-rate.  
+– [50] (2015-07-23 15:59)
+
 #### Transformations
 Another advantage is the way transformations work. Instead of applying them to the meshes directly, and keeping track of what meshes belong to the same object (like the chassis and the tires and the windows of a car), they can simply be nested under the same transformation group. The transformation thus applies to all objects associated with that group.
+
+#### Reuse
+With the ability to address nodes it's possible to reuse their information. If you have a car, it would be enough to have only one node containing the meshes for a tire, all other tires are merely addressing the tire with the geometry information:
+
+* Group
+	* Transform
+		* Geomatry "Chassis"
+	* Transform
+		* Geometry "Tire"
+	* Translate
+		* Use Geometry "Tire"
+	* Translate
+		* Use Geometry "Tire"
+	* Translate
+		* Use Geometry "Tire"
+
+That way the memory footprint of an application can be reduced.
 
 #### X3D
 X3D is the [XML] representation of [VRML] which was designed as a universal interactive 3D exchange format, much like html is for written documents or SVG for vector graphics.
@@ -126,46 +151,45 @@ As said in the previous chapter x3dom was developed by the Frauenhofer Institute
 * imperative
 * declarative
 
-The following matrix classifies x3dom together with other common web technologies:
+The following matrix classifies x3dom together with other common web technologies <sup>[40] (2015-07-23 13:00)</sup>:
 
 |                | 2D       | 3D      |
 | :------------- | :------- | :------ |
 | Declarative    | [SVG]    | [X3DOM] |
 | Imperative     | [Canvas] | [WebGL] |
 
-As can be seen x3dom complements the already existing technologies perfectly
+As can be seen x3dom complements the already existing technologies perfectly.
 
 ### SSIML
->TODO: web3d paper `That paper is not about SSIML it's about r3d, but hey`
-1. Objective description of the problem
-2. Why some approaches might not work
-3. Why the chosen approach will work
+When multiple developers are involved in building an applications, each developer has her own mental model of the problem space the application tries to solve.
+The differences of these models can lead unmet expectations regarding naming conventions or the role of the different parts that make up the application.
 
-When multiple developers take part in the process of developing an application, the different mental models each developer has on their own can lead to subtle bugs.
-These bugs are mostly inconsistency of naming things or method signatures.
-They are the result of applications that are too big to be understood as a whole by one person. Each developer has certain expectations of how to interface with modules other people developed.
-These expectations don't necessarily need to match those of the person responsible for developing that specific module.
+Building 3D applications complicate the process even more, since it involves a 3rd party besides domain experts of the problem space and programmers: 3D artists or modelers.
+3D artists care more for the visuals of a model than for it's integrity and coherence with existing project standards. They might name things differently or not at all.
 
-Instead of every person having their own mental model, the model could be formalized in written of graphical form.
+Since participants share a different understanding of the same domain, the specification of the application to be developed needs to be formalized [GF13]
+When formalizing the mental model most of these differences can be resolved.
+
 For software a well known approach is UML.
 
 ![screenshot of argo uml](https://www.dropbox.com/s/n5wpmdtyor18epm/Association_Class_Diagram.png?dl=1)<sup style="text-align:center;">by [wikipedia]( https://commons.wikimedia.org/wiki/Unified_Modeling_Language#/media/File:Association_Class_Diagram.jpg)</sup>
 
 The classes' interfaces their usages are defined by the model. Naming or call parameter inconsistencies can be detected automatically. Naming inconsistencies could probably also be fixed automatically.
 
-Because there wasn't any suitable approach for 3D applications, Arndt Vitztum developed [SSIML].
+[SSIML] is an appraoch to model 3D applications in a similar approach.
 [SSIML] stands for *Scene Structure and Integration Modeling Language* and graphical DSL to model 3D applications as a scene-graph.
 
 ![A SSIML Diagram](https://www.dropbox.com/s/v7tpvhvqdqbw4mi/SSIML.png?dl=1)
 
-[SSIML] is a graphical notation for a [scene graph](#scene-graph), which is a well known and widely used way to organize a 3d scene in a treelike structure.
+[SSIML] is a graphical notation for a [scene graphs](#scene-graph), which is a well known and widely used way to organize a 3d scene in a treelike structure.
 
 
 ### Roundtrip 3D
 TODO: csrd paper
 
+As stated above, when developing 3D applications, many different developers are involved, i.e. 3D designers, programmers and, ideally, when the application is developed using a structured dev process, also software designers (see figure n)
+When developing a 3D application multiple different developers are involved doing different stuff.
 Roundtrip3D was research project that, amongst others, resulted in a graphical editor for [SSIML] models.
-SSIML stands for *Scene Structure and Integration Modeling Language* and graphical DSL to model 3D applications as a scene-graph.
 A scene's root node is a scene node that is the parent of describing attributes like the viewpoint or the light and also contains all object the scene contains.
 
 ![Roundtrip Process](https://www.dropbox.com/s/komaipe44oguh9q/csrd2014.svg?dl=1)
@@ -257,8 +281,12 @@ Tilt Brush was lauded for t
 [WebGL]: https://www.khronos.org/registry/webgl/specs/latest/2.0/
 [X3DOM]: http://www.x3dom.org/
 [Canvas]: https://html.spec.whatwg.org/multipage/scripting.html#the-canvas-element
+[MDD]: Model-Driven-Development
 
 [0]: http://3d.meteor.com/
 [10]: http://www.researchgate.net/publication/221610780_A_Blender_Plugin_for_Collaborative_Work_on_the_Articiel_Platform
 [20]: http://www.tiltbrush.com/
 [30]: https://github.com/x3dom/component-editor
+[40]: http://www.x3dom.org
+[50]: http://www.realityprime.com/blog/2007/06/scenegraphs-past-present-and-future/
+[GF15]: http://dx.doi.org/10.1007/s00450-014-0256-x
