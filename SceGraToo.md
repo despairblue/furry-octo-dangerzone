@@ -161,38 +161,26 @@ The following matrix classifies x3dom together with other common web technologie
 As can be seen x3dom complements the already existing technologies perfectly.
 
 ### SSIML
-When multiple developers are involved in building an applications, each developer has her own mental model of the problem space the application tries to solve.
-The differences of these models can lead unmet expectations regarding naming conventions or the role of the different parts that make up the application.
+Heterogeneous developer groups, groups that are comprised of people from different backgrounds (programmers, 3D designers) hava hard time working together. <sup>[GF15]</sup>
 
-Building 3D applications complicate the process even more, since it involves a 3rd party besides domain experts of the problem space and programmers: 3D artists or modelers.
-3D artists care more for the visuals of a model than for it's integrity and coherence with existing project standards. They might name things differently or not at all.
+SSIML is a graphical approach to unify the scene graph model and the the application model, thus making the communication between the different parties easier.
 
-Since participants share a different understanding of the same domain, the specification of the application to be developed needs to be formalized [GF13]
-When formalizing the mental model most of these differences can be resolved.
+It also serves as a code generation template.
 
-For software a well known approach is UML.
-
-![screenshot of argo uml](https://www.dropbox.com/s/n5wpmdtyor18epm/Association_Class_Diagram.png?dl=1)<sup style="text-align:center;">by [wikipedia]( https://commons.wikimedia.org/wiki/Unified_Modeling_Language#/media/File:Association_Class_Diagram.jpg)</sup>
-
-The classes' interfaces their usages are defined by the model. Naming or call parameter inconsistencies can be detected automatically. Naming inconsistencies could probably also be fixed automatically.
-
-[SSIML] is an appraoch to model 3D applications in a similar approach.
-[SSIML] stands for *Scene Structure and Integration Modeling Language* and graphical DSL to model 3D applications as a scene-graph.
-
-![A SSIML Diagram](https://www.dropbox.com/s/v7tpvhvqdqbw4mi/SSIML.png?dl=1)
-
-[SSIML] is a graphical notation for a [scene graphs](#scene-graph), which is a well known and widely used way to organize a 3d scene in a treelike structure.
-
+![A SSIML Diagram](https://www.dropbox.com/s/v7tpvhvqdqbw4mi/SSIML.png?dl=1)  
+<sup>[60] (2015-07-24 18:17)</sup>
 
 ### Roundtrip 3D
-TODO: csrd paper
+As stated above, when developing 3D applications, many different developers are involved, i.e. 3D designers, programmers and, ideally, also software designers (see figure n)
 
-As stated above, when developing 3D applications, many different developers are involved, i.e. 3D designers, programmers and, ideally, when the application is developed using a structured dev process, also software designers (see figure n)
-When developing a 3D application multiple different developers are involved doing different stuff.
+![Roundtrip Process](https://www.dropbox.com/s/komaipe44oguh9q/csrd2014.svg?dl=1)  
+<sup>[JLV15]</sup>
+
 Roundtrip3D was research project that, amongst others, resulted in a graphical editor for [SSIML] models.
-A scene's root node is a scene node that is the parent of describing attributes like the viewpoint or the light and also contains all object the scene contains.
+It offers an approach for merging a developer's changes back into the main model.
+After all working copies are merged back into the main model (dropping unwanted or conflicting changes), all working copies are regenerated and delivered to the individual developers.
+After each roundtrip every developer has a copy of the project that is consistent with everyone else's.
 
-![Roundtrip Process](https://www.dropbox.com/s/komaipe44oguh9q/csrd2014.svg?dl=1)
 
 ### [React](https://facebook.github.io/react)
 As part of SceGraToo a tree view
@@ -289,4 +277,6 @@ Tilt Brush was lauded for t
 [30]: https://github.com/x3dom/component-editor
 [40]: http://www.x3dom.org
 [50]: http://www.realityprime.com/blog/2007/06/scenegraphs-past-present-and-future/
+[60]: http://vr.tu-freiberg.de/roundtrip3d/
 [GF15]: http://dx.doi.org/10.1007/s00450-014-0256-x
+[JLV15]: http://dx.doi.org/10.1007/s00450-014-0258-8
