@@ -251,7 +251,8 @@ Depending on how the scene graph is mutated 3 main cases must be differentiated.
 
 1. and 2. would be handled by the tree view itself whereas 3. would be handled by each node respectively.
 
-![Naive Approach](https://rawgit.com/despairblue/furry-octo-dangerzone/master/assets/naiveTreeView.md.svg)
+
+<object data=https://rawgit.com/despairblue/furry-octo-dangerzone/master/assets/naiveTreeView.md.svg></object>
 
 Let's recap.
 An initial tree view is created by traversing the scene graph.
@@ -272,7 +273,7 @@ The first culrpit in this design is that the tree view mutates itself.
 
 Let's externalize the mutation observation and update capabilities into another actor: a mutation observer.
 
-![External Observer](https://rawgit.com/despairblue/furry-octo-dangerzone/master/assets/externalObserver.md.svg)
+<object data=https://rawgit.com/despairblue/furry-octo-dangerzone/master/assets/externalObserver.md.svg></object>
 
 The mutation observer can map each graph node to its corresponding tree node and thus change the tree node to represent the matching graph node again.
 
@@ -282,15 +283,18 @@ But the scene graph and the tree view can still diverge, since moving the mutati
 
 Assuming that the first operation (traversing the scene graph and creating the tree view) is correctly implemented and resilient, the easiest way to make sure the tree view and the scene graph are in sync would be to recreate the tree view whenever the scene graph changes.
 
-![rerender on every change](https://rawgit.com/despairblue/furry-octo-dangerzone/master/assets/rerenderOnChange.md.svg)
+<object data="https://rawgit.com/despairblue/furry-octo-dangerzone/master/assets/rerenderOnChange.md.svg"></object>
 
 At first sight that seems to be awfully slow, that needn't to be true.
 Instead of recreating the the whole tree using [DOM] elements, a model could be created using simple javascript objects.
 This virtual tree view can then be compared to the tree view already in the [DOM] and only the changes need to be applied.
 
-That might sound like it's no easier than doing the synchronization manually like in the first diagram, but the diff algorithm doesn't actually need to know what its diffing.
+That might sound like it's no easier than doing the synchronization manually like in the first diagram, but the diff algorithm doesn't actually need to know what it's diffing.
 Meaning it could be developed and tested once and be used by all kinds of projects.
-That's what mainly is react is.
+That's one thing react provides.
+The rendering pipeline looks finally like this:  
+<object data="https://rawgit.com/despairblue/furry-octo-dangerzone/master/assets/react.md.svg"></object>
+
 React calls the virtual representation of what will be rendered *virtual DOM*.
 The other important feature of react is it's way to build the virtual [DOM].
 A is a factory that returns
