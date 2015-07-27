@@ -1,0 +1,24 @@
+{
+  "name": "scegratoo",
+  "version": "0.0.1",
+  "description": "Bachelor Thesis",
+  "main": "index.js",
+  "scripts": {
+    "make": "mermaid assets/*.md --svg -o assets",
+    "installHooks": "ln -s -f ../../hooks/pre-commit .git/hooks/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/despairblue/furry-octo-dangerzone.git"
+  },
+  "author": "Danny Arnold",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/despairblue/furry-octo-dangerzone/issues"
+  },
+  "homepage": "https://github.com/despairblue/furry-octo-dangerzone#readme",
+  "dependencies": {
+    "mermaid": "^0.5.1"
+  }
+}
