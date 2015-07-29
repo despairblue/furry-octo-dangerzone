@@ -1,1 +1,6 @@
-{}
+{
+  "gitbook": ">=2.0.0",
+  "title": "SceGraToo",
+  "description": "This is such a great book!",
+  "language": "en"
+}
