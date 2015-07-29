@@ -1,20 +1,20 @@
 ## Basics
 ### Scene Graph
-Scene graphs can be used to group and organize 3D objects, their properties and concerning transformations. A directed acyclic graph (DAG) can be used to represent a scene graph.
+Scene-graphs can be used to group and organize 3D objects, their properties and concerning transformations. A directed acyclic graph (DAG) can be used to represent a scene-graph.
 It starts with a root node that is associated with one or more children. Each child can be an object or a group, again containing more children.
 A group can contain associated transformation information, like *translation*, *rotation* or *scaling*. This structure has certain advantages compared to applying all transformations to the raw meshes and sending everything to the [GPU].<sup>[50] (2015-07-23 15:59)</sup>
 
-[SSIML] scene graphs differ from the above definition: there are three types of nodes:
+[SSIML] scene-graphs differ from the above definition: there are three types of nodes:
 - transform
 - geometry
 - group
 
 #### Culling
-Before using structures like scene graphs, all polygon would be sent to the [GPU] and the [GPU] would need to test what polygons are actually in the view and thus need to be rendered. The problem with that approach was that this information was only known after doing a lot of calculations for every polygon already.  
-With a scene graph it's possible to start from the root and traverse the graph, testing the bounding box of each group and only sending it to the [GPU] it it's completely visible. If it ain't, the whole subtree isn't sent to the [GPU]. If it's partially visible the same process is applied to the subtree.  
+Before using structures like scene-graphs, all polygon would be sent to the GPU and the GPU would need to test what polygons are actually in the view and thus need to be rendered. The problem with that approach was that this information was only known after doing a lot of calculations for every polygon already.  
+With a scene-graph it's possible to start from the root and traverse the graph, testing the bounding box of each group and only sending it to the GPU it it's completely visible. If it ain't, the whole sub-tree isn't sent to the GPU. If it's partially visible the same process is applied to the sub-tree.  
 By using a structure that retains more information about what it represents it's possible to let the [CPU] do more of the heavy lifting and unburden the [GPU].
 
->Rather than do the heavy work at the OpenGL and polygon level, scenegraph architects realized they could better perform culling at higher level abstractions for greater efficiency. If we can remove the invisible objects first, then we make the hardware do less work and generally improve performance and the all-important frame-rate.  
+>Rather than do the heavy work at the OpenGL and polygon level, scene-graph architects realized they could better perform culling at higher level abstractions for greater efficiency. If we can remove the invisible objects first, then we make the hardware do less work and generally improve performance and the all-important frame-rate.  
 – [50] (2015-07-23 15:59)
 
 #### Transformations
@@ -58,7 +58,7 @@ As can be seen x3dom complements the already existing technologies perfectly.
 ### SSIML
 Heterogeneous developer groups, groups that are comprised of people from different backgrounds (programmers, 3D designers) have hard time working together. <sup>[GF15]</sup>
 
-SSIML is a graphical approach to unify the scene graph model and the the application model, thus making the communication between the different parties easier.
+SSIML is a graphical approach to unify the scene-graph model and the the application model, thus making the communication between the different parties easier.
 
 It also serves as a code generation template.
 
@@ -79,10 +79,10 @@ After each roundtrip every developer has a copy of the project that is consisten
 
 ### [React](https://facebook.github.io/react)
 As part of SceGraToo as tree view
-React is utilized by SceGraToo to render the tree view that gives a more structured view of the scene graph than the 3 dimensional representation.
+React is utilized by SceGraToo to render the tree view that gives a more structured view of the scene-graph than the 3 dimensional representation.
 
 #### Objective description of the problem
-The most important part of SceGraToo is the tree view, that visualizes the x3d scene graph in a more comprehendible.
+The most important part of SceGraToo is the tree view, that visualizes the x3d scene-graph in a more comprehendible.
 
 **Requirements:**
 1. has to work right away <sup>[80]</sup>
@@ -128,15 +128,15 @@ That posed some problems, because it meant that I'd have to traverse the x3d sce
 ```
 <sup>jqTree's input format <sup>[70]</sup></sup>
 
-Traversing the scene graph and creating that structure isn't exactly complicated and I didn't expect to find a solution that supported rendering a part of the [DOM] back into the [DOM] out of the box, so this requirement can be neglected. -->
+Traversing the scene-graph and creating that structure isn't exactly complicated and I didn't expect to find a solution that supported rendering a part of the [DOM] back into the [DOM] out of the box, so this requirement can be neglected. -->
 
 ##### Easy Synchronization to a Model
-The far more complicated part is keeping the tree view in sync with the scene graph while the scene graph is being modified and also the other way around.
+The far more complicated part is keeping the tree view in sync with the scene-graph while the scene-graph is being modified and also the other way around.
 
 First approach would be to create the tree view while traversing the scene graph.
-Each tree node would observe the its corresponding scene graph node for attribute mutations.
+Each tree node would observe the its corresponding scene-graph node for attribute mutations.
 
-Depending on how the scene graph is mutated 3 main cases must be differentiated.
+Depending on how the scene-graph is mutated 3 main cases must be differentiated.
 1. a scene graph node is added
 	* ↪️ add a new tree node to the map and the tree view.
 2. a scene graph node is deleted
@@ -250,7 +250,7 @@ var TreeNodeAttributeList = React.createClass({
 
 This is code is the a simplified version of the code that renders a graph's nodes attributes into the tree view. This component simply decides what attributes should be rendered into the tree. `TreeNodeAttribute` is another component that will renders different elements depending on what attribute is passed in.
 
-Because the outputted html is only a function of its input it easy to parse the scenegraph:
+Because the outputted html is only a function of its input it easy to parse the scene-graph:
 1. choose a graph node as the root
 2. call the node component with that graph node
 3. if the graph node has child nodes call the node component again with each child node and return their return values wrapped in an element
