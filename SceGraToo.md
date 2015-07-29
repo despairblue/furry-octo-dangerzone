@@ -197,11 +197,11 @@ Each tree node would observe the its corresponding scene graph node for attribut
 
 Depending on how the scene graph is mutated 3 main cases must be differentiated.
 1. a scene graph node is added
-	* :arrow_right_hook: add a new tree node to the map and the tree view.
+	* ↪️ add a new tree node to the map and the tree view.
 2. a scene graph node is deleted
-	* :arrow_right_hook: remove it from the map and the tree view.
+	* ↪️ remove it from the map and the tree view.
 3. a scene graph node is mutated
-	* :arrow_right_hook: alter the corresponding tree node.
+	* ↪️ alter the corresponding tree node.
 
 1. and 2. would be handled by the tree view itself whereas 3. would be handled by each node respectively.
 
