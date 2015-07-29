@@ -1,10 +1,10 @@
 ## Basics
 ### Scene Graph
-Scene graphs are a way to organize 3d objects and concerning transformations in a directed graph, most of the times a directed acyclic graph (DAG), though also directed cyclic graphs (DCG) exist.
+Scene graphs can be used to group and organize 3D objects, their properties and concerning transformations. A directed acyclic graph (DAG) can be used to represent a scene graph.
 It starts with a root node that is associated with one or more children. Each child can be an object or a group, again containing more children.
-A group can contain associated transformation information, like *translation*, *rotation* or *scaling*. This structure has certain advantages compared to applying all transformations to the the raw meshes and sending everything to the [GPU].<sup>[50] (2015-07-23 15:59)</sup>
+A group can contain associated transformation information, like *translation*, *rotation* or *scaling*. This structure has certain advantages compared to applying all transformations to the raw meshes and sending everything to the [GPU].<sup>[50] (2015-07-23 15:59)</sup>
 
-[SSIML] scene graphs differ from above definition scene graph: Usually, there are three types of nodes:
+[SSIML] scene graphs differ from the above definition: there are three types of nodes:
 - transform
 - geometry
 - group
