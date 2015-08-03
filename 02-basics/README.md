@@ -24,16 +24,16 @@ Another advantage is the way transformations work. Instead of applying them to t
 With the ability to address nodes it's possible to reuse their information. If you have a car, it would be enough to have only one node containing the meshes for a tire, all other tires are merely addressing the tire with the geometry information:
 
 * Group
-	* Transform
-		* Geomatry "Chassis"
-	* Transform
-		* Geometry "Tire"
-	* Translate
-		* Use Geometry "Tire"
-	* Translate
-		* Use Geometry "Tire"
-	* Translate
-		* Use Geometry "Tire"
+  * Transform
+    * Geomatry "Chassis"
+  * Transform
+    * Geometry "Tire"
+  * Translate
+    * Use Geometry "Tire"
+  * Translate
+    * Use Geometry "Tire"
+  * Translate
+    * Use Geometry "Tire"
 
 That way the memory footprint of an application can be reduced.
 
@@ -139,12 +139,12 @@ First approach would be to create the tree-view while traversing the scene-graph
 Each tree node would observe the its corresponding scene-graph node for attribute mutations.
 
 Depending on how the scene-graph is mutated 3 main cases must be differentiated.
-1. a scene-graph node is added
-	* ↪️ add a new tree node to the map and the tree-view.
-2. a scene-graph node is deleted
-	* ↪️ remove it from the map and the tree-view.
-3. a scene-graph node is mutated
-	* ↪️ alter the corresponding tree node.
+1. a scene-graph node is added  
+  ↪️ add a new tree node to the and the tree-view.
+2. a scene-graph node is deleted  
+  ↪️ remove it from the and the tree-view.
+3. a scene-graph node is mutated  
+  ↪️ alter the corresponding tree node.
 
 1. and 2. would be handled by the tree-view itself whereas 3. would be handled by each node respectively.
 
