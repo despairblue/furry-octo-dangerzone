@@ -264,7 +264,10 @@ Because the outputted html is only a function of its input it easy to parse the 
 Another idea is to utilize data binding.
 Frameworks like [angular] or web components like [polymer] support templates and two way data binding.
 An idea would be to make every part of the scene-graph a component (polymer) or directive (angular).
-Nesting is also possible so it should be possible to compose the scene-graph.
+Nesting is also possible so it should be possible to compose the scene-graph by either:
+* constructing a template and rendering it
+* using recursive directives or components, which are at least in the case of angular not as simple to achieve as with react <sup>the author has no knowledge of web components or polymer and can thus form no opinion about how hard this approach would be by using that technology</sup>
+
 The initial scene-graph would need to be parsed for each element a directive/componten would be created, binding its attributes to a model.
 The data binding would than ensure that when the scene-graphs attributes are changed the model is kept in sync and the other way around.
 The tree-view could be bound to the same model and should thus update automatically respectively all updates to the tree-view would be propagated to the model again:
