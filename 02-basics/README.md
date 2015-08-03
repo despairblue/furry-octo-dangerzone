@@ -104,35 +104,9 @@ with mixed results:
 * ability to listen to changes to the tree node
 
 **Requirements none of the tested tools met:**
+
 * flexible input parsing
-* easy synchronization to a model
-
-The ones that met most requirements still required that the input data is passed in as a specifically structured javascript object and offered no to little help on keeping the tree in sync with the graph.
-<!-- If going down that road, how would one act on changes to the initial model? -->
-
-<!-- ##### Flexible Input Parsing
-That posed some problems, because it meant that I'd have to traverse the X3D scene and construct that specifically structured object.
-
-```javascript
-[
-    {
-        label: 'node1', id: 1,
-        children: [
-            { label: 'child1', id: 2 },
-            { label: 'child2', id: 3 }
-        ]
-    },
-    {
-        label: 'node2', id: 4,
-        children: [
-            { label: 'child3', id: 5 }
-        ]
-    }
-]
-```
-<sup>jqTree's input format <sup>[70]</sup></sup>
-
-Traversing the scene-graph and creating that structure isn't exactly complicated and I didn't expect to find a solution that supported rendering a part of the [DOM] back into the [DOM] out of the box, so this requirement can be neglected. -->
+* easy synchronization to a model, that can recover inconsistent state
 
 ##### Easy Synchronization to a Model
 The far more complicated part is keeping the tree-view in sync with the scene-graph while the scene-graph is being modified and also the other way around.
