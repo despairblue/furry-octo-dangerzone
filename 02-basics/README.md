@@ -84,20 +84,22 @@ React is utilized by SceGraToo to render the tree view that gives a more structu
 #### Objective description of the problem
 The most important part of SceGraToo is the tree-view, that visualizes the X3D scene-graph in a more comprehendible.
 
-**Requirements:**
+React is utilized by SceGraToo to render the tree-view that gives a more structured view of the scene-graph than the rendered scene.
+
+The scene-graph is the most important part of SceGraToo, it shows the the structure rather than the visual representation.
+Different off-the-shelf solutions, like angular or JQuery plugins, were tested against theses requirements:
 
 1. has to work right away <sup>[80]</sup>
 2. custom elements as part of tree nodes (multiple checkboxes or multiple inputs)
 3. ability to listen to changes to tree nodes
-4. *easy* synchronization to a model
+4. *easy* synchronization to a model, that can recover inconsistent state
 5. flexible input parsing
 
-#### Why some approaches might not work
-First a couple off-the-shelf solutions were tried, like [angular] or [JQuery] plugins with mixed results:
+with mixed results:
 
 **Partially not met requirements:**
 
-* did not work right away
+* has to work right away
 * custom elements as part of tree nodes
 * ability to listen to changes to the tree node
 
