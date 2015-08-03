@@ -146,7 +146,7 @@ Depending on how the scene-graph is mutated 3 main cases must be differentiated.
 3. a scene-graph node is mutated  
   ↪️ alter the corresponding tree node.
 
-1. and 2. would be handled by the tree-view itself whereas 3. would be handled by each node respectively.
+1\. and 2. would be handled by the tree-view itself whereas 3. would be handled by each node respectively.
 
 
 <object data=https://rawgit.com/despairblue/furry-octo-dangerzone/master/assets/naiveTreeView.md.svg></object>
