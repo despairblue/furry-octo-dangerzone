@@ -4,6 +4,12 @@
 
 http://www.autodesk.com/products/3ds-max/overview
 
+## Angular
+https://angularjs.org/
+
+## JQuery
+https://jquery.com/
+
 ## Blender
 
 https://www.blender.org/
