@@ -1,4 +1,4 @@
-## Basics
+## Basics and Related Work
 ### Scene-Graph
 Scene-graphs can be used to group and organize 3D objects, their properties and concerning transformations. A directed acyclic graph (DAG) can be used to represent a scene-graph.
 It starts with a root node that is associated with one or more children. Each child can be an object or a group, again containing more children.
@@ -77,7 +77,9 @@ After all working copies are merged back into the main model (dropping unwanted 
 After each roundtrip every developer has a copy of the project that is consistent with everyone else's.
 
 #### states
-TODO: explain the DOM
+TODO:
+* explain the DOM
+* move to
 
 Using something imperative like backbone it would be necessary to create a model (copying the information already in the DOM), a view (rendering that information to the DOM again) and a controller keeping track of the state changing the model where necessary and rerendering the view, and also keeping track of all it's children and removing them when they disappear or creating new ones whenever a new X3D element appears.
 
@@ -87,6 +89,7 @@ That structure is diffed against the tree-view that is already in the DOM and re
 
 
 ### Koa
+TODO: move to implemenation
 Koa is pretty much boring unless I'd explain node.js's take on asynchronicity, callbacks, promises and then generators. Still, the server is way to simple to be of any interest for this project.
 
 ### Related Work
