@@ -1,31 +1,29 @@
 <!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-  - [Concept](#concept)
-    - [How](#how)
-      - [Server](#server)
-      - [Client](#client)
-      - [Interaction](#interaction)
-    - [Problems](#problems)
-      - [Synchronization Process](#synchronization-process)
-      - [Easy Synchronization to a Model](#easy-synchronization-to-a-model)
-        - [Terminology](#terminology)
-        - [Data Binding](#data-binding)
-    - [How to solve](#how-to-solve)
+- [Concept](#concept)
+	- [How](#how)
+		- [Server](#server)
+		- [Client](#client)
+			- [Synchronization Process](#synchronization-process)
+				- [Rerendering and Diffing](#rerendering-and-diffing)
+					- [Terminology](#terminology)
+				- [Data Binding](#data-binding)
+		- [Interaction](#interaction)
 <!-- /TOC -->
 
-## Concept
+# Concept
 
 skizze wie dom rendering funktioniert
 
-### How
-#### Server
+## How
+### Server
 
 
-#### Client
+### Client
+
+
 ![treeview](https://www.dropbox.com/s/985tkrkpx67nyuk/treeview.png?dl=1)
 
-#### Interaction
-### Problems
 #### Synchronization Process
 
 > “I conclude that there are two ways of constructing a software
@@ -57,10 +55,11 @@ with mixed results:
 
 None of the off-the-shelf solutions could satisfy expectations.
 
-#### Easy Synchronization to a Model
 The most complicated part is keeping the tree-view-controller in sync with the scene-graph while the scene-graph is being modified and vice versa.
 
-##### Terminology
+##### Rerendering and Diffing
+
+###### Terminology
 
 **scene-graph:**  
 The HTML/XML/X3D representation of the scene:
@@ -167,12 +166,6 @@ Depending on how the scene-graph is mutated 3 main cases can be differentiated.
 3. a scene-graph node is mutated  
   ↪️ the corresponding tree-view-node-view is altered
 
-<!-- 1\. and 2. would be handled by the tree-view-controller itself whereas 3. would be handled by each node respectively. -->
-
-TODO: remove or update
-<object data=https://rawgit.com/despairblue/furry-octo-dangerzone/master/assets/naiveTreeView.md.svg></object>  
-<sup>the dotted lines represent events, the solid one method calls</sup>
-
 Tree-view-node-views can also be used to edit a show scene-graph node's properties.  
 When a tree-view-node-views is edited it's tree-view-node-controller is notified and applies the new properties to the corresponding scene-graph node.
 It's assumed that the updates will always lead to consistent state, where the scene-graph and the tree node converge.
@@ -201,30 +194,125 @@ React is used to circumvent this problem.
 React calculates a lightweight representation of what is going to be rendered to the DOM and compares that to what is already rendered.
 It calculates a set of patches and only applies these to the DOM.
 
+The code below is for explanation purposes and does not resemble react's implementation in any way.
+
+**Old Virtiual DOM:**
+```html
+<ol data-reactid=".0">
+  <li data-reactid=".0.0">scene
+    <ol data-reactid=".0.0.0">
+      <li data-reactid=".0.0.0.0">transform
+        <ol data-reactid=".0.0.0.0.0">
+          <li data-reactid=".0.0.0.0.0.0">inline</li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ol>
+```
+
+**New Virtual DOM:**
+```html
+<ol data-reactid=".0">
+  <li data-reactid=".0.0">scene
+    <ol data-reactid=".0.0.0">
+      <li data-reactid=".0.0.0.0">transform
+        <ol data-reactid=".0.0.0.0.0">
+          <li data-reactid=".0.0.0.0.0.0">inline</li>
+        </ol>
+      </li>
+      <li>group</li>
+    </ol>
+  </li>
+</ol>
+```
+
+**Patch:**
+```javascript
+var li = document.createElement('li')
+li.innerText = 'group'
+document.querySelector('[data-reactid=".0.0.0"]').appendChild(li)
+```
+
 That means as long as the code that parses the scene-graph and generates the lightweight representation is correct, the tree-view-view is correct.
 
 
 
+
 ##### Data Binding
-<!--  TODO: remove konunktiv -->
-Another idea is to utilize data binding.
-Frameworks like [angular] or web components like [polymer] support templates and two way data binding.
-An idea would be to make every part of the scene-graph a component (polymer) or directive (angular).
-Nesting is also possible so it should be possible to compose the scene-graph by either:
-* constructing a template and rendering it
-* using recursive directives or components, which are at least in the case of angular not as simple to achieve as with react <sup>the author has no knowledge of web components or polymer and can thus form no opinion about how hard this approach would be by using that technology</sup>
+<!--  TODO: remove konjunktiv -->
+Another idea is to utilize templates and data binding.
+Frameworks like [angular] or web components implementations like [polymer] support templates and two way data binding.
+Following I'm just concerning angular directives, but the same thing should be possible with web components.
 
-The initial scene-graph would need to be parsed for each element a directive/componten would be created, binding its attributes to a model.
-The data binding would than ensure that when the scene-graphs attributes are changed the model is kept in sync and the other way around.
-The tree-view-controller could be bound to the same model and should thus update automatically respectively all updates to the tree-view-controller would be propagated to the model again:
-It would probably work, but the complexity is too daunting.
-* nesting directives/components indefinitely deep makes it harder to reason about them.
-* the X3D scene couldn't be dumped just be dumped into the [DOM] it would have to be parsed and componentized
+An angular directive consists of a mostly logic less template and some javascript containing logic for creating the directive or reacting to events.
 
-<!-- What that means is to traverse the X3D scene, create a tree node for every eligible part of the scene-graph and hook up event listeners that update that tree node when the scene-graph node changes and the other way around, update the scene-graph when the tree node is updated. -->
+For each node a directive is instantiated which creates a template rendering the node.
+Also for each child it has it creates a new instance of itself.
 
-<!-- Even if one of them would have worked the main problem would have remained: How to keep the tree-view-controller in sync with the [DOM]? -->
+**Example:**
 
+The `treenode` renders the node itself and a `nodelist`, that renders a list of treenodes for each child node.
+Mind the recursion
 
+The data:
+```
+node: {
+  name: "scene",
+  children: [
+    {
+      name: "viewpoint"
+    },
+    {
+      name: "worldinfo"
+    }
+  ]
+}
+```
 
-### How to solve
+```html
+<treenode node="node">
+</treenode>
+```
+```html
+<treenode node="node">
+  <span>{{node.name}}</span>
+  <nodelist ng-repeat='node in children' children='children'>
+  </nodelist>
+</treenode>
+```
+```html
+<treenode node="node">
+  <span>{{node.name}}</span>
+  <nodelist ng-repeat='node in children' children='children'>
+    <treenode node="children[0]">
+    </treenode>
+    <treenode node="children[1]">
+    </treenode>
+  </nodelist>
+</treenode>
+```
+```html
+<treenode node="node">
+  <span>{{node.name}}</span>
+  <nodelist ng-repeat='node in children' children='children'>
+    <treenode node="children[0]">
+      <span>{{node.name}}</span>
+    </treenode>
+    <treenode node="children[1]">
+      <span>{{node.name}}</span>
+    </treenode>
+  </nodelist>
+</treenode>
+```
+
+Again, this is not an accurate depiction of how angular works, it's just for illustration purposes.
+
+The scene-graph is traversed and for each eligable child node a a new `treenode` is created.
+The double curly braces are angulars way to denote data access in templates.
+The data from the elements scope is automatically inserted and kept up to date.
+This data binding would than ensure that when the scene-graphs attributes are changed the model is kept in sync and the other way around.
+
+This idea is not further pursued, since the first is better suited for a functional programming style.
+
+### Interaction
