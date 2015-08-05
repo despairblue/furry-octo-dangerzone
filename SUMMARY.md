@@ -4,7 +4,7 @@
 	* [Prelude](01-prelude/README.md)
 		* [Motivation](01-prelude/README.md)
 		* [Scope](01-prelude/README.md)
-	* [Basics](02-basics/README.md)
+	* [Basics and Related Work](02-basics/README.md)
 		* [Scene Graph](02-basics/README.md)
 			* [Culling](02-basics/README.md)
 			* [Transformations](02-basics/README.md)
