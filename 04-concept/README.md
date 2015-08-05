@@ -95,10 +95,10 @@ The HTML/XML/X3D representation of the scene:
 ```
 
 **tree-view-controller:**  
-Loosely defined term that comprises of all objects, methods, functions, event-listeners and callbacks related to parsing the scene-graph and creating the initial  tree-view-view.
+Loosely defined term that comprises all objects, methods, functions, event-listeners and callbacks related to parsing the scene-graph and creating the initial  tree-view-view.
 
 **tree-view-node-controller:**
-Loosely defined term that comprises of all objects, methods, functions, event-listeners end callbacks related to keeping a subtree of the scene-graph uptodate.
+Loosely defined term that comprises all objects, methods, functions, event-listeners end callbacks related to keeping a subtree of the scene-graph uptodate.
 
 **tree-view-view:**  
 The HTML representation of the tree-view-controller (html output shortened and simplified):  
