@@ -242,7 +242,6 @@ That means as long as the code that parses the scene-graph and generates the lig
 
 
 ##### Data Binding
-<!--  TODO: remove konjunktiv -->
 Another idea is to utilize templates and data binding.
 Frameworks like [angular] or web components implementations like [polymer] support templates and two way data binding.
 Following I'm just concerning angular directives, but the same should be possible with web components.
