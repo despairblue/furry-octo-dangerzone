@@ -38,8 +38,8 @@ React is utilized by SceGraToo to render the tree-view-controller that gives a m
 The scene-graph is the most important part of SceGraToo, it shows the the structure rather than the visual representation.
 Different off-the-shelf solutions, like angular or JQuery plugins, were tested against theses requirements:
 
-1. custom elements as part of tree nodes (multiple checkboxes or multiple inputs)
-2. ability to listen to changes to tree nodes
+1. custom html elements as part of tree nodes (multiple checkboxes or multiple inputs)
+2. ability to observe the tree node's state changing
 3. binding to an arbitrary model, that can recover inconsistent state
 
 with mixed results:
@@ -254,7 +254,7 @@ Also for each child it creates a new instance of itself.
 
 **Example:**
 
-The `treenode` renders the node itself and a `nodelist`, that renders a list of treenodes for each child node.
+The `treenode` renders the node itself and a `nodelist`, that renders a list of tree-nodes for each child node.
 Mind the recursion
 
 The data:
@@ -310,9 +310,9 @@ node: {
 
 Again, this is not an accurate depiction of how angular works, it's just for illustration purposes.
 
-The scene-graph is traversed and for each eligable child node a new `treenode` is created.
-The double curly braces are angulars way to denote data access in templates.
+The scene-graph is traversed and for each eligible child node a new `treenode` is created.
+The double curly braces are angular's way to denote data-binding in templates.
 The data from the elements scope is automatically inserted and kept up to date.
-This data binding would than ensure that when the scene-graphs attributes are changed the model is kept in sync and the other way around.
+This data binding would then ensure that when the scene-graphs attributes are changed the model is kept in sync and the other way around.
 
 ### Interaction
