@@ -130,7 +130,73 @@ It is also not in real time, so it is more comparable to version control system 
 #### [Tilt Brush][20]
 Tilt Brush was lauded for t
 
-### x3d gizmos
+### Gizmos
+Gizmos, also called manipulators, are handles or bounding boxes with handles that manipulate it's containgin object in a predefined way when dragged.<sup>[wikipedia](https://en.wikipedia.org/wiki/Gizmo)</sup>
+
+
+![blender tranlsate](http://wiki.blender.org/uploads/7/73/Manual-Manipulators-Translate.jpg)  
+<sup> translation gizmo </sup>
+
+![blender rotate](http://wiki.blender.org/uploads/0/04/Manual-Manipulators-Rotate.jpg)  
+<sup> rotation gizmo </sup>
+
+![blender scale](http://wiki.blender.org/uploads/1/14/Manual-Manipulators-Scale.jpg)  
+<sup> scale gizmo </sup>
+
+![blender all](http://wiki.blender.org/uploads/6/6c/Manual-Manipulators-Combo.jpg)  
+<sup> all gizmos together <sup>[blender wiki](http://wiki.blender.org/index.php/Doc:2.4/Manual/3D_interaction/Transform_Control/Manipulators)</sup></sup>
+
+![threejs online editor](https://rawgit.com/despairblue/furry-octo-dangerzone/round4/assets/threejs-editor.png)  
+<sup> Shows translate gizmos along the x, y and z axis als well as gizmos that translate the cube along the xy, xz, yz and frustum plane.</sup>
+
+![x3dom gizmo example](https://rawgit.com/despairblue/furry-octo-dangerzone/round4/assets/x3dom-gizmo-example.png)  
+<sup> [x3dom example](http://doc.x3dom.org/tutorials/animationInteraction/transformations/example.html) </sup>
+
+
+In X3D gizmos can be realized with on of [X3DDragSensorNode's](http://doc.x3dom.org/author/PointingDeviceSensor/X3DDragSensorNode.html) decedents.
+
+* SphereSensor
+  * SphereSensor converts pointing device motion into a spherical rotation around the origin of the local coordinate system.  <sup>[xd3om1](http://doc.x3dom.org/author/PointingDeviceSensor/SphereSensor.html)</sup>
+* CylinderSensor
+  * The CylinderSensor node converts pointer motion (for example, from a mouse) into rotation values, using an invisible cylinder of infinite height, aligned with local Y-axis.  <sup>[x3dom2](http://doc.x3dom.org/author/PointingDeviceSensor/CylinderSensor.html)</sup>
+* PlaneSensor
+  * PlaneSensor converts pointing device motion into 2D translation, parallel to the local Z=0 plane. Hint: You can constrain translation output to one axis by setting the respective minPosition and maxPosition members to equal values for that axis. <sup>[x3dom3](http://doc.x3dom.org/author/PointingDeviceSensor/PlaneSensor.html)</sup>
+
+The sensors track drag events on their siblings.
+In the example above (which is taken directly from the x3dom website) the PlaneSensor tracks drag events on the cones and the cylinder that make up the cyan handle.
+```html
+<group>
+  <planeSensor autoOffset='true' axisRotation='1 0 0 -1.57' minPosition='-6 0' maxPosition='6 0' onoutputchange='processTranslationGizmoEvent(event)'>
+  </planeSensor>
+
+  <transform id='translationHandleTransform'>
+    <transform translation='0 -5.5 8' rotation='0 1 0 1.57'>
+      <transform translation='0 0 1.5' rotation='1 0 0 1.57'>
+        <shape DEF='CONE_CAP'>
+          <appearance DEF='CYAN_MAT'><material diffuseColor='0 1 1'></material></appearance>
+          <cone height='1'></cone>
+        </shape>
+      </transform>
+      <transform rotation='1 0 0 -1.57'>
+        <shape>
+          <appearance USE='CYAN_MAT'></appearance>
+          <cylinder></cylinder>
+        </shape>
+      </transform>
+      <transform translation='0 0 -1.5' rotation='1 0 0 -1.57'>
+        <shape USE='CONE_CAP'></shape>
+      </transform>
+    </transform>
+  </transform>
+</group>
+```
+Every time it detects a drag event it converts it into a 2D transformation and raises an *onOutPutChange* event.
+The callback `processTranslationGizmoEvent` is registered as an event handler.
+In this function the position of the handle is adjusted to make it follow the drag movement, also the position of the teapot is adjust.
+
+Having the the handles being 3d objects within the scene, that look touchable and intractable, make it easier for users find their way around the application.
+Instead of haven to learn keyboard shortcuts the user simply uses their intuition about how she would interact with objects in the real world.
+
 
 ### [Component Editor][30]
 
