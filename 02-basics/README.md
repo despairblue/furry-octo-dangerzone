@@ -38,6 +38,7 @@ With the ability to address nodes it's possible to reuse their information. If y
 That way the memory footprint of an application can be reduced.
 
 ### X3D
+
 X3D is the [XML] representation of [VRML] which was designed as a universal interactive 3D exchange format, much like html is for written documents or SVG for vector graphics.
 Due to its XML structure it can be integrated in html documents, thus the Frauenhofer Institute pursued to implement a runtime that could interpret and visualize X3D in the browser, by using a [WebGL] context. It's called [x3dom](http://www.x3dom.org/) and it's extensively used by SceGraToo, the tool that arose from this thesis.
 
@@ -128,7 +129,7 @@ It is also not in real time, so it is more comparable to version control system 
 
 ### 3D Widgets
 #### [Tilt Brush][20]
-Tilt Brush was lauded for t
+Tilt Brush was lauded for it's 3d interface.
 
 ### Gizmos
 Gizmos, also called manipulators, are handles or bounding boxes with handles that manipulate it's containgin object in a predefined way when dragged.<sup>[wikipedia](https://en.wikipedia.org/wiki/Gizmo)</sup>
@@ -199,6 +200,48 @@ Instead of haven to learn keyboard shortcuts the user simply uses their intuitio
 
 
 ### [Component Editor][30]
+* release 12th of june 2015
+  * thus after the work on SceGraToo started
+* developed over a year
+* developed by 3 people working part time
+* cannot save or load x3d files
+  * serealizes the scene into a JSON format
+
+```json
+{
+  "0": {
+    "type": "Box",
+    "transform": "1.000000, 0.000000, 0.000000, 0.000000, \n0.000000, 1.000000, 0.000000, 0.000000, \n0.000000, 0.000000, 1.000000, 0.000000, \n0.000000, 0.000000, 0.000000, 1.000000",
+    "referencePoints": ["p1", "p2", "p3", "p4", "p5", "p6"],
+    "parameters": {
+      "Size": [1, 1, 1],
+      "Positive Element": "true"
+    }
+  }
+}
+```
+
+* this would loose meta information like the IDs in comments.
+
+### Real-Time Collaborative Scientific WebGL Visualization with Web Sockets <sup>[acm](http://doi.acm.org/10.1145/2338714.2338721)</sup>
+Using web sockets instead of AJAX is an interesting approach.
+Especially the cut down on latency.
+It is over all very similar to the approach I was thinking about.
+Except that they propagate only some information, like the camera position and view angle.
+In SceGraToo's case the whole scene needs to be synchronized.
+So to have specttors like they have we either have to send the whoe model to the server after eacht change or use some kind of tree diff algorithm.
+They visualize a specific dataset in a specific format (*which?*).
+We only need to visualize X3D data, so there is no reason to use some generic Visualization tool kit, x3dom does a pretty good job doint this.
+on the other hand we not only have to visualize the data, but also manipulate it and this is way easiear in a descriptive scene graph instead of manimpulatiing webgl scenes or data formats like vtk.
+
+### ParaViewWeb <sup>[pvweb](http://paraviewweb.kitware.com/)</sup>
+Simple to use out of the box, but needs a paraview server instance and paraview does not support x3d as an input format.
+So using this is sadly not possible unless an import filter is written.
+The visualization is mainly meant to explore data sets.
+There is no easy way to manipulate the input data.
+This can only happen by extending the visualization pipeline via python scripts on the server.
+ 
+
 
 [0]: http://3d.meteor.com/
 [10]: http://www.researchgate.net/publication/221610780_A_Blender_Plugin_for_Collaborative_Work_on_the_Articiel_Platform

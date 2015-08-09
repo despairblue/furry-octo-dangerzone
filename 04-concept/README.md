@@ -1,19 +1,7 @@
-<!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
-
-- [Concept](#concept)
-	- [How](#how)
-		- [Server](#server)
-		- [Client](#client)
-			- [Synchronization Process](#synchronization-process)
-				- [Rerendering and Diffing](#rerendering-and-diffing)
-					- [Terminology](#terminology)
-				- [Data Binding](#data-binding)
-		- [Interaction](#interaction)
-<!-- /TOC -->
-
 # Concept
 
 skizze wie dom rendering funktioniert
+oder auch nicht, da es ziemlich uninteressant ist
 
 ## How
 ### Server
@@ -151,7 +139,12 @@ The HTML representation of the tree-view-controller (html output shortened and s
 </div>
 ```
 
-The aim is to keep the tree-view-view a consistent representation of the scene-graph, where interesting scene-graph nodes and their properties are presented in an up to date and editable form.
+The aim is to keep the tree-view-view a consistent representation of the scene-graph.
+The tree-view-view only shows specific nodes, I can't list them here because they will change over the
+
+ where specific scene-graph nodes, ones that  , and their properties are presented in an up to date and editable form.
+
+todo: explain what nodes and what properties and why
 
 First design approach is to let the tree-view-controller create an initial tree-view-view by traversing it and creating tree-view-node-controllers ad hoc.
 These tree-view-node-controllers create the corresponding tree-view-node-views while traversing the scene-graph.
