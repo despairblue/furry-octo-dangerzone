@@ -98,8 +98,33 @@ Koa is pretty much boring unless I'd explain node.js's take on asynchronicity, c
 ### [3D Meteor][0]
 ![3dmeteor](https://www.dropbox.com/s/173i8xo8xkxdmq7/3dmeteor.png?dl=1)
 
-### [Blender Plugin][10]
+This simple 3D editor allows the user to add and remove colored blocks to a scene.
+The synchronization is leveraging meteor's database collection subscription features.
+Meteor apps are comprised of a client side and a server side.
+The client can subscribe to database collections and get's automatically notified of changes to that collection by the server.
+The only thing that actually is synchronized is an array of *boxes*.
+A box is an object with an x, y and z property describing its position.
 
+
+### [Blender Plugin][10]
+I don't do anything about collaborative working anymore.
+So yeah.
+
+As part of an asset management system the Université du Québec à Montréal implemented a plugin for blender for collaborative working.
+An artist can record changes to to wiremeshes and store them on a server.
+Another artist can download these changes and apply them to his working copy.
+The diffs are a simple list of vertices and their movement in the x, y and z space.
+```
+95 [0.0000, 0.0000, 0.0000]
+295 [0.0027, 0.0013, 0.0000]
+309 [0.2123, 0.1001, 0.0000]
+311 [0.3029, 0.1429, 0.0000]
+```
+These are saved on the server and another user working on the same object can apply them to his working copy.
+They can actually be applied to any object that has the same number of vertices.
+That's also a shortcoming.
+Adding or removing vertices cannot be handled by the plugin.
+It is also not in real time, so it is more comparable to version control system like git, just for 3d models.
 
 ### 3D Widgets
 #### [Tilt Brush][20]
