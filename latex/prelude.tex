@@ -1,3 +1,5 @@
+% !TEX root = seminararbeit.tex
+
 \section{Prelude}
 \label{sec:Prelude}
 
@@ -7,7 +9,7 @@ result of a tool which was implemented as part of the DFG research
 project {[}Roundtrip3D{]}. The scene are automatically derived from
 software models \ldots{}
 
-\subsubsection{Motivation}\label{motivation}
+\subsection{Motivation}\label{motivation}
 
 As part of the Roundtrip3D project, a round-trip framework (hereafter
 referred to as \emph{R3D}) was developed. This framework also includes a
@@ -52,15 +54,32 @@ meets both of these requirements:
 \end{itemize*}
 
 The following pictures demonstrate the problem:\\
-\includegraphics{../assets/wheel1.png}
-\includegraphics{../assets/wheel2.png}
-\includegraphics{../assets/wheel3.png}
+\begin{figure}[htbp]
+  \includegraphics[width=12cm]{../assets/wheel1.png}
+	\caption{Wheel 1}
+	\label{fig:wheel1}
+\end{figure}
+\begin{figure}[htbp]
+	\includegraphics[width=12cm]{../assets/wheel2.png}
+	\caption{Wheel 2}
+	\label{fig:wheel2}
+\end{figure}
+\begin{figure}[htbp]
+	\includegraphics[width=12cm]{../assets/wheel3.png}
+	\caption{Wheel 3}
+	\label{fig:wheel3}
+\end{figure}
+
 
 These are common orientations, since it's disputable which of these
 could be considered be the norm.\\
 But if one depends on art from 3rd parties, the orientation and position
 could be completely arbitrary:\\
-\includegraphics{../assets/wheel4.png}
+\begin{figure}[htbp]
+	\includegraphics[width=12cm]{../assets/wheel4.png}
+	\caption{Wheel 4}
+	\label{fig:wheel4}
+\end{figure}
 
 These properties could be added and adjusted via any text editor by
 opening the generated x3d file, but the resulting workflow isn't
@@ -95,7 +114,7 @@ using mouse interactions. For fine grained control SceGraToo also
 contains a tree view that allows the user to input exact attributes for
 translations, rotations and scale.
 
-\subsubsection{Scope}\label{scope}
+\subsection{Scope}\label{scope}
 
 This thesis addresses two issues:
 

@@ -1,3 +1,5 @@
+% !TEX root = seminararbeit.tex
+
 \section{Basics and Related Work}
 \label{basics-and-related-work}
 
@@ -61,42 +63,28 @@ containing the meshes for a tire, all other tires are merely addressing
 the tire with the geometry information:
 
 \begin{itemize*}
-\item
-  Group
-\item
-  Transform
-
+  \item Group
   \begin{itemize*}
-  \item
-    Geomatry ``Chassis''
-  \end{itemize*}
-\item
-  Transform
-
-  \begin{itemize*}
-  \item
-    Geometry ``Tire''
-  \end{itemize*}
-\item
-  Translate
-
-  \begin{itemize*}
-  \item
-    Use Geometry ``Tire''
-  \end{itemize*}
-\item
-  Translate
-
-  \begin{itemize*}
-  \item
-    Use Geometry ``Tire''
-  \end{itemize*}
-\item
-  Translate
-
-  \begin{itemize*}
-  \item
-    Use Geometry ``Tire''
+    \item Transform
+    \begin{itemize*}
+      \item Geomatry ``Chassis''
+    \end{itemize*}
+    \item Transform
+    \begin{itemize*}
+      \item Geometry ``Tire''
+    \end{itemize*}
+    \item Translate
+    \begin{itemize*}
+      \item Use Geometry ``Tire''
+    \end{itemize*}
+    \item Translate
+    \begin{itemize*}
+      \item Use Geometry ``Tire''
+    \end{itemize*}
+    \item Translate
+    \begin{itemize*}
+      \item Use Geometry ``Tire''
+    \end{itemize*}
   \end{itemize*}
 \end{itemize*}
 
@@ -157,9 +145,12 @@ parties easier.
 
 It also serves as a code generation template.
 
-\includegraphics{../assets/SSIML.png}\\
-A SSIML Diagram \href{http://vr.tu-freiberg.de/roundtrip3d/}{60}
-(2015-07-24 18:17)
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=12cm]{../assets/SSIML.png}
+	\caption{A SSIML Diagram \cite{roundtrip3dwebsite}}
+	\label{fig:ssimldiagram}
+\end{figure}
 
 \subsection{Roundtrip 3D}\label{roundtrip-3d}
 
@@ -217,9 +208,10 @@ this project.
 Meteor}}{3D Meteor}}\label{d-meteor0}
 
 \begin{figure}[htbp]
-\centering
-\includegraphics{../assets/3dmeteor.png}
-\caption{3dmeteor}
+  \centering
+  \includegraphics[width=12cm]{../assets/3dmeteor.png}
+  \caption{3D Meteor}
+	\label{fig:3dmeteor}
 \end{figure}
 
 This simple 3D editor allows the user to add and remove colored blocks
@@ -268,62 +260,37 @@ Tilt Brush was lauded for it's 3d interface.
 
 Gizmos, also called manipulators, are handles or bounding boxes with
 handles that manipulate it's containgin object in a predefined way when
-dragged.\href{https://en.wikipedia.org/wiki/Gizmo}{wikipedia}
+dragged. \cite{gizmo}
 
-\includegraphics{../assets/Manual-Manipulators-Translate.jpg}\\
- translation gizmo
-
-\includegraphics{../assets/Manual-Manipulators-Rotate.jpg}\\
- rotation gizmo
-
-\includegraphics{../assets/Manual-Manipulators-Scale.jpg}\\
- scale gizmo
-
-\includegraphics{../assets/Manual-Manipulators-Combo.jpg}\\
- all gizmos together
-\href{http://wiki.blender.org/index.php/Doc:2.4/Manual/3D_interaction/Transform_Control/Manipulators}{blender
-wiki}
-
-\includegraphics{../assets/threejs-editor.png}\\
- Shows translate gizmos along the x, y and z axis als well as gizmos
-that translate the cube along the xy, xz, yz and frustum plane.
-
-\includegraphics{../assets/x3dom-gizmo-example.png}\\
-
-\href{http://doc.x3dom.org/tutorials/animationInteraction/transformations/example.html}{x3dom
-example}
-
-In X3D gizmos can be realized with on of
-\href{http://doc.x3dom.org/author/PointingDeviceSensor/X3DDragSensorNode.html}{X3DDragSensorNode's}
-decedents.
-
-\begin{itemize*}
-\item
-  SphereSensor
-\item
-  SphereSensor converts pointing device motion into a spherical rotation
-  around the origin of the local coordinate system.
-  \href{http://doc.x3dom.org/author/PointingDeviceSensor/SphereSensor.html}{xd3om1}
-\item
-  CylinderSensor
-\item
-  The CylinderSensor node converts pointer motion (for example, from a
-  mouse) into rotation values, using an invisible cylinder of infinite
-  height, aligned with local Y-axis.
-  \href{http://doc.x3dom.org/author/PointingDeviceSensor/CylinderSensor.html}{x3dom2}
-\item
-  PlaneSensor
-\item
-  PlaneSensor converts pointing device motion into 2D translation,
-  parallel to the local Z=0 plane. Hint: You can constrain translation
-  output to one axis by setting the respective minPosition and
-  maxPosition members to equal values for that axis.
+In X3D gizmos can be realized with on of X3DDragSensorNode's \cite{x3ddragsensornode} decedents.
+\begin{description}
+  \item[]
+\end{description}
+\begin{description*}
+\item[SphereSensor]
+  SphereSensor converts pointing device motion into a spherical rotation around the origin of the local coordinate system. \href{http://doc.x3dom.org/author/PointingDeviceSensor/SphereSensor.html}{xd3om1}
+\item[CylinderSensor]
+  The CylinderSensor node converts pointer motion (for example, from a mouse) into rotation values, using an invisible cylinder of infinite height, aligned with local Y-axis. \href{http://doc.x3dom.org/author/PointingDeviceSensor/CylinderSensor.html}{x3dom2}
+\item[PlaneSensor]
+  PlaneSensor converts pointing device motion into 2D translation, parallel to the local Z=0 plane. Hint: You can constrain translation output to one axis by setting the respective minPosition and maxPosition members to equal values for that axis.
   \href{http://doc.x3dom.org/author/PointingDeviceSensor/PlaneSensor.html}{x3dom3}
-\end{itemize*}
+\end{description*}
 
-The sensors track drag events on their siblings. In the example above
+The sensors track drag events on their siblings. In the example in figure \ref{fig:x3dgizmo}
 (which is taken directly from the x3dom website) the PlaneSensor tracks
 drag events on the cones and the cylinder that make up the cyan handle.
+
+Every time it detects a drag event it converts it into a 2D
+transformation and raises an \emph{onOutPutChange} event. The callback
+\texttt{processTranslationGizmoEvent} is registered as an event handler.
+In this function the position of the handle is adjusted to make it
+follow the drag movement, also the position of the teapot is adjust.
+
+Having the the handles being 3d objects within the scene, that look
+touchable and intractable, make it easier for users find their way
+around the application. Instead of haven to learn keyboard shortcuts the
+user simply uses their intuition about how she would interact with
+objects in the real world.
 
 \begin{minted}[breaklines,bgcolor=bg]{html}
 <group>
@@ -352,34 +319,51 @@ drag events on the cones and the cylinder that make up the cyan handle.
 </group>
 \end{minted}
 
-Every time it detects a drag event it converts it into a 2D
-transformation and raises an \emph{onOutPutChange} event. The callback
-\texttt{processTranslationGizmoEvent} is registered as an event handler.
-In this function the position of the handle is adjusted to make it
-follow the drag movement, also the position of the teapot is adjust.
+\begin{figure}[htbp]
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Translate.jpg}
+  	\caption{translation gizmo \cite{blenderwiki}}
+  \end{minipage}
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Translate.jpg}\\
+  	\caption{rotation gizmo \cite{blenderwiki}}
+  \end{minipage}\\
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Scale.jpg}
+  	\caption{scale gizmo \cite{blenderwiki}}
+  \end{minipage}
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Combo.jpg}
+  	\caption{all gizmos together \cite{blenderwiki}}
+  \end{minipage}
+\end{figure}
+\begin{figure}[]
+  \centering
+  \includegraphics[width=12cm]{../assets/threejs-editor.png}
+	\caption{ Shows translate gizmos along the x, y and z axis als well as gizmos that translate the cube along the xy, xz, yz and frustum plane. \cite{threejseditor} }
+\end{figure}
+\begin{figure}[]
+  \centering
+  \includegraphics[width=12cm]{../assets/x3dom-gizmo-example.png}
+	\caption{ Shows an official x3dom tutorial for using sensors to create gizmos. \cite{x3dgizmo} }
+	\label{fig:x3dgizmo}
+\end{figure}
 
-Having the the handles being 3d objects within the scene, that look
-touchable and intractable, make it easier for users find their way
-around the application. Instead of haven to learn keyboard shortcuts the
-user simply uses their intuition about how she would interact with
-objects in the real world.
-
+\clearpage
 \subsubsection{\texorpdfstring{\href{https://github.com/x3dom/component-editor}{Component
 Editor}}{Component Editor}}\label{component-editor30}
 
 \begin{itemize*}
-\item
-  release 12th of june 2015
-\item
-  thus after the work on SceGraToo started
-\item
-  developed over a year
-\item
-  developed by 3 people working part time
-\item
-  cannot save or load x3d files
-\item
-  serealizes the scene into a JSON format
+\item release 12th of june 2015
+\item thus after the work on SceGraToo started
+\item developed over a year
+\item developed by 3 people working part time
+\item cannot save or load x3d files
+\item serealizes the scene into a JSON format
 \end{itemize*}
 
 \begin{minted}[breaklines,bgcolor=bg]{json}

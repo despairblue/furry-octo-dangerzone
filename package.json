@@ -4,7 +4,7 @@
   "description": "Bachelor Thesis",
   "main": "index.js",
   "scripts": {
-    "make": "mermaid assets/*.md --svg -o assets",
+    "make": "cd latex;latexmk -pdf -pdflatex='pdflatex --shell-escape %O %S' seminararbeit.tex",
     "installHooks": "ln -s -f ../../hooks/pre-commit .git/hooks/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
