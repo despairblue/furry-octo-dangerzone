@@ -1,0 +1,244 @@
+% This template is provided for all the participants of the seminar ``Spatio-temporal Logics and Reasoning''
+%%%%%%%%%%%%%%%%%%%%%
+% Author information:
+%%%%%%%%%%%%%%%%%%%%%
+% Jannik Strötgen
+% Institute of Computer Science
+% Database Systems Research Group
+% INF 348
+% 69120 Heidelberg
+% stroetgen@uni-hd.de
+%%%%%%%
+% Date: October 5, 2010
+%%%%%%%
+
+\documentclass[
+	 11pt,         % font size
+	 a4paper,      % paper format
+	 oneside,
+	 ]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% PACKAGES:
+
+% Use German :
+\usepackage[USenglish, ngerman]{babel}
+% Input encoding
+\usepackage[utf8]{inputenc}
+% Font encoding
+\usepackage[T1]{fontenc}
+% Einbinden von URLs:
+\usepackage{url}
+% Hyperref
+\usepackage[bookmarks=true,colorlinks,pdfpagelabels,pdfstartview = FitH,bookmarksopen = true,bookmarksnumbered = true,linkcolor = black,plainpages = false,hypertexnames = false,citecolor = black,urlcolor=black]{hyperref}
+%\usepackage{hyperref}
+% Include Graphic-files:
+\usepackage{graphicx}
+% Include PDF links
+%\usepackage[pdftex, bookmarks=true]{hyperref}
+% Fuer Textsatz
+\usepackage{setspace}
+% For bibliography style
+\usepackage[numbers]{natbib}
+% for Latex symbols
+\usepackage{doc}
+% symbols
+\usepackage{ marvosym }
+% tables
+\usepackage{ tabularx }
+% quates
+\usepackage[babel,german=quotes]{csquotes}
+% colors
+\usepackage[usenames, dvipsnames]{xcolor}
+% subscript
+\usepackage{fixltx2e}
+% verzeichnisse zu toc hinzufügen
+\usepackage{tocbibind}
+% index
+\usepackage{makeidx}
+\usepackage{showidx} %DEBUG: remove
+% placement H for ecactly here!
+\usepackage{float}
+% strikeout text
+\usepackage{ulem}
+% tightly packed lists
+\usepackage{mdwlist}
+% long tables
+\usepackage{longtable}
+% better ruler support for tables
+\usepackage{booktabs}
+% source code highliting
+\usepackage{minted}
+% background color for listings
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Titel, Autor, Seminar, Semester, Dozent %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\mytitle}{SceGraToo}
+\newcommand{\myauthor}{Danny Arnold}
+\newcommand{\myseminar}{Seminar zu Awareness-Algorithmen zur Präsens in Kommunikationsräumen}
+\newcommand{\mysemester}{Sommersemester 2011}
+\newcommand{\mydozent}{Prof. Froitzheim}
+\newcommand{\mydozentTwo}{Prof. Jasper}
+
+% OTHER SETTINGS:
+% \setlength{\parindent}{0in}
+\renewcommand{\arraystretch}{1.5}
+
+\newcommand{\emptypage}[0]{
+	% Empty Page
+	\clearpage
+	\thispagestyle{empty}
+	\mbox{}
+	\newpage
+}
+
+\newcommand{\headingspage}[0]{
+	% Empty Page
+	\clearpage
+	\thispagestyle{headings}
+	\mbox{}
+	\newpage
+}
+
+% Pagestyle:
+\pagestyle{myheadings}
+\markright{\myauthor: \mytitle}
+
+% start indexing
+\makeindex
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <TITLE> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{roman}
+\begin{titlepage}
+\begin{tabular}[l]{l}
+% Angaben zum Seminar
+Technische Universität Bergakademie Freiberg\\
+Fakultät für Mathematik und Informatik\\
+\mysemester\\
+Seminar: \myseminar\\
+Dozenten: \mydozent\\
+\phantom{Dozenten: }\mydozentTwo\\
+\end{tabular}
+
+\vspace{4cm}
+\begin{center}
+\textbf{\large Bachelor Thesis} % Proseminararbeit,Studienarbeit, Interdisziplinaeres Projekt
+\vspace{0.5\baselineskip}
+
+% Titel wird ausgegeben (siehe oben)
+{\huge
+\mytitle
+}
+\end{center}
+
+\vfill
+% Persönliche Angaben
+\begin{tabular}[l]{ll}
+Name:           & \myauthor\\
+Matrikelnummer: & 52315\\
+Studiengang:    & Angewandte Informatik\\
+Email: & danny.arnold@student.tu-freiberg.de\\
+Datum der Abgabe: & \today \\
+\end{tabular}
+
+\end{titlepage}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% </TITLE> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\emptypage
+
+% Zeilenabstand
+\onehalfspacing
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <Antiplagiatserklärung> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{empty}
+\vspace*{100pt}
+Hiermit versichere ich \textbf{\myauthor}, dass ich die Hausarbeit mit dem Titel \textbf{\mytitle}
+im Seminar \textbf{\myseminar}
+im \textbf{\mysemester}
+bei \textbf{\mydozent} und \textbf{\mydozentTwo}
+selbstständig und nur mit den in der Arbeit angegebenen Hilfsmitteln verfasst habe.
+Zitate sowie der Gebrauch fremder Quellen, Texte und Hilfsmittel habe ich nach den
+Regeln wissenschaftlicher Praxis eindeutig gekennzeichnet.
+Mir ist bewusst, dass ich fremde Texte und Textpassagen nicht als meine eigenen ausgeben darf und dass ein
+Verstoß gegen diese Grundregel des wissenschaftlichen Arbeitens als Täuschungs- und
+Betrugsversuch gilt, der entsprechende Konsequenzen nach sich zieht. Diese bestehen
+in der Bewertung der Prüfungsleistung mit \enquote{nicht ausreichend} (5,0) sowie ggf. weiteren
+Maßnahmen.
+
+Außerdem bestätige ich, dass diese Arbeit in gleicher oder ähnlicher Form noch in keinem anderen Seminar vorgelegt wurde.
+\vspace*{50pt}
+
+Freiberg, den \today \hspace{2cm} \underline{\phantom{Platz für die Unterschrift}}
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% </Antiplagiatserklärung> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <Danksagung> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TODO: translate
+\emptypage
+\thispagestyle{empty}
+\section*{Danksagung} % (fold)
+\label{sec:danksagung}
+
+Danken möchte ich allen voran \mydozent \index{Froitzheim} und \mydozentTwo \index{Jasper} für dieses Seminar und all ihre Hilfe. Des Weiteren möchte ich mich bei \citeauthor{SeminarTemplate} für sein sehr gutes Latex-Template \cite{SeminarTemplate} bedanken, welches dieser Arbeit zu Grunde liegt, aber in vielen Bereichen angepasst wurde. Eine weitere sehr große Hilfe war das WikiBook \LaTeX~\cite{WikiLatex}, auch vielen Dank an alle Autoren dieses WikiBooks. \\
+
+Mein Dank geht auch an die fleißigen Korrekturleser Jana Starke \index{Starke, Jana} und Felix Kästner \index{Kästner, Felix}.
+
+Thanks!
+
+\begin{figure}[htbp]
+	\includegraphics[width=6cm]{../assets/my-little-pony-mlp-other-261396.jpeg}
+	% \caption{Feedback Formular (Quelle: \cite{Muhlenbrock:2004:LDU:977406.978698})}
+	% \label{fig:contactinterface2}
+\end{figure}
+
+% section danksagung (end)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <Inhaltsverzeichnis> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\emptypage
+% Table of contents
+\setcounter{tocdepth}{5}
+\tableofcontents
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% </Inhaltsverzeichnis> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <Hauptteil der Arbeit> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\emptypage
+\pagenumbering{arabic}
+
+% TODO: make sure all the sections are correct
+\include{prelude}
+
+\include{basics}
+
+\include{concept}
+
+% TODO: objects are missing, need to convert them to pdf
+\include{implementation}
+
+\include{result}
+ 
+\listoftables
+
+\clearpage
+\listoffigures
+
+% References (Literaturverzeichnis):
+% a) Style (with abbreviations: use alpha):
+\bibliographystyle{plainnat-d}
+% b) The File:
+\clearpage
+\bibliography{seminararbeit}
+
+\clearpage
+\printindex
+
+\emptypage
+
+\end{document}
