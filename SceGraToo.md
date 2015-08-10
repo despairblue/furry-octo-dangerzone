@@ -6,7 +6,6 @@ The scene are automatically derived from software models ...
 
 ### Motivation
 As part of the Roundtrip3D project, a round-trip framework (hereafter referred to as *R3D*) was developed. This framework also includes a graphical editor for SSIML models, to describe 3D applications.
-<!-- TODO: csrd paper -->
 Then the R3D can be used to generate boilerplate code for multiple programming languages, such as JavaScript, Java or C++, and an X3D file describing the scene.
 The X3D file may contain references to other X3D files containing the actual 3D data (e.g. a car and the corresponding tires), hereafter called *inlines* .
 These files are created by exporting objects from a 3D computer graphics software (e.g. [Blender], [Maya] or [3DS Max]).  
@@ -342,8 +341,6 @@ React solves this issue quite elegantly by creating the dom structure in javascr
 That made it possible to use the X3D node of the DOM as the only source of truth and minimize the state that needs to be kept to make the tree view work.
 
 #### states
-TODO: explain the DOM
-
 Using something imperative like backbone it would be necessary to create a model (copying the information already in the DOM), a view (rendering that information to the DOM again) and a controller keeping track of the state changing the model where necessary and rerendering the view, and also keeping track of all it's children and removing them when they disappear or creating new ones whenever a new X3D element appears.
 
 #### Functional Programming

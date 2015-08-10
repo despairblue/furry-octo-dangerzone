@@ -15,7 +15,7 @@ associated transformation information, like \emph{translation},
 compared to applying all transformations to the raw meshes and sending
 everything to the \gls{GPU}. \cite{realityprime}
 
-\hyperref[ssiml]{SSIML} scene-graphs differ from the above definition:
+\gls{SSIML} \cite{Lenk:2012:MID:2338714.2338742} scene-graphs differ from the above definition:
 there are three types of nodes:
 \begin{itemize*}
   \item transform
@@ -98,7 +98,8 @@ That way the memory footprint of an application can be reduced.
 \end{figure}
 
 
-\subsubsection{X3D}\label{x3d}
+\subsection{X3D}
+\label{x3d}
 
 X3D is the XML representation of VRML which was designed as
 a universal interactive 3D exchange format, much like html is for
@@ -109,7 +110,7 @@ the browser, by using a WebGL context. It's called
 \href{http://www.x3dom.org/}{x3dom} and it's extensively used by
 SceGraToo, the tool that arose from this thesis.
 
-\paragraph{x3dom}
+\subsubsection{x3dom}
 \label{par:x3dom}
 
 As said in the previous chapter x3dom was developed by the Frauenhofer
@@ -181,44 +182,12 @@ delivered to the individual developers. After each roundtrip every
 developer has a copy of the project that is consistent with everyone
 else's.
 
-\subsubsection{states}\label{states}
-
-TODO:
-\begin{itemize}
-  \item explaing the DOM
-  \item move to implemtation
-\end{itemize}
-
-Using something imperative like backbone it would be necessary to create
-a model (copying the information already in the DOM), a view (rendering
-that information to the DOM again) and a controller keeping track of the
-state changing the model where necessary and rerendering the view, and
-also keeping track of all it's children and removing them when they
-disappear or creating new ones whenever a new X3D element appears.
-
-\subsubsection{Functional Programming}\label{functional-programming}
-
-All SceGraToo does is listen to changes of the \gls{X3D} node and whenever it
-changes, may it be an attribute that changes or nodes that are added or
-removed, it calls one function that evaluates the X3D node (basically
-traversing it) and return the new structure. That structure is diffed
-against the tree-view that is already in the DOM and react calculates
-the minimal changes necessary to make the tree-view's old structure
-coherent with the newly calculated one.
-
-\subsection{Koa}\label{koa}
-
-TODO: move to implemenation Koa is pretty much boring unless I'd explain
-node.js's take on asynchronicity, callbacks, promises and then
-generators. Still, the server is way to simple to be of any interest for
-this project.
-
 \subsection{Related Work}
 \label{related-work}
 
 \subsubsection{Collaborative Work}
 \label{collaborative-work}
- 
+
 \subsubsection{\texorpdfstring{\href{http://3d.meteor.com/}{3D
 Meteor}}{3D Meteor}}\label{d-meteor0}
 
@@ -264,10 +233,8 @@ shortcoming. Adding or removing vertices cannot be handled by the
 plugin. It is also not in real time, so it is more comparable to version
 control system like git, just for 3d models.
 
-\subsubsection{3D Widgets}\label{d-widgets}
-
-\paragraph{\texorpdfstring{\href{http://www.tiltbrush.com/}{Tilt
-Brush}}{Tilt Brush}}\label{tilt-brush20}
+\subsubsection{Tilt Brush}
+\label{tilt-brush20}
 
 Tilt Brush was lauded for it's 3d interface.
 
@@ -367,8 +334,9 @@ objects in the real world.
 \end{figure}
 
 \clearpage
-\subsubsection{\texorpdfstring{\href{https://github.com/x3dom/component-editor}{Component
-Editor}}{Component Editor}}\label{component-editor30}
+
+\subsubsection{Component Editor}
+\label{component-editor30}
 
 \begin{itemize*}
 \item release 12th of june 2015
@@ -398,8 +366,7 @@ Editor}}{Component Editor}}\label{component-editor30}
   this would loose meta information like the IDs in comments.
 \end{itemize*}
 
-\subsubsection{Real-Time Collaborative Scientific WebGL
-Visualization with Web Sockets}
+\subsubsection{Real-Time Collaborative Scientific WebGL Visualization with Web Sockets}
 \label{rtcswvwws}
 
 Using web sockets instead of AJAX is an interesting approach. \cite{Marion:2012:RCS:2338714.2338721} Especially
@@ -416,8 +383,8 @@ have to visualize the data, but also manipulate it and this is way
 easiear in a descriptive scene graph instead of manimpulatiing webgl
 scenes or data formats like vtk.
 
-\subsubsection{\texorpdfstring{ParaViewWeb
-\href{http://paraviewweb.kitware.com/}{pvweb}}{ParaViewWeb pvweb}}\label{paraviewweb-pvweb}
+\subsubsection{ParaViewWeb pvweb}
+\label{paraviewweb-pvweb}
 
 Simple to use out of the box, but needs a paraview server instance and
 paraview does not support x3d as an input format. So using this is sadly

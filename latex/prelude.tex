@@ -4,29 +4,28 @@
 \label{sec:Prelude}
 
 The goal of the thesis is to create a 3D editor, using web technologies,
-which enables its users to postprocess x3d scenes. These scenes are the
-result of a tool which was implemented as part of the DFG research
-project Roundtrip3D. The scene are automatically derived from
-software models \ldots{}
-
+which enables its users to postprocess \gls{X3D} scenes. These scenes are the
+product of a tool that was implemented as part of the DFG research
+project \gls{Roundtrip3D} \cite{Jung:2015:SDA:2802768.2802837}.
+% The scene are automatically derived from software models \ldots{}
 \subsection{Motivation}\label{motivation}
 
 As part of the Roundtrip3D project, a round-trip framework (hereafter
 referred to as \emph{R3D}) was developed. This framework also includes a
-graphical editor for SSIML models, to describe 3D applications. Then the
-R3D can be used to generate boilerplate code for multiple programming
-languages, such as JavaScript, Java or C++, and an X3D file describing
-the scene. The X3D file may contain references to other X3D files
-containing the actual 3D data (e.g.~a car and the corresponding tires),
+graphical editor for SSIML models, to describe 3D applications. Then
+\gls{R3D} can be used to generate boilerplate code for multiple programming
+languages, such as JavaScript, Java or C++, and an \gls{X3D} file describing
+the scene. The \gls{X3D} file may contain references to other \gls{X3D} files
+containing the actual 3D data (e.g.~a car and its corresponding tires),
 hereafter called \emph{inlines} . These files are created by exporting
-objects from a 3D computer graphics software (e.g. Blender,
+objects from a 3D computer graphics software (e.g.~Blender,
 Maya or 3DS Max).\\
 The problem that arises is that each object is usually in the center of
-it's own coordinate system. So they need to be translated, rotated and
-maybe even scaled to result in desired scene (e.g.~a car where the tires
+its own coordinate system. So they need to be translated, rotated and
+maybe even scaled, to result in desired scene (e.g.~a car where the tires
 are in the places they belong to and not in the center of the chassis).
 The structure is mostly generated. Attribute values of respective nodes,
-such as transformation nodes need to be adjusted in order to compose the
+such as transformation nodes need, to be adjusted in order to compose the
 overall 3D scene.
 
 % \includegraphics{Picture of a car with the tires in the center}\\
@@ -34,8 +33,7 @@ overall 3D scene.
 
 This can be achieved by adjusting \emph{translate}, \emph{rotate} and
 \emph{scale} properties to arrange 3D objects. To exacerbate this
-problem further, the orientation the 3D artists chose for it's object is
-simply unknown, if their is no convention for 3D modeling. \sout{Usually
+problem further, the orientation the 3D artists chose for its object may be unknown, if their is no convention for 3D modeling. \sout{Usually
 their is a convention about origin of coord system, scaling and
 orientation} (no there isn't, still not sure what to put here). However, we cannot assume that these
 conventions are always met. The main problem is, that 3D
@@ -44,7 +42,7 @@ geometries, need to be adjusted. So far, there is no graphical tool that
 meets both of these requirements:
 
 \begin{itemize*}
-\item user friendly and straight forward compose functionalities of X3D scenes
+\item user friendly and straight forward composition functionalities for \gls{X3D} scenes
 \item and preservation of (generated) information, such as node names or comments (necessary to merge the changed files back into the source model)
 \end{itemize*}
 
@@ -79,7 +77,7 @@ But if one depends on art from 3rd parties, the orientation and position
 could be completely arbitrary like in figure \ref{fig:wheel4}\\
 
 These properties could be added and adjusted via any text editor by
-opening the generated x3d file, but the resulting workflow isn't
+opening the generated \gls{X3D} file, but the resulting workflow isn't
 user-friendly:
 
 \begin{enumerate*}

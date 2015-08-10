@@ -1,15 +1,16 @@
 % !TEX root = seminararbeit.tex
 
-\section{Concept}\label{concept}
+\section{Concept}
+\label{concept}
 
 skizze wie dom rendering funktioniert oder auch nicht, da es ziemlich
 uninteressant ist
 
-\subsection{How}\label{how}
+\subsection{Server}
+\label{server}
 
-\subsubsection{Server}\label{server}
-
-\subsubsection{Client}\label{client}
+\subsection{Client}
+\label{client}
 
 \begin{figure}[htbp]
   \centering
@@ -19,7 +20,8 @@ uninteressant ist
 \end{figure}
 
 \clearpage
-\paragraph{Synchronization Process}\label{synchronization-process}
+\subsubsection{Synchronization Process}
+\label{synchronization-process}
 
 \epigraph{I conclude that there are two ways of constructing a software design:
 One way is to make it so simple that there are obviously no deficiencies
@@ -60,14 +62,14 @@ with the scene-graph while the scene-graph is being modified and vice
 versa.
 
 \clearpage
-\subparagraph{Rerendering and Diffing}
+\paragraph{Rerendering and Diffing}
 \label{rerendering-and-diffing}
 
 \textbf{Terminology}
 
 \begin{description*}
   \item[scene-graph]
-    The HTML/XML/X3D representation of the scene, see listing \ref{list:x3dscene}
+    The HTML/XML/X3D representation of the scene, see listing~\ref{list:x3dscene}
   \item[tree-view-controller]
     Loosely defined term that comprises all objects, methods, functions,
     event-listeners and callbacks related to parsing the scene-graph and
@@ -76,11 +78,11 @@ versa.
     all objects, methods, functions, event-listeners end callbacks related
     to keeping a subtree of the scene-graph up to date.
   \item[tree-view-view]
-    The HTML representation of the tree-view-controller see figure \ref{fig:tree-view} and listing \ref{list:tree-view}(html output
-    shortened and simplified):\\
+    The HTML representation of the tree-view-controller see figure \ref{fig:tree-view} and listing \ref{list:tree-view} (html output
+    shortened and simplified)
 \end{description*}
 
-\begin{listing}[H]
+\begin{listing}
   \begin{minted}[breaklines,bgcolor=bg]{html}
 <x3d version="3.0" profile="Interaction" width="708px" height="354px">
 <!-- id=69b81d54-6e7a-4967-acca-b8c89ba90782 -->
@@ -111,7 +113,7 @@ versa.
 	\label{list:x3dscene}
 \end{listing}
 
-\begin{listing}[H]
+\begin{listing}
   \begin{minted}[breaklines,bgcolor=bg]{html}
 <div>
   <li>
@@ -283,7 +285,7 @@ That means as long as the code that parses the scene-graph and generates
 the lightweight representation is correct, the tree-view-view is
 correct.
 
-\subparagraph{Data Binding}
+\paragraph{Data Binding}
 \label{data-binding}
 
 Another idea is to utilize templates and data binding. Frameworks like
@@ -386,4 +388,4 @@ automatically inserted and kept up to date. This data binding would then
 ensure that when the scene-graphs attributes are changed the model is
 kept in sync and the other way around.
 
-\subsubsection{Interaction}\label{interaction}
+\subsection{Communication}\label{interaction}

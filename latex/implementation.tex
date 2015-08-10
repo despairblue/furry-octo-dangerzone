@@ -1,30 +1,44 @@
 % !TEX root = seminararbeit.tex
 
-\section{Implementation}\label{implementation}
+\section{Implementation}
+\label{implementation}
 
-\subsection{Used Tech}\label{used-tech}
+\subsection{Server}
+\label{used-tech}
 
-\paragraph{angular}\label{angular}
+\subsubsection{Koa}
+\label{koa}
+
+% TODO: move to implemenation
+Koa is pretty much boring unless I'd explain
+node.js's take on asynchronicity, callbacks, promises and then
+generators. Still, the server is way to simple to be of any interest for
+this project.
+
+\subsection{Client}
+\label{used-tech}
+
+\subsubsection{angular}
+\label{angular}
 
 \begin{itemize*}
-\item
-  dependency management
-\item
-  resource management
-\item
-  less dynamic templates
+  \item dependency management
+  \item resource management
+  \item less dynamic templates
 \end{itemize*}
 
-\paragraph{react}\label{react}
+\subsubsection{react}
+\label{react}
 
 \begin{itemize*}
-\item
-  highly dynamic views (like the tree view)
+  \item highly dynamic views (like the tree view)
 \end{itemize*}
 
-\subsection{Problems}\label{problems}
+\subsection{Problems}
+\label{problems}
 
-\paragraph{synchronization Process}\label{synchronization-process}
+\subsubsection{Synchronization Process}
+\label{synchronization-process}
 
 This design leads to brittle code that is hard to maintain and hard to
 adapt to new use cases.
@@ -140,13 +154,38 @@ different elements depending on what attribute is passed in.
 Because the outputted html is only a function of its input it easy to
 parse the scene-graph:
 \begin{enumerate*}
-  \item choose a graph node as the root 
-  \item call the node component with that graph node 
-  \item if the graph node has child nodes call the node component again with each child node and return their return values wrapped in an element 
+  \item choose a graph node as the root
+  \item call the node component with that graph node
+  \item if the graph node has child nodes call the node component again with each child node and return their return values wrapped in an element
   \item if the graph node has no children return an empty element
 \end{enumerate*}
 
-\subsubsection{Why the chosen approach will
+\subsubsection{states}\label{states}
+
+% TODO: explaing the DOM
+\begin{itemize}
+  \item explaing the DOM
+  \item move to implemtation
+\end{itemize}
+
+Using something imperative like backbone it would be necessary to create
+a model (copying the information already in the DOM), a view (rendering
+that information to the DOM again) and a controller keeping track of the
+state changing the model where necessary and rerendering the view, and
+also keeping track of all it's children and removing them when they
+disappear or creating new ones whenever a new X3D element appears.
+
+\subsubsection{Functional Programming}\label{functional-programming}
+
+All SceGraToo does is listen to changes of the \gls{X3D} node and whenever it
+changes, may it be an attribute that changes or nodes that are added or
+removed, it calls one function that evaluates the X3D node (basically
+traversing it) and return the new structure. That structure is diffed
+against the tree-view that is already in the DOM and react calculates
+the minimal changes necessary to make the tree-view's old structure
+coherent with the newly calculated one.
+
+\subsection{Why the chosen approach will
 work}\label{why-the-chosen-approach-will-work}
 
 After trying different solutions it turned out the a functional solution

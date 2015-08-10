@@ -90,7 +90,6 @@ That structure is diffed against the tree-view that is already in the DOM and re
 
 
 ## Koa
-TODO: move to implemenation
 Koa is pretty much boring unless I'd explain node.js's take on asynchronicity, callbacks, promises and then generators. Still, the server is way to simple to be of any interest for this project.
 
 ## Related Work
@@ -240,7 +239,7 @@ So using this is sadly not possible unless an import filter is written.
 The visualization is mainly meant to explore data sets.
 There is no easy way to manipulate the input data.
 This can only happen by extending the visualization pipeline via python scripts on the server.
- 
+
 
 
 [0]: http://3d.meteor.com/
