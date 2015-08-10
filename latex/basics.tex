@@ -13,38 +13,38 @@ object or a group, again containing more children. A group can contain
 associated transformation information, like \emph{translation},
 \emph{rotation} or \emph{scaling}. This structure has certain advantages
 compared to applying all transformations to the raw meshes and sending
-everything to the
-{[}GPU{]}.\href{http://www.realityprime.com/blog/2007/06/scenegraphs-past-present-and-future/}{50}
-(2015-07-23 15:59)
+everything to the \gls{GPU}. \cite{realityprime}
 
 \hyperref[ssiml]{SSIML} scene-graphs differ from the above definition:
-there are three types of nodes: - transform - geometry - group
+there are three types of nodes:
+\begin{itemize*}
+  \item transform
+  \item geometry
+  \item group
+\end{itemize*}
 
 \subsubsection{Culling}\label{culling}
 
 Before using structures like scene-graphs, all polygon would be sent to
-the GPU and the GPU would need to test what polygons are actually in the
+the \gls{GPU} and the \gls{GPU} would need to test what polygons are actually in the
 view and thus need to be rendered. The problem with that approach was
 that this information was only known after doing a lot of calculations
 for every polygon already.\\
 With a scene-graph it's possible to start from the root and traverse the
 graph, testing the bounding box of each group and only sending it to the
-GPU it it's completely visible. If it ain't, the whole sub-tree isn't
-sent to the GPU. If it's partially visible the same process is applied
+\gls{GPU} it it's completely visible. If it ain't, the whole sub-tree isn't
+sent to the \gls{GPU}. If it's partially visible the same process is applied
 to the sub-tree.\\
 By using a structure that retains more information about what it
-represents it's possible to let the {[}CPU{]} do more of the heavy
-lifting and unburden the {[}GPU{]}.
+represents it's possible to let the CPU do more of the heavy
+lifting and unburden the \gls{GPU}.
 
 \begin{quote}
-Rather than do the heavy work at the OpenGL and polygon level,
-scene-graph architects realized they could better perform culling at
-higher level abstractions for greater efficiency. If we can remove the
-invisible objects first, then we make the hardware do less work and
-generally improve performance and the all-important frame-rate.\\
---
-\href{http://www.realityprime.com/blog/2007/06/scenegraphs-past-present-and-future/}{50}
-(2015-07-23 15:59)
+  Rather than do the heavy work at the OpenGL and polygon level,
+  scene-graph architects realized they could better perform culling at
+  higher level abstractions for greater efficiency. If we can remove the
+  invisible objects first, then we make the hardware do less work and
+  generally improve performance and the all-important frame-rate. \cite{realityprime}
 \end{quote}
 
 \subsubsection{Transformations}\label{transformations}
@@ -59,85 +59,94 @@ transformation thus applies to all objects associated with that group.
 
 With the ability to address nodes it's possible to reuse their
 information. If you have a car, it would be enough to have only one node
-containing the meshes for a tire, all other tires are merely addressing
-the tire with the geometry information:
-
-\begin{itemize*}
-  \item Group
-  \begin{itemize*}
-    \item Transform
-    \begin{itemize*}
-      \item Geomatry ``Chassis''
-    \end{itemize*}
-    \item Transform
-    \begin{itemize*}
-      \item Geometry ``Tire''
-    \end{itemize*}
-    \item Translate
-    \begin{itemize*}
-      \item Use Geometry ``Tire''
-    \end{itemize*}
-    \item Translate
-    \begin{itemize*}
-      \item Use Geometry ``Tire''
-    \end{itemize*}
-    \item Translate
-    \begin{itemize*}
-      \item Use Geometry ``Tire''
-    \end{itemize*}
-  \end{itemize*}
-\end{itemize*}
-
+containing the geometry for a tire, all other tires are merely addressing
+the tire with the geometry information (see listing \ref{list:defuse}).
 That way the memory footprint of an application can be reduced.
+
+\begin{figure}
+  \begin{minted}{html}
+<Group>
+  <Transform>
+    <Shape def="chassis">
+        <Appearance>
+            <Material></Material>
+        </Appearance>
+        <Box></Box>
+    </Shape>
+  </Transform>
+  <Transform>
+    <Shape def="tire">
+        <Appearance>
+             <Material></Material>
+        </Appearance>
+        <Torus></Torus>
+    </Shape>
+  </Transform>
+  <Transform>
+    <Shape use="tire"/>
+  </Transform>
+  <Transform>
+    <Shape use="tire"/>
+  </Transform>
+  <Transform>
+    <Shape use="tire"/>
+  </Transform>
+</Group>
+  \end{minted}
+  \caption{example x3d group showing the use of \texttt{def} and \texttt{use}}
+  \label{list:defuse}
+\end{figure}
+
 
 \subsubsection{X3D}\label{x3d}
 
-X3D is the {[}XML{]} representation of {[}VRML{]} which was designed as
+X3D is the XML representation of VRML which was designed as
 a universal interactive 3D exchange format, much like html is for
-written documents or SVG for vector graphics. Due to its XML structure
+written documents or \gls{SVG} for vector graphics. Due to its XML structure
 it can be integrated in html documents, thus the Frauenhofer Institute
 pursued to implement a runtime that could interpret and visualize X3D in
-the browser, by using a {[}WebGL{]} context. It's called
+the browser, by using a WebGL context. It's called
 \href{http://www.x3dom.org/}{x3dom} and it's extensively used by
 SceGraToo, the tool that arose from this thesis.
 
-\hyperdef{}{x3dom}{\paragraph{x3dom}\label{x3dom}}
+\paragraph{x3dom}
+\label{par:x3dom}
 
 As said in the previous chapter x3dom was developed by the Frauenhofer
 Institute to realize the vision that started VRML in the first place:
 \emph{mark up interactive 3D content for the web}. On the web there are
-to entirely different approaches to describe the same thing: *
-imperative * declarative
+to entirely different approaches to describe the same thing:
+\begin{itemize*}
+  \item imperative
+  \item declarative
+\end{itemize*}
 
-The following matrix classifies x3dom together with other common web
-technologies \href{http://www.x3dom.org}{40} (2015-07-23 13:00):
+The matrix in table \ref{tab:feature_matrix} classifies x3dom together with other common web
+technologies \cite{x3dom}:
 
-\begin{longtable}[c]{@{}lll@{}}
-\toprule
-& 2D & 3D\tabularnewline
-\midrule
-\endhead
-Declarative & {[}SVG{]} & \hyperref[x3dom]{X3DOM}\tabularnewline
-Imperative & {[}Canvas{]} & {[}WebGL{]}\tabularnewline
-\bottomrule
-\end{longtable}
-
-\begin{table}[htbp]
-  \centering
-  \begin{tabularx}{\textwidth}{X X}
-    \hline
-
-  \end{tabularx}
+\begin{table}[H]
+  \begin{longtable}[c]{@{}lll@{}}
+  \toprule
+  & 2D & 3D\tabularnewline
+  \midrule
+  \endhead
+  Declarative & \gls{SVG} \cite{svg} & x3dom \cite{x3dom} \tabularnewline
+  Imperative  & Canvas \cite{canvas} & WebGL \cite{webgl} \tabularnewline
+  \bottomrule
+  \end{longtable}
+  \caption{\cite{x3dom}}
+  \label{tab:feature_matrix}
 \end{table}
 
-As can be seen x3dom complements the already existing technologies
+As can be seen in table \ref{tab:feature_matrix} x3dom complements the already existing technologies
 perfectly.
 
-\hyperdef{}{ssiml}{\subsection{SSIML}\label{ssiml}}
+\subsection{SSIML}
+\label{ssiml}
 
 Heterogeneous developer groups, groups that are comprised of people from
 different backgrounds (programmers, 3D designers) have hard time working
-together. \href{http://dx.doi.org/10.1007/s00450-014-0256-x}{GF15}
+together. \cite{Glinz:2015:SUS:2802768.2802838}
 
 SSIML is a graphical approach to unify the scene-graph model and the the
 application model, thus making the communication between the different
@@ -156,7 +165,7 @@ It also serves as a code generation template.
 
 As stated above, when developing 3D applications, many different
 developers are involved, i.e.~3D designers, programmers and, ideally,
-also software designers (see figure n)
+also software designers (see figure \ref{fig:ssimldiagram})
 
 % TODO: convert to pdf
 % \includegraphics{../assets/csrd2014.svg}\\
@@ -174,7 +183,11 @@ else's.
 
 \subsubsection{states}\label{states}
 
-TODO: * explain the DOM * move to
+TODO:
+\begin{itemize}
+  \item explaing the DOM
+  \item move to implemtation
+\end{itemize}
 
 Using something imperative like backbone it would be necessary to create
 a model (copying the information already in the DOM), a view (rendering
@@ -185,7 +198,7 @@ disappear or creating new ones whenever a new X3D element appears.
 
 \subsubsection{Functional Programming}\label{functional-programming}
 
-All SceGraToo does is listen to changes of the X3D node and whenever it
+All SceGraToo does is listen to changes of the \gls{X3D} node and whenever it
 changes, may it be an attribute that changes or nodes that are added or
 removed, it calls one function that evaluates the X3D node (basically
 traversing it) and return the new structure. That structure is diffed
@@ -200,10 +213,12 @@ node.js's take on asynchronicity, callbacks, promises and then
 generators. Still, the server is way to simple to be of any interest for
 this project.
 
-\subsection{Related Work}\label{related-work}
+\subsection{Related Work}
+\label{related-work}
 
-\subsubsection{Collaborative Work}\label{collaborative-work}
-
+\subsubsection{Collaborative Work}
+\label{collaborative-work}
+ 
 \subsubsection{\texorpdfstring{\href{http://3d.meteor.com/}{3D
 Meteor}}{3D Meteor}}\label{d-meteor0}
 
@@ -223,8 +238,8 @@ server. The only thing that actually is synchronized is an array of
 \emph{boxes}. A box is an object with an x, y and z property describing
 its position.
 
-\subsubsection{\texorpdfstring{\href{http://www.researchgate.net/publication/221610780_A_Blender_Plugin_for_Collaborative_Work_on_the_Articiel_Platform}{Blender
-Plugin}}{Blender Plugin}}\label{blender-plugin10}
+\subsubsection{Blender Plugin}
+\label{blender-plugin}
 
 I don't do anything about collaborative working anymore. So yeah.
 
@@ -233,7 +248,7 @@ Montréal implemented a plugin for blender for collaborative working. An
 artist can record changes to to wiremeshes and store them on a server.
 Another artist can download these changes and apply them to his working
 copy. The diffs are a simple list of vertices and their movement in the
-x, y and z space.
+x, y and z space. \cite{LCR07}
 
 \begin{verbatim}
 95 [0.0000, 0.0000, 0.0000]
@@ -260,20 +275,18 @@ Tilt Brush was lauded for it's 3d interface.
 
 Gizmos, also called manipulators, are handles or bounding boxes with
 handles that manipulate it's containgin object in a predefined way when
-dragged. \cite{gizmo}
+dragged. \cite{wikigizmo}
 
 In X3D gizmos can be realized with on of X3DDragSensorNode's \cite{x3ddragsensornode} decedents.
-\begin{description}
-  \item[]
-\end{description}
+
 \begin{description*}
 \item[SphereSensor]
-  SphereSensor converts pointing device motion into a spherical rotation around the origin of the local coordinate system. \href{http://doc.x3dom.org/author/PointingDeviceSensor/SphereSensor.html}{xd3om1}
+  SphereSensor converts pointing device motion into a spherical rotation around the origin of the local coordinate system. \cite{spheresensor}
 \item[CylinderSensor]
-  The CylinderSensor node converts pointer motion (for example, from a mouse) into rotation values, using an invisible cylinder of infinite height, aligned with local Y-axis. \href{http://doc.x3dom.org/author/PointingDeviceSensor/CylinderSensor.html}{x3dom2}
+  The CylinderSensor node converts pointer motion (for example, from a mouse) into rotation values, using an invisible cylinder of infinite height, aligned with local Y-axis. \cite{cylindersensor}
 \item[PlaneSensor]
   PlaneSensor converts pointing device motion into 2D translation, parallel to the local Z=0 plane. Hint: You can constrain translation output to one axis by setting the respective minPosition and maxPosition members to equal values for that axis.
-  \href{http://doc.x3dom.org/author/PointingDeviceSensor/PlaneSensor.html}{x3dom3}
+  \cite{planesensor}
 \end{description*}
 
 The sensors track drag events on their siblings. In the example in figure \ref{fig:x3dgizmo}
@@ -385,18 +398,18 @@ Editor}}{Component Editor}}\label{component-editor30}
   this would loose meta information like the IDs in comments.
 \end{itemize*}
 
-\subsubsection{\texorpdfstring{Real-Time Collaborative Scientific WebGL
-Visualization with Web Sockets
-\href{http://doi.acm.org/10.1145/2338714.2338721}{acm}}{Real-Time Collaborative Scientific WebGL Visualization with Web Sockets acm}}\label{real-time-collaborative-scientific-webgl-visualization-with-web-sockets-acm}
+\subsubsection{Real-Time Collaborative Scientific WebGL
+Visualization with Web Sockets}
+\label{rtcswvwws}
 
-Using web sockets instead of AJAX is an interesting approach. Especially
+Using web sockets instead of AJAX is an interesting approach. \cite{Marion:2012:RCS:2338714.2338721} Especially
 the cut down on latency. It is over all very similar to the approach I
 was thinking about. Except that they propagate only some information,
 like the camera position and view angle. In SceGraToo's case the whole
 scene needs to be synchronized. So to have specttors like they have we
 either have to send the whoe model to the server after eacht change or
 use some kind of tree diff algorithm. They visualize a specific dataset
-in a specific format (\emph{which?}). We only need to visualize X3D
+in a threejs's specific JSON format \cite{threejs-format}. We only need to visualize X3D
 data, so there is no reason to use some generic Visualization tool kit,
 x3dom does a pretty good job doint this. on the other hand we not only
 have to visualize the data, but also manipulate it and this is way

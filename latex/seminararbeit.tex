@@ -58,10 +58,10 @@
 % index
 \usepackage{makeidx}
 \usepackage{showidx} %DEBUG: remove
-% placement H for ecactly here!
+% placement H for exactly here!
 \usepackage{float}
 % strikeout text
-\usepackage{ulem}
+\usepackage[normalem]{ulem}
 % tightly packed lists
 \usepackage{mdwlist}
 % long tables
@@ -72,6 +72,13 @@
 \usepackage{minted}
 % background color for listings
 \definecolor{bg}{rgb}{0.95,0.95,0.95}
+% neat quotes everywhere
+\usepackage{epigraph}
+\setlength\epigraphwidth{12cm}
+\setlength\epigraphrule{0pt}
+% for a glossary
+\usepackage[toc]{glossaries}
+\input{glossary}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Titel, Autor, Seminar, Semester, Dozent %
@@ -183,19 +190,17 @@ Freiberg, den \today \hspace{2cm} \underline{\phantom{Platz für die Unterschrif
 % TODO: translate
 \emptypage
 \thispagestyle{empty}
-\section*{Danksagung} % (fold)
+\section*{Acknowledgment} % (fold)
 \label{sec:danksagung}
 
-Danken möchte ich allen voran \mydozent \index{Froitzheim} und \mydozentTwo \index{Jasper} für dieses Seminar und all ihre Hilfe. Des Weiteren möchte ich mich bei \citeauthor{SeminarTemplate} für sein sehr gutes Latex-Template \cite{SeminarTemplate} bedanken, welches dieser Arbeit zu Grunde liegt, aber in vielen Bereichen angepasst wurde. Eine weitere sehr große Hilfe war das WikiBook \LaTeX~\cite{WikiLatex}, auch vielen Dank an alle Autoren dieses WikiBooks. \\
+% Danken möchte ich allen voran \mydozent \index{Froitzheim} und \mydozentTwo \index{Jasper} für dieses Seminar und all ihre Hilfe. Des Weiteren möchte ich mich bei \citeauthor{SeminarTemplate} für sein sehr gutes Latex-Template \cite{SeminarTemplate} bedanken, welches dieser Arbeit zu Grunde liegt, aber in vielen Bereichen angepasst wurde. Eine weitere sehr große Hilfe war das WikiBook \LaTeX~\cite{WikiLatex}, auch vielen Dank an alle Autoren dieses WikiBooks. \\
 
-Mein Dank geht auch an die fleißigen Korrekturleser Jana Starke \index{Starke, Jana} und Felix Kästner \index{Kästner, Felix}.
+% Mein Dank geht auch an die fleißigen Korrekturleser Jana Starke \index{Starke, Jana} und Felix Kästner \index{Kästner, Felix}.
 
 Thanks!
 
 \begin{figure}[htbp]
 	\includegraphics[width=6cm]{../assets/my-little-pony-mlp-other-261396.jpeg}
-	% \caption{Feedback Formular (Quelle: \cite{Muhlenbrock:2004:LDU:977406.978698})}
-	% \label{fig:contactinterface2}
 \end{figure}
 
 % section danksagung (end)
@@ -212,7 +217,6 @@ Thanks!
 \emptypage
 \pagenumbering{arabic}
 
-% TODO: make sure all the sections are correct
 \include{prelude}
 
 \include{basics}
@@ -238,6 +242,9 @@ Thanks!
 
 \clearpage
 \printindex
+
+\clearpage
+\printglossaries
 
 \emptypage
 

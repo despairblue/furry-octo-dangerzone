@@ -53,10 +53,10 @@ scene-graph are in sync would be to recreate the tree-view-controller
 whenever the scene-graph changes.
 
 At first sight that seems to be awfully slow, that needn't to be true.
-Instead of recreating the the whole tree using {[}DOM{]} elements, a
+Instead of recreating the the whole tree using DOM elements, a
 model could be created using simple javascript objects. This virtual
 tree-view-controller can then be compared to the tree-view-controller
-already in the {[}DOM{]} and only the changes need to be applied.
+already in the DOM and only the changes need to be applied.
 
 That might sound like it's no easier than doing the synchronization
 manually like in the first diagram, but the diff algorithm doesn't
@@ -68,76 +68,83 @@ React calls the virtual representation of what will be rendered
 \emph{virtual DOM}. The other important feature of react is it's way to
 build the virtual DOM. A is a factory that returns A virtual DOM node is
 the return value of component's render function, the render function can
-nest other virtual {[}DOM{]} nodes in its return value.
+nest other virtual DOM nodes in its return value.
 
-A quick examples:
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+// TreeNodeAttributeList :: [Attribute] -> div
+var TreeNodeAttributeList = React.createClass({
+  render: function () {
+    // the scene-graph node that was passed `createElement` by the caller
+    var node = this.props.node;
 
-\begin{minted}[breaklines,bgcolor=bg]{javascript}
-  // TreeNodeAttributeList :: [Attribute] -> div
-  var TreeNodeAttributeList = React.createClass({
-    render: function () {
-      // the scene-graph node that was passed `createElement` by the caller
-      var node = this.props.node;
+    var whitelist = ['def', 'diffusecolor', 'orientation', 'position', 'render', 'rotation', 'scale', 'translation', 'url'];
 
-      var whitelist = ['def', 'diffusecolor', 'orientation', 'position', 'render', 'rotation', 'scale', 'translation', 'url'];
+    var attributesToRender = node.attributes.filter(function (attribute) {
+      return whitelist.includes(attribute.name.toLowerCase());
+    })
 
-      var attributesToRender = node.attributes.filter(function (attribute) {
-        return propsToRender.includes(attribute.name.toLowerCase());
+    return (
+      <div>
+        {
+          attributesToRender.map(function (attribute) {
+            return <TreeNodeAttribute attribute={a} owner={node}/>
+          })
+        }
+      </div>
+    );
+  }
+});
+  \end{minted}
+  \caption{the usage of HTML tags is just syntactic sugar}
+  \label{list:treenodeattributeslist}
+\end{listing}
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+'use strict';
+
+// TreeNodeAttributeList :: [Attribute] -> div
+var TreeNodeAttributeList = React.createClass({
+  render: function render() {
+    // the scene-graph node that was passed `createElement` by the caller
+    var node = this.props.node;
+
+    var whitelist = ['def', 'diffusecolor', 'orientation', 'position', 'render', 'rotation', 'scale', 'translation', 'url'];
+
+    var attributesToRender = node.attributes.filter(function (attribute) {
+      return whitelist.includes(attribute.name.toLowerCase());
+    });
+
+    return React.createElement(
+      'div',
+      null,
+      attributesToRender.map(function (attribute) {
+        return React.createElement(TreeNodeAttribute, { attribute: a, owner: node });
       })
+    );
+  }
+});
+  \end{minted}
+  \caption{the transpiled version}
+  \label{list:trenodeattributeslisttranspiled}
+\end{listing}
 
-      return (
-        <div>
-          {
-            attributesToRender.map(function (attribute) {
-              return <TreeNodeAttribute attribute={a} owner={node}/>
-            })
-          }
-        </div>
-      );
-    }
-  });
-\end{minted}
-
-The usage of HTML tags is just syntactic sugar, it's transpiled into:
-
-\begin{minted}[breaklines,bgcolor=bg]{javascript}
-  'use strict';
-
-  // TreeNodeAttributeList :: [Attribute] -> div
-  var TreeNodeAttributeList = React.createClass({
-    render: function render() {
-      // the scene-graph node that was passed `createElement` by the caller
-      var node = this.props.node;
-
-      var whitelist = ['def', 'diffusecolor', 'orientation', 'position', 'render', 'rotation', 'scale', 'translation', 'url'];
-
-      var attributesToRender = node.attributes.filter(function (attribute) {
-        return propsToRender.includes(attribute.name.toLowerCase());
-      });
-
-      return React.createElement(
-        'div',
-        null,
-        attributesToRender.map(function (attribute) {
-          return React.createElement(TreeNodeAttribute, { attribute: a, owner: node });
-        })
-      );
-    }
-  });
-\end{minted}
-
-This is code is the a simplified version of the code that renders a
-graph's nodes attributes into the tree-view-controller. This component
-simply decides what attributes should be rendered into the tree.
+Listing \ref{list:treenodeattributeslist} is the a simplified version of the code that renders a
+graph's nodes attributes into the tree-view-controller.
+The usage of HTML tags is just syntactic sugar and is transpiled into pure javascript (see listing \ref{list:trenodeattributeslisttranspiled}).
+This component simply decides what attributes should be rendered into the tree.
 \texttt{TreeNodeAttribute} is another component that will renders
 different elements depending on what attribute is passed in.
 
 Because the outputted html is only a function of its input it easy to
-parse the scene-graph: 1. choose a graph node as the root 2. call the
-node component with that graph node 3. if the graph node has child nodes
-call the node component again with each child node and return their
-return values wrapped in an element 4. if the graph node has no children
-return an empty element
+parse the scene-graph:
+\begin{enumerate*}
+  \item choose a graph node as the root 
+  \item call the node component with that graph node 
+  \item if the graph node has child nodes call the node component again with each child node and return their return values wrapped in an element 
+  \item if the graph node has no children return an empty element
+\end{enumerate*}
 
 \subsubsection{Why the chosen approach will
 work}\label{why-the-chosen-approach-will-work}
@@ -156,7 +163,7 @@ since the translation is an attribute. This thesis will not contain any
 benchmarks proving that manipulating the DOM from javascript is slow,
 rather than that it is left as an exercise to the reader to research it
 if she wants. React solves this issue quite elegantly by creating the
-dom structure in javascript and diffing it with the {[}DOM{]}, only
+dom structure in javascript and diffing it with the DOM, only
 applying the minimum of changes to the DOM to realize the corresponding
 result. That made it possible to use the X3D node of the DOM as the only
 source of truth and minimize the state that needs to be kept to make the

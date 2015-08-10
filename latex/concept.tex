@@ -1,3 +1,5 @@
+% !TEX root = seminararbeit.tex
+
 \section{Concept}\label{concept}
 
 skizze wie dom rendering funktioniert oder auch nicht, da es ziemlich
@@ -10,20 +12,19 @@ uninteressant ist
 \subsubsection{Client}\label{client}
 
 \begin{figure}[htbp]
-\centering
-\includegraphics{../assets/treeview.png}
-\caption{treeview}
+  \centering
+  \includegraphics[width=12cm]{../assets/treeview.png}
+  \caption{treeview}
+  \label{fig:tree-view}
 \end{figure}
 
+\clearpage
 \paragraph{Synchronization Process}\label{synchronization-process}
 
-\begin{quote}
-``I conclude that there are two ways of constructing a software design:
+\epigraph{I conclude that there are two ways of constructing a software design:
 One way is to make it so simple that there are obviously no deficiencies
 and the other way is to make it so complicated that there are no obvious
-deficiencies. The first method is far more difficult.\\
-- Hoare, Turing Award Lecture 1980
-\end{quote}
+deficiencies. The first method is far more difficult.}{--- Hoare, Turing Award Lecture 1980}
 
 React is utilized by SceGraToo to render the tree-view-controller that
 gives a more structured view of the scene-graph than the rendered scene.
@@ -31,35 +32,25 @@ gives a more structured view of the scene-graph than the rendered scene.
 The scene-graph is the most important part of SceGraToo, it shows the
 the structure rather than the visual representation. Different
 off-the-shelf solutions, like angular or JQuery plugins, were tested
-against theses requirements:
+against theses requirements with mixed results:
 
 \begin{enumerate*}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  custom html elements as part of tree nodes (multiple checkboxes or
-  multiple inputs)
-\item
-  ability to observe the tree node's state changing
-\item
-  binding to an arbitrary model, that can recover inconsistent state
+  \item custom html elements as part of tree nodes (e.g. multiple checkboxes or multiple inputs)
+  \item ability to observe the tree node's state changing
+  \item binding to an arbitrary model, that can recover inconsistent state
 \end{enumerate*}
-
-with mixed results:
 
 \textbf{Partially not met requirements:}
 
 \begin{itemize*}
-\item
-  custom elements as part of tree nodes
-\item
-  ability to listen to changes to the tree node
+  \item custom elements as part of tree nodes
+  \item ability to listen to changes to the tree node
 \end{itemize*}
 
 \textbf{Requirements none of the tested tools met:}
 
 \begin{itemize*}
-\item
-  binding to an arbitrary model, that can recover inconsistent views
+  \item binding to an arbitrary model, that can recover inconsistent views
 \end{itemize*}
 
 None of the off-the-shelf solutions could satisfy all expectations.
@@ -68,106 +59,101 @@ The most complicated part is keeping the tree-view-controller in sync
 with the scene-graph while the scene-graph is being modified and vice
 versa.
 
-\subparagraph{Rerendering and Diffing}\label{rerendering-and-diffing}
+\clearpage
+\subparagraph{Rerendering and Diffing}
+\label{rerendering-and-diffing}
 
-Terminology
+\textbf{Terminology}
 
-\textbf{scene-graph:}\\
-The HTML/XML/X3D representation of the scene:
+\begin{description*}
+  \item[scene-graph]
+    The HTML/XML/X3D representation of the scene, see listing \ref{list:x3dscene}
+  \item[tree-view-controller]
+    Loosely defined term that comprises all objects, methods, functions,
+    event-listeners and callbacks related to parsing the scene-graph and
+    creating the initial tree-view-view.
+  \item[tree-view-view]
+    all objects, methods, functions, event-listeners end callbacks related
+    to keeping a subtree of the scene-graph up to date.
+  \item[tree-view-view]
+    The HTML representation of the tree-view-controller see figure \ref{fig:tree-view} and listing \ref{list:tree-view}(html output
+    shortened and simplified):\\
+\end{description*}
 
-\begin{minted}[breaklines,bgcolor=bg]{html}
-  <x3d version="3.0" profile="Interaction" width="708px" height="354px">
-    <!-- id=69b81d54-6e7a-4967-acca-b8c89ba90782 -->
-    <scene render="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1" pickmode="idBuf" dopickpass="true">
-      <worldinfo def="generatedWorldInfo1" title="Orgel" info="">
-      </worldinfo>
+\begin{listing}[H]
+  \begin{minted}[breaklines,bgcolor=bg]{html}
+<x3d version="3.0" profile="Interaction" width="708px" height="354px">
+<!-- id=69b81d54-6e7a-4967-acca-b8c89ba90782 -->
+<scene render="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1" pickmode="idBuf" dopickpass="true">
+<worldinfo>
+</worldinfo>
+<background skycolor="0.3 0.3 0.3"></background>
+<viewpoint fieldofview="0.7" position="1 1 3" orientation="0.1 0.9 0.13 3.8">
+</viewpoint>
+<!-- id=8d3f0a8a-b6d7-4acc-922b-ea59364443fa -->
+<group render="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1">
+  <transform render="true">
+    <!-- id=8459b736-5a9d-4688-b624-e519857a92fd -->
+    <inline url="projects/Red Box/src/redBox.x3d" render="true" load="true">
+      <Shape render="true" isPickable="true">
+        <Appearance sortType="auto" alphaClipThreshold="0.1">
+          <Material diffuseColor="1 0 0" ambientIntensity="0.2" shininess="0.2"></Material>
+        </Appearance>
+        <Box solid="true" size="2,2,2"></Box>
+      </Shape>
+    </inline>
+  </transform>
+</group>
+</scene>
+</x3d>
+  \end{minted}
+	\caption{X3D example scene}
+	\label{list:x3dscene}
+\end{listing}
 
-      <background skycolor="0.3 0.3 0.3" groundcolor="" groundangle="" skyangle="" backurl="" bottomurl="" fronturl="" lefturl="" righturl="" topurl=""></background>
-
-      <viewpoint def="V0" fieldofview="0.7" position="-1.9504748689304945 1.180349823049051 -3.724484991086488" orientation="0.10730618820578387 0.9854647428763489 0.13169898450784276 3.8513980449760714" centerofrotation="0 0 0" znear="-1" zfar="-1">
-      </viewpoint>
-
-      <!-- id=8d3f0a8a-b6d7-4acc-922b-ea59364443fa -->
-      <group def="G1" render="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1">
-        <transform def="generatedTransform3" scale="1 1 1" rotation="0 0 1 0" translation="0 0 0" render="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1" center="0,0,0" scaleorientation="0,0,0,0">
-          <!-- id=8459b736-5a9d-4688-b624-e519857a92fd -->
-          <inline def="O1_3" namespacename="O1_3" url="projects/Red Box/src/redBox.x3d" render="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1" load="true">
-            <Shape render="true" bboxCenter="0,0,0" bboxSize="-1,-1,-1" isPickable="true">
-              <Appearance sortType="auto" alphaClipThreshold="0.1">
-                <Material diffuseColor="1 0 0" ambientIntensity="0.2" emissiveColor="0,0,0" shininess="0.2" specularColor="0,0,0"></Material>
-              </Appearance>
-              <Box solid="true" ccw="true" useGeoCache="true" lit="true" size="2,2,2"></Box>
-            </Shape>
-          </inline>
-        </transform>
-      </group>
-    </scene>
-  </x3d>
-\end{minted}
-
-
-\textbf{tree-view-controller:}\\
-Loosely defined term that comprises all objects, methods, functions,
-event-listeners and callbacks related to parsing the scene-graph and
-creating the initial tree-view-view.
-
-\textbf{tree-view-node-controller:} Loosely defined term that comprises
-all objects, methods, functions, event-listeners end callbacks related
-to keeping a subtree of the scene-graph up to date.
-
-\textbf{tree-view-view:}\\
-The HTML representation of the tree-view-controller (html output
-shortened and simplified):\\
-\includegraphics{../assets/treeview.png}
-
-\begin{minted}[breaklines,bgcolor=bg]{html}
-  <div>
-    <li>
-      <div>
-        <div></div>
-        <a>
-          <span></span>
-          <span>SCENE</span>
-        </a>
-      </div>
+\begin{listing}[H]
+  \begin{minted}[breaklines,bgcolor=bg]{html}
+<div>
+  <li>
+    <div>
+      <a> <span>SCENE</span> </a>
+    </div>
+    <div>
       <div>
         <div>
           <div>
-            <div>
-              <span>render</span>
-              <span>:</span>
-            </div>
-            <div>
-              <input type="checkbox">
-            </div>
+            <span>render:</span>
+          </div>
+          <div>
+            <input type="checkbox">
           </div>
         </div>
-        <ol>
-          <li>
-            <div>
-              <div></div>
-              <a>
-                <span></span>
-                <span>WORLDINFO</span>
-              </a><a>X</a></div>
+      </div>
+      <ol>
+        <li>
+          <div>
+            <a> <span>WORLDINFO</span> </a>
+            <a>X</a>
+          </div>
+          <div>
             <div>
               <div>
                 <div>
-                  <div>
-                    <span>def</span>
-                    <span>:</span>
-                  </div>
-                  <div>generatedWorldInfo1</div>
+                  <span>def:</span>
                 </div>
+                <div>generatedWorldInfo1</div>
               </div>
-              <ol></ol>
             </div>
-  ...
-        </ol>
-      </div>
-    </li>
-  </div>
-\end{minted}
+          </div>
+...
+      </ol>
+    </div>
+  </li>
+</div>
+  \end{minted}
+  \caption{example tree view structure, structure is simplified}
+  \label{list:tree-view}
+\end{listing}
 
 The aim is to keep the tree-view-view a consistent representation of the
 scene-graph. The tree-view-view only shows specific nodes, I can't list
@@ -191,11 +177,11 @@ Depending on how the scene-graph is mutated 3 main cases can be
 differentiated.
 
 \begin{description*}
-  \item a scene-graph node is added \hfill \\
+  \item[a scene-graph node is added]
     a new tree-view-node-controller is instantiated and renders a new tree-view-node-view
-  \item a scene-graph node is deleted \hfill \\
+  \item[a scene-graph node is deleted]
     the corresponding tree-view-node-controller is destroyed
-  \item a scene-graph node is mutated \hfill \\
+  \item[a scene-graph node is mutated]
     the corresponding tree-view-node-view is altered
 \end{description*}
 
@@ -220,23 +206,22 @@ the scene-graph, like the possibility to collapse parts of the tree , is
 added to the tree-view.
 
 \textbf{Problem 2:} implementation effort\\
-For every new feature 4 things have to implemented:\\
-\begin{enumerate}
+For every new feature 4 things have to implemented:
+\begin{enumerate*}
   \item code for parsing the the scene-graph
   \item code to generate the tree-view-node-view
   \item code to synchronize changes from the scene-graph to the tree-view-node-view
   \item code to synchronize changes from the tree-view-node-view to the scene-graph
-\end{enumerate}
+\end{enumerate*}
 
 This design bears more complexity than reparsing and regenerating the
 complete tree-view-view on every change.
 
-Rerendering solves Problem 1 and reduces problem 2 to two steps:\\
-\begin{enumerate}
+Rerendering solves Problem 1 and reduces problem 2 to two steps:
+\begin{enumerate*}
   \item code for parsing the scene-graph and generating the tree-view-node-view
   \item code to synchronize changes from the tree-view-node-view to the scene-graph
-\end{enumerate}
-
+\end{enumerate*}
 
 Rerendering everything on every change is usually inefficient. React is
 used to circumvent this problem. React calculates a lightweight
@@ -250,9 +235,8 @@ sent to the DOM and thus never
 The code below is for explanation purposes and does not resemble react's
 implementation in any way.
 
-\textbf{Old Virtiual DOM:}
-
-\begin{minted}[breaklines,bgcolor=bg]{html}
+\begin{listing}[H]
+  \begin{minted}[breaklines,bgcolor=bg]{html}
 <ol data-reactid=".0">
   <li data-reactid=".0.0">scene
     <ol data-reactid=".0.0.0">
@@ -264,10 +248,12 @@ implementation in any way.
     </ol>
   </li>
 </ol>
-\end{minted}
+  \end{minted}
+  \caption{Old Virtual DOM}
+\end{listing}
 
-\textbf{New Virtual DOM:}
-\begin{minted}[breaklines,bgcolor=bg]{html}
+\begin{listing}[H]
+  \begin{minted}[breaklines,bgcolor=bg]{html}
 <ol data-reactid=".0">
   <li data-reactid=".0.0">scene
     <ol data-reactid=".0.0.0">
@@ -280,24 +266,28 @@ implementation in any way.
     </ol>
   </li>
 </ol>
-\end{minted}
+  \end{minted}
+  \caption{New Virtual DOM}
+\end{listing}
 
-\textbf{Patch:}
-
-\begin{minted}[breaklines,bgcolor=bg]{javascript}
-  var li = document.createElement('li')
-  li.innerText = 'group'
-  document.querySelector('[data-reactid=".0.0.0"]').appendChild(li)
-\end{minted}
+\begin{listing}[H]
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+var li = document.createElement('li')
+li.innerText = 'group'
+document.querySelector('[data-reactid=".0.0.0"]').appendChild(li)
+  \end{minted}
+  \caption{Patch}
+\end{listing}
 
 That means as long as the code that parses the scene-graph and generates
 the lightweight representation is correct, the tree-view-view is
 correct.
 
-\subparagraph{Data Binding}\label{data-binding}
+\subparagraph{Data Binding}
+\label{data-binding}
 
 Another idea is to utilize templates and data binding. Frameworks like
-{[}angular{]} or web components implementations like {[}polymer{]}
+angular or web components implementations like polymer
 support templates and two way data binding. Following I'm just
 concerning angular directives, but the same should be possible with web
 components.
@@ -312,73 +302,79 @@ itself.
 
 \textbf{Example:}
 
-The \texttt{treenode} renders the node itself and a \texttt{nodelist},
-that renders a list of tree-nodes for each child node. Mind the
-recursion.
+The \texttt{treenode} expands into the node name and a \texttt{nodelist},
+that then expands into a list of tree-nodes for each child node.
+This recursive expanding stops when a \texttt{treenode} is childless.
 
 \begin{listing}[H]
-\mint{cl}/(car (cons 1 '(2)))/
-\caption{Example of a listing.}
-\label{lst:example}
-\end{listing}
-Listing \ref{lst:example} contains an example of a listing.
-
-The data:
-\begin{listing}[H]
-  \caption{Example of a listing.}
   \begin{minted}[breaklines,bgcolor=bg]{javascript}
-  node: {
-    name: "scene",
-    children: [
-      {
-        name: "viewpoint"
-      },
-      {
-        name: "worldinfo"
-      }
-    ]
-  }
+node: {
+  name: "scene",
+  children: [
+    {
+      name: "viewpoint"
+    },
+    {
+      name: "worldinfo"
+    }
+  ]
+}
   \end{minted}
+  \caption{example input data}
+  \label{list:templatedata}
 \end{listing}
 
-\begin{minted}[breaklines,bgcolor=bg]{html}
-  <treenode node="node">
-  </treenode>
-\end{minted}
+\begin{listing}[H]
+  \begin{minted}[breaklines,bgcolor=bg]{html}
+<treenode node="node">
+</treenode>
+  \end{minted}
+  \caption{the initial template, node is the node from the data in listing \ref{list:templatedata}}
+\end{listing}
 
-\begin{minted}[breaklines,bgcolor=bg]{html}
-  <treenode node="node">
-    <span>{{node.name}}</span>
-    <nodelist ng-repeat='node in children' children='children'>
-    </nodelist>
-  </treenode>
-\end{minted}
+\begin{listing}[H]
+  \begin{minted}[breaklines,bgcolor=bg]{html}
+<treenode node="node">
+  <span>{{node.name}}</span>
+  <nodelist ng-repeat='node in children' children='children'>
+  </nodelist>
+</treenode>
+  \end{minted}
+  \caption{the template expands itself, putting the node's name into a span and adding a nodelist directive the expands the node's children}
+\end{listing}
 
-\begin{minted}[breaklines,bgcolor=bg]{html}
-  <treenode node="node">
-    <span>{{node.name}}</span>
-    <nodelist ng-repeat='node in children' children='children'>
-      <treenode node="children[0]">
-      </treenode>
-      <treenode node="children[1]">
-      </treenode>
-    </nodelist>
-  </treenode>
-\end{minted}
+\begin{listing}[H]
+  \begin{minted}[breaklines,bgcolor=bg]{html}
+<treenode node="node">
+  <span>{{node.name}}</span>
+  <nodelist ng-repeat='node in children' children='children'>
+    <treenode node="children[0]">
+    </treenode>
+    <treenode node="children[1]">
+    </treenode>
+  </nodelist>
+</treenode>
+  \end{minted}
+  \caption{the nodelist expands the children array and renders a treenode for every child}
+\end{listing}
 
-\begin{minted}[breaklines,bgcolor=bg]{html}
-  <treenode node="node">
-    <span>{{node.name}}</span>
-    <nodelist ng-repeat='node in children' children='children'>
-      <treenode node="children[0]">
-        <span>{{node.name}}</span>
-      </treenode>
-      <treenode node="children[1]">
-        <span>{{node.name}}</span>
-      </treenode>
-    </nodelist>
-  </treenode>
-\end{minted}
+\begin{listing}[H]
+  \begin{minted}[breaklines,bgcolor=bg]{html}
+<treenode node="node">
+  <span>{{node.name}}</span>
+  <nodelist ng-repeat='node in children' children='children'>
+    <treenode node="children[0]">
+      <span>{{node.name}}</span>
+    </treenode>
+    <treenode node="children[1]">
+      <span>{{node.name}}</span>
+    </treenode>
+  </nodelist>
+</treenode>
+  \end{minted}
+  \caption{the treenode directive expands the nodes and renders their names, since there are no nodes left to render they stop}
+\end{listing}
+
 
 Again, this is not an accurate depiction of how angular works, it's just
 for illustration purposes.
