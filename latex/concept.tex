@@ -9,17 +9,74 @@ uninteressant ist
 \subsection{Server}
 \label{server}
 
+\subsubsection{Node.js}
+\begin{quote}
+  Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices. \cite{nodejs}
+\end{quote}
+
+Node is used because it's inherently easy writing small servers with it, and
+SceGraToo's server is not going to be complex. \footnote{Complex servers can be
+written in nodejs as well, it is just not encourages, since most people tend to
+refactor there infrastructure into micro services.}
+
+Listing \ref{list:nodejs} shows a server that is looking up a user from the database and returning it as JSON to the browser.
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+const http = require('http')
+const db = require('db')
+
+http.createServer((request, response) => {
+  db.getuser(function(error, user) {
+    if (error) {
+      return res.status(404).send(error);
+    } else {
+      response.writeHead(200, {'Content-Type': 'application/json'})
+      response.send(user)
+    }
+  })
+}).listen(1337, '127.0.0.1')
+  \end{minted}
+  \caption{an example server in nodejs, using the http module in its standard library}
+  \label{list:nodejs}
+\end{listing}
+
+\paragraph{Koa}
+\label{par:Koa}
+\begin{quote}
+  Koa is a new web framework designed by the team behind Express, which aims to be a smaller, more expressive, and more robust foundation for web applications and APIs. Through leveraging generators Koa allows you to ditch callbacks and greatly increase error-handling. Koa does not bundle any middleware within core, and provides an elegant suite of methods that make writing servers fast and enjoyable. \cite{koajs}
+\end{quote}
+
+Koa is used to make writing the server and using asynchronouse functions in request handlers even simpler and clearer.
+See listing \ref{list:koajs} for the same example from listing \ref{list:nodejs} written with koajs.
+It's not only shorter, but also simplier and clearer.
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+const db = require('db')
+const koa = require('koa')
+const app = koa()
+
+app.use(function * (){
+  this.body = yield db.getUser()
+})
+
+app.listen(3000)
+  \end{minted}
+  \caption{an example server utilizing the koajs framework}
+  \label{list:koajs}
+\end{listing}
+
 \subsection{Client}
 \label{client}
 
-\begin{figure}[htbp]
+\begin{figure}
   \centering
   \includegraphics[width=12cm]{../assets/treeview.png}
   \caption{treeview}
   \label{fig:tree-view}
 \end{figure}
 
-\clearpage
 \subsubsection{Synchronization Process}
 \label{synchronization-process}
 
@@ -34,7 +91,7 @@ gives a more structured view of the scene-graph than the rendered scene.
 The scene-graph is the most important part of SceGraToo, it shows the
 the structure rather than the visual representation. Different
 off-the-shelf solutions, like angular or JQuery plugins, were tested
-against theses requirements with mixed results:
+against theses requirements:
 
 \begin{enumerate*}
   \item custom html elements as part of tree nodes (e.g. multiple checkboxes or multiple inputs)
@@ -56,8 +113,10 @@ against theses requirements with mixed results:
 \end{itemize*}
 
 None of the off-the-shelf solutions could satisfy all expectations.
+After spending some time it was clear that the problem space was to specific and a
+custom solution is required.
 
-The most complicated part is keeping the tree-view-controller in sync
+Of all requirements, the most complicated part is keeping the tree-view-controller in sync
 with the scene-graph while the scene-graph is being modified and vice
 versa.
 
@@ -225,11 +284,13 @@ Rerendering solves Problem 1 and reduces problem 2 to two steps:
   \item code to synchronize changes from the tree-view-node-view to the scene-graph
 \end{enumerate*}
 
-Rerendering everything on every change is usually inefficient. React is
-used to circumvent this problem. React calculates a lightweight
-representation of what is going to be rendered to the DOM and compares
-that to what is already rendered. It calculates a set of patches and
-only applies these to the DOM.
+Rerendering everything on every change is usually inefficient. Remove a big part
+of the DOM and replacing it would lead the browser to reflow, which is the
+process of laying out the content. This process is blocking, the user can't
+scroll or otherwise interact with the application. \cite{reflow} React is used
+to circumvent this problem. React calculates a lightweight representation of
+what is going to be rendered to the DOM and compares that to what is already
+rendered. It calculates a set of patches and only applies these to the DOM.
 
 The complete rerender of the view happens only im memory and is never
 sent to the DOM and thus never
@@ -276,7 +337,8 @@ implementation in any way.
   \begin{minted}[breaklines,bgcolor=bg]{javascript}
 var li = document.createElement('li')
 li.innerText = 'group'
-document.querySelector('[data-reactid=".0.0.0"]').appendChild(li)
+document.querySelector('[data-reactid=".0.0.0"]')
+  .appendChild(li)
   \end{minted}
   \caption{Patch}
 \end{listing}
@@ -388,4 +450,9 @@ automatically inserted and kept up to date. This data binding would then
 ensure that when the scene-graphs attributes are changed the model is
 kept in sync and the other way around.
 
-\subsection{Communication}\label{interaction}
+\subsection{Communication}
+\label{interaction}
+
+The client comunicates with the server via a small HTTP API returning JSON.
+Making a GET request to \texttt{/projects} returns all projects stored on the server.
+Making a GET request to \texttt{/projects/unicorn} returns all data about unicorn project.
