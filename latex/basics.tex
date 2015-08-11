@@ -338,16 +338,22 @@ objects in the real world.
 \subsubsection{Component Editor}
 \label{component-editor30}
 
+On the 12th of June 2015 the x3dom maintainers released their Component Editor. \cite{componenteditor}
+It was released after the my work on SceGraToo started.
+Its development took about a year and three people working part-time on it. \cite{componenteditoreffort}
+Although it does offer all the wanted scene composition features, it lacks the ability to:
+
 \begin{itemize*}
-\item release 12th of june 2015
-\item thus after the work on SceGraToo started
-\item developed over a year
-\item developed by 3 people working part time
-\item cannot save or load x3d files
-\item serealizes the scene into a JSON format
+  \item load an existing x3d file
+  \item save the scene as an x3d file
+  \item upload x3d files that can be included as inlines
 \end{itemize*}
 
-\begin{minted}[breaklines,bgcolor=bg]{json}
+Scenes can only be loaded and saved as a json representation (see listing~\ref{componenteditorjson}).
+Conversion between the formats may be possible, but meta information like IDs in comments would be lost.
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{json}
 {
   "0": {
     "type": "Box",
@@ -359,12 +365,10 @@ objects in the real world.
     }
   }
 }
-\end{minted}
-
-\begin{itemize*}
-\item
-  this would loose meta information like the IDs in comments.
-\end{itemize*}
+  \end{minted}
+  \caption{}
+  \label{componenteditorjson}
+\end{listing}
 
 \subsubsection{Real-Time Collaborative Scientific WebGL Visualization with Web Sockets}
 \label{rtcswvwws}
