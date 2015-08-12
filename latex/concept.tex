@@ -3,8 +3,9 @@
 \section{Concept}
 \label{concept}
 
-skizze wie dom rendering funktioniert oder auch nicht, da es ziemlich
-uninteressant ist
+% TODO: skizze wie dom rendering funktioniert oder auch nicht, da es ziemlich uninteressant ist
+
+In the following sections the initial design concept of SceGraToo is illustrated.
 
 \subsection{Server}
 \label{server}
@@ -41,7 +42,7 @@ http.createServer((request, response) => {
   \label{list:nodejs}
 \end{listing}
 
-\paragraph{Koa}
+\subsubsection{Koa}
 \label{par:Koa}
 \begin{quote}
   Koa is a new web framework designed by the team behind Express, which aims to be a smaller, more expressive, and more robust foundation for web applications and APIs. Through leveraging generators Koa allows you to ditch callbacks and greatly increase error-handling. Koa does not bundle any middleware within core, and provides an elegant suite of methods that make writing servers fast and enjoyable. \cite{koajs}
@@ -49,7 +50,7 @@ http.createServer((request, response) => {
 
 Koa is used to make writing the server and using asynchronouse functions in request handlers even simpler and clearer.
 See listing \ref{list:koajs} for the same example from listing \ref{list:nodejs} written with koajs.
-It's not only shorter, but also simplier and clearer.
+It is not only shorter, but also simplier and clearer.
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg]{javascript}
@@ -70,76 +71,102 @@ app.listen(3000)
 \subsection{Client}
 \label{client}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=12cm]{../assets/treeview.png}
-  \caption{treeview}
-  \label{fig:tree-view}
-\end{figure}
-
-\subsubsection{Synchronization Process}
-\label{synchronization-process}
-
 \epigraph{I conclude that there are two ways of constructing a software design:
 One way is to make it so simple that there are obviously no deficiencies
 and the other way is to make it so complicated that there are no obvious
 deficiencies. The first method is far more difficult.}{--- Hoare, Turing Award Lecture 1980}
 
-React is utilized by SceGraToo to render the tree-view-controller that
-gives a more structured view of the scene-graph than the rendered scene.
-
-The scene-graph is the most important part of SceGraToo, it shows the
+The tree-view is the most important part of SceGraToo, it shows the
 the structure rather than the visual representation. Different
 off-the-shelf solutions, like angular or JQuery plugins, were tested
-against theses requirements:
+against the following requirements:
 
 \begin{enumerate*}
-  \item custom html elements as part of tree nodes (e.g. multiple checkboxes or multiple inputs)
-  \item ability to observe the tree node's state changing
-  \item binding to an arbitrary model, that can recover inconsistent state
+  \item Custom html elements as part of tree nodes (e.g. multiple checkboxes or multiple inputs),
+  \item ability to observe the tree node's state changing,
+  \item binding to an arbitrary model and
+  \item detect inconsistencies between the model and the view and recover from them.
 \end{enumerate*}
 
 \textbf{Partially not met requirements:}
 
 \begin{itemize*}
-  \item custom elements as part of tree nodes
+  \item Custom elements as part of tree nodes and
   \item ability to listen to changes to the tree node
 \end{itemize*}
 
 \textbf{Requirements none of the tested tools met:}
 
 \begin{itemize*}
-  \item binding to an arbitrary model, that can recover inconsistent views
+  \item Binding to an arbitrary model and
+  \item detect inconsistencies between the model and the view and recover from them.
 \end{itemize*}
 
-None of the off-the-shelf solutions could satisfy all expectations.
-After spending some time it was clear that the problem space was to specific and a
-custom solution is required.
+None of the off-the-shelf solutions could satisfy all expectations. After
+evaluating a couple of solutions it was clear that the problem space was to
+specific and a custom solution is required.
 
-Of all requirements, the most complicated part is keeping the tree-view-controller in sync
+\subsubsection{Synchronization Process}
+\label{synchronization-process}
+
+Of all requirements, the most complicated part is keeping the tree-view in sync
 with the scene-graph while the scene-graph is being modified and vice
 versa.
 
-\clearpage
-\paragraph{Rerendering and Diffing}
-\label{rerendering-and-diffing}
-
-\textbf{Terminology}
+\paragraph{Terminology}
+\label{terminology}
 
 \begin{description*}
   \item[scene-graph]
-    The HTML/XML/X3D representation of the scene, see listing~\ref{list:x3dscene}
-  \item[tree-view-controller]
-    Loosely defined term that comprises all objects, methods, functions,
-    event-listeners and callbacks related to parsing the scene-graph and
-    creating the initial tree-view-view.
-  \item[tree-view-view]
-    all objects, methods, functions, event-listeners end callbacks related
-    to keeping a subtree of the scene-graph up to date.
-  \item[tree-view-view]
-    The HTML representation of the tree-view-controller see figure \ref{fig:tree-view} and listing \ref{list:tree-view} (html output
+    the X3D representation of the scene as part of the DOM, see listing~\ref{list:x3dscene} and the screenshot in figure \ref{fig:x3dom-dom} from the Chrome DevTools
+  \item[scene-graph-node]
+    a specific scene graph node (e.g. \texttt{inline}, \texttt{transform} or \texttt{scene})
+  \item[tree-view-component]
+    comprises all functionality related to parsing the scene-graph and creating the tree-view out of individual tree-view-node-components
+  \item[tree-view]
+    the HTML representation of the tree-view-component as part of the DOM, see figure \ref{fig:tree-view} and listing \ref{list:tree-view} (html output
     shortened and simplified)
+  \item[tree-view-node-component]
+    comprises all functionality related to synchronizing changes from a scene-graph-node to the corresponding
+    tree-view-node and vice-versa
+  \item[tree-view-node]
+    the HTML representation of the tree-view-node-component as part of the DOM, see figure \ref{fig:tree-view-node-dom} and figure \ref{fig:tree-view-node-rendered}
 \end{description*}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../assets/treeview.png}
+  \caption{The rendered tree-view.}
+  \label{fig:tree-view}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../assets/x3dom-dom.png}
+  \caption{The X3D scene inside the DOM.}
+  \label{fig:x3dom-dom}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../assets/treeview-dom.png}
+  \caption{About half of the DOM elements that make up a tree-view of only three tree-view-nodes: a \texttt{scene}, a \texttt{transform} and an \texttt{inline}.}
+  \label{fig:treeview-dom}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../assets/treeview-node-dom.png}
+  \caption{The DOM elements that make up a tree-view-node for an \texttt{inline}.}
+  \label{fig:tree-view-node-dom}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.5\textwidth]{../assets/tree-view-node-rendered.png}
+  \caption{The rendered tree-view-node of an \texttt{inline}.}
+  \label{fig:tree-view-node-rendered}
+\end{figure}
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg]{html}
@@ -216,87 +243,100 @@ versa.
   \label{list:tree-view}
 \end{listing}
 
-The aim is to keep the tree-view-view a consistent representation of the
-scene-graph. The tree-view-view only shows specific nodes, I can't list
-them here because they will change over the
+The aim is to keep the tree-view a consistent representation of the scene-graph.
+The tree-view filters some nodes and attributes. As an example nodes contained
+in an \texttt{inline} are not shown, since  SceGraToo's task is only to compose
+a scene of \texttt{inlines}, not to change anything inside the \texttt{inlines}.
+Also not all attributes are shown, but only the ones the user may be interested
+in (such as \texttt{DEF}, \texttt{translate} or \texttt{rotate}).
 
-where specific scene-graph nodes, ones that , and their properties are
-presented in an up to date and editable form.
+One approach is to instantiate the tree-view-component with the a
+scene-graph-node a root node. For all child nodes the tree-view-component
+instatiates new tree-view-node-components. These tree-view-node-components
+create the corresponding tree-view-nodes while further traversing the
+scene-graph. For each scene-graph-node a corresponding tree-view-node-component
+is created. If there are no child nodes left the tree-view creation is done.
+Each tree-view-node-component creates all DOM elements necessary to represent
+the corresponding scene-graph-node in the the DOM. Also each
+tree-view-node-component observes its corresponding scene-graph-node for
+attribute mutations and added or removed child nodes and act accordingly.
 
-todo: explain what nodes and what properties and why
-
-First design approach is to let the tree-view-controller create an
-initial tree-view-view by traversing it and creating
-tree-view-node-controllers ad hoc. These tree-view-node-controllers
-create the corresponding tree-view-node-views while traversing the
-scene-graph. For each scene-graph node create a corresponding
-tree-view-view node. Each tree-view-node-controller observes its
-corresponding scene-graph node for attribute mutations and added or
-removed child nodes and change it's view accordingly.
-
-Depending on how the scene-graph is mutated 3 main cases can be
-differentiated.
+Depending on how the scene-graph is mutated 3 main cases can be differentiated:
 
 \begin{description*}
-  \item[a scene-graph node is added]
-    a new tree-view-node-controller is instantiated and renders a new tree-view-node-view
-  \item[a scene-graph node is deleted]
-    the corresponding tree-view-node-controller is destroyed
-  \item[a scene-graph node is mutated]
-    the corresponding tree-view-node-view is altered
+  \item[a scene-graph-node is added]
+    a new tree-view-node-component is instantiated, adding all DOM elements making up the tree-view-node to the DOM
+  \item[a scene-graph-node is deleted]
+    the corresponding tree-view-node-component is destroyed and all DOM elements making up that tree-view-node are removed from the DOM
+  \item[a scene-graph-node is mutated]
+    the corresponding DOM elements that make up the  tree-view-node are altered to reflect the mutation
 \end{description*}
 
-Tree-view-node-views can also be used to edit a scene-graph node's
-properties.\\
-When a tree-view-node-views is edited it's tree-view-node-controller is
-notified and applies the new properties to the corresponding scene-graph
-node. It's assumed that the updates will always lead to consistent
-state, where the scene-graph and the tree node converge.
+Tree-view-node can also be used to edit a scene-graph node's properties. When an
+input element that contains the x value of a transformation is edited its
+tree-view-node-component is notified of the change, by firing a change event to
+that the component subscribed, and applies the new value to the corresponding
+scene-graph-node.
 
-The synchronization process has no ability to detect if updates lead to
-a consistent state. It also has no ability to recover from an
-inconsistent state, though without the ability to detect inconsistencies
-this does not really matter.
+It is assumed that the updates will always lead to consistent state, where the
+scene-graph and the tree node converge. It is also assumed that an application
+may be buggy and in that case the synchronization process has no ability to
+detect if updates lead to an inconsistent state. It also has no ability to
+recover from an inconsistent state, though without the ability to detect
+inconsistencies this does not really matter.
 
-\textbf{Problem 1:} keeping the tree-view consistent with the
-scene-graph\\
-The difficulty to make sure that incremental updates are error-free
-exacerbates even more when further functionality, like checkboxes for
-specific properties or saving state in the tree-view that is not part of
-the scene-graph, like the possibility to collapse parts of the tree , is
-added to the tree-view.
+Following the two main problems are described.
 
-\textbf{Problem 2:} implementation effort\\
-For every new feature 4 things have to implemented:
+\clearpage
+
+\begin{description*}
+  \item[Problem 1: keeping the tree-view consistent with the scene-graph]
+    The difficulty to make sure that incremental updates are error-free
+    exacerbates even more when further functionality - like checkboxes for
+    specific properties or saving state in the tree-view that is not part of
+    the scene-graph, like the possibility to collapse parts of the tree - is
+    added to the tree-view.
+  \item[Problem 2: implementation effort]
+    For every new feature four things have to implemented:
+    \begin{enumerate*}
+      \item Code for parsing the the scene-graph,
+      \item code to generate the tree-view-node,
+      \item code to synchronize changes to a scene-graph-node to the corresponding tree-view-node and
+      \item code to synchronize changes to a tree-view-node to the corresponding scene-graph-node.
+    \end{enumerate*}
+\end{description*}
+
+This can be greatly simplified if only the functionality for parsing the
+scene-graph and creating DOM elements to represent the parts of the scene-graph
+is implemented and on every change the whole tree-view is recreated by doing
+this again.
+
+Problem 1 is disappears completely, because the incremental updates are gone and
+Problem 2 is reduced to the following two steps:
+
 \begin{enumerate*}
-  \item code for parsing the the scene-graph
-  \item code to generate the tree-view-node-view
-  \item code to synchronize changes from the scene-graph to the tree-view-node-view
-  \item code to synchronize changes from the tree-view-node-view to the scene-graph
+  \item Code for parsing the scene-graph and generating the tree-view and
+  \item code to synchronize changes to a tree-view-node to the corresponding scene-graph-node.
 \end{enumerate*}
 
-This design bears more complexity than reparsing and regenerating the
-complete tree-view-view on every change.
+Rerendering everything on every change is usually inefficient. Removing a big part
+of the DOM and replacing it would kick of a \emph{reflow}, which is the browser's
+process of laying out the content. This process is blocking, meaning the user can't
+scroll or otherwise interact with the application. \cite{reflow}
 
-Rerendering solves Problem 1 and reduces problem 2 to two steps:
-\begin{enumerate*}
-  \item code for parsing the scene-graph and generating the tree-view-node-view
-  \item code to synchronize changes from the tree-view-node-view to the scene-graph
-\end{enumerate*}
+React is used to minimize the possibility of a reflow happening. React
+calculates a lightweight representation of what the DOM should be like and
+compares that to what the DOM is already. It calculates a set of patches and
+only applies these to the DOM.
 
-Rerendering everything on every change is usually inefficient. Remove a big part
-of the DOM and replacing it would lead the browser to reflow, which is the
-process of laying out the content. This process is blocking, the user can't
-scroll or otherwise interact with the application. \cite{reflow} React is used
-to circumvent this problem. React calculates a lightweight representation of
-what is going to be rendered to the DOM and compares that to what is already
-rendered. It calculates a set of patches and only applies these to the DOM.
+From a developer's point of view the application is programmed like it's
+completlely rerendered everytime something changes. But from the browser's point
+of view only the most minimal set of changes that are required to transform the
+DOM into disired state are applied, thus greatly reducing the risk of a reflow.
 
-The complete rerender of the view happens only im memory and is never
-sent to the DOM and thus never
-
-The code below is for explanation purposes and does not resemble react's
-implementation in any way.
+The code below (listings \ref{oldvirtdom}, \ref{newvirtdom} and \ref{patch}) is
+for explanitary purposes to describe how react works. It does not resemble
+react's implementation in any way:
 
 \begin{listing}[H]
   \begin{minted}[breaklines,bgcolor=bg]{html}
@@ -313,6 +353,7 @@ implementation in any way.
 </ol>
   \end{minted}
   \caption{Old Virtual DOM}
+  \label{oldvirtdom}
 \end{listing}
 
 \begin{listing}[H]
@@ -331,6 +372,7 @@ implementation in any way.
 </ol>
   \end{minted}
   \caption{New Virtual DOM}
+  \label{newvirtdom}
 \end{listing}
 
 \begin{listing}[H]
@@ -341,19 +383,20 @@ document.querySelector('[data-reactid=".0.0.0"]')
   .appendChild(li)
   \end{minted}
   \caption{Patch}
+  \label{patch}
 \end{listing}
 
-That means as long as the code that parses the scene-graph and generates
-the lightweight representation is correct, the tree-view-view is
-correct.
+That means as long as the code that parses the scene-graph and generates the
+lightweight representation of the tree-view is correct, the tree-view will
+represent the current state of the scene-graph
 
 \paragraph{Data Binding}
 \label{data-binding}
 
 Another idea is to utilize templates and data binding. Frameworks like
 angular or web components implementations like polymer
-support templates and two way data binding. Following I'm just
-concerning angular directives, but the same should be possible with web
+support templates and two way data binding. Following only
+angular directives are examined, but the same should be possible with web
 components.
 
 An angular directive consists of a mostly logic less template and some
@@ -366,9 +409,12 @@ itself.
 
 \textbf{Example:}
 
-The \texttt{treenode} expands into the node name and a \texttt{nodelist},
-that then expands into a list of tree-nodes for each child node.
-This recursive expanding stops when a \texttt{treenode} is childless.
+The structure that is rendered is shown in listing \ref{list:templatedata}. The
+\texttt{treenode} (listing \ref{list:angular1}) expands into the node name and a
+\texttt{nodelist} (listing \ref{list:angular2}), that then expands into a list
+of tree-nodes for each child node (listing \ref{list:angular3}), that further
+expand again (listing \ref{list:angular4}). This recursive expanding stops when a
+\texttt{treenode} is childless.
 
 \begin{listing}[H]
   \begin{minted}[breaklines,bgcolor=bg]{javascript}
@@ -394,6 +440,7 @@ node: {
 </treenode>
   \end{minted}
   \caption{the initial template, node is the node from the data in listing \ref{list:templatedata}}
+  \label{list:angular1}
 \end{listing}
 
 \begin{listing}[H]
@@ -405,6 +452,7 @@ node: {
 </treenode>
   \end{minted}
   \caption{the template expands itself, putting the node's name into a span and adding a nodelist directive the expands the node's children}
+  \label{list:angular2}
 \end{listing}
 
 \begin{listing}[H]
@@ -420,6 +468,7 @@ node: {
 </treenode>
   \end{minted}
   \caption{the nodelist expands the children array and renders a treenode for every child}
+  \label{list:angular3}
 \end{listing}
 
 \begin{listing}[H]
@@ -437,6 +486,7 @@ node: {
 </treenode>
   \end{minted}
   \caption{the treenode directive expands the nodes and renders their names, since there are no nodes left to render they stop}
+  \label{list:angular4}
 \end{listing}
 
 
@@ -444,7 +494,7 @@ Again, this is not an accurate depiction of how angular works, it's just
 for illustration purposes.
 
 The scene-graph is traversed and for each eligible child node a new
-\texttt{treenode} is created. The double curly braces are angular's way
+\texttt{treenode} is created. The double braces are angular's way
 to denote data-binding in templates. The data from the elements scope is
 automatically inserted and kept up to date. This data binding would then
 ensure that when the scene-graphs attributes are changed the model is
