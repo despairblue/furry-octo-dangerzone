@@ -38,11 +38,11 @@ represents it is possible to let the CPU do more of the heavy
 lifting and unburden the \gls{GPU}.
 
 \begin{quote}
-  Rather than do the heavy work at the \gls{OpenGL} and polygon level,
+  ``Rather than do the heavy work at the \gls{OpenGL} and polygon level,
   scene-graph architects realized they could better perform culling at
   higher level abstractions for greater efficiency. If we can remove the
   invisible objects first, then we make the hardware do less work and
-  generally improve performance and the all-important frame-rate. \cite{realityprime}
+  generally improve performance and the all-important frame-rate.'' \cite{realityprime}
 \end{quote}
 
 \subsubsection{Transformations}\label{transformations}
@@ -99,7 +99,7 @@ That way the memory footprint of an application can be reduced.
 \subsection{X3D}
 \label{x3d} \gls{X3D} \cite{x3d} is the \gls{XML} representation of \gls{VRML} which was designed as a
 universal interactive \gls{3D} exchange format, much like \gls{HTML} is for written
-documents or \gls{SVG} for vector graphics. Due to its \gls{XML} structure it can be
+documents or \acrshort{SVG} for vector graphics. Due to its \gls{XML} structure it can be
 integrated in \gls{HTML} documents, thus the Frauenhofer Institute pursued to
 implement a runtime that could interpret and visualize \gls{X3D} in the browser, by
 using a \gls{WebGL} context. It is called x3dom \cite{x3dom} and it is extensively used
@@ -265,7 +265,7 @@ In this function the position of the handle is adjusted to make it
 follow the drag movement, also the position of the teapot is adjusted.
 
 Having the handles being \gls{3D} objects within the scene, that look
-touchable and intractable, make it easier for users find their way
+touchable and interactable, make it easier for users to find their way
 around the application. Instead of having to learn keyboard shortcuts
 users simply use their intuition and knowledge about how to interact with
 objects in the real world.
@@ -346,7 +346,7 @@ different applications.
 \label{component-editor30}
 
 On the 12th of June 2015 the x3dom maintainers released their Component Editor. \cite{componenteditor}
-It was released after the the work on \gls{Roundtrip3D} started.
+It was released after the the work on \gls{SceGraToo} started.
 Its development took about a year and three people working part-time on it. \cite{componenteditoreffort}
 Although it does offer all the wanted scene composition features, it lacks the ability to:
 
@@ -357,7 +357,7 @@ Although it does offer all the wanted scene composition features, it lacks the a
 \end{itemize*}
 
 Scenes can only be loaded and saved as a \gls{JSON} representation (see listing~\ref{componenteditorjson}).
-Conversion between the formats may be possible, but meta information like \gls{ID}s in comments would be lost.
+Conversion between the formats may be possible, but meta information like \glspl{ID} in comments would be lost.
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg]{json}
@@ -384,14 +384,14 @@ Using web sockets instead of AJAX is an interesting approach.
 \cite{Marion:2012:RCS:2338714.2338721} Especially the cut down on latency. It is
 over all very similar to the approach that was considered for SceGraToo, but not
 implemented due to time constraints. In the end the differences between
-SceGraToo's requirements and theirs outweigh the similarities. \gls{Roundtrip3D} not only
+SceGraToo's requirements and theirs outweigh the similarities. \gls{SceGraToo} not only
 has to visualize a scene, but also manipulate it. And to achieve a spectator mode
 like in this work not only the viewpoint would have to be synchronized but also
 the whole scene. This can either be done by sending the whole scene to the other
 clients on every change, or sending change sets, which poses an interesting
 challenge. They visualize a specific dataset in a threejs's specific \gls{JSON} format
-\cite{threejs-format}. \gls{Roundtrip3D} only needs to render \gls{X3D} scenes, converting the
-scene into another format and have it rendered by another scene graph framework
+\cite{threejs-format}. \gls{SceGraToo} only needs to render \gls{X3D} scenes. Converting the
+scene into another format and having it rendered by another scene graph framework
 is unnecessary, since x3dom does a pretty good job doing this.
 
 \subsubsection{ParaViewWeb}
