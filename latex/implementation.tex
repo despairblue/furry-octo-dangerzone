@@ -37,9 +37,9 @@ AngularJS is used for:
 \paragraph{Bootstrapping}
 \label{par:Bootstrapping and Routing}
 
-Listing \ref{list:bootstrap} initializes an SceGraToo. In the \texttt{config}
+Listing \ref{list:bootstrap} initializes SceGraToo. In the \texttt{config}
 function routes are defined. When a link is clicked the browser will not make a
-request to the server and load that page instead a new controller takes over and
+request to the server and load that page. Instead a new controller takes over and
 renders a different template. The advantage of this approach is that the user
 sees immediate feedback while navigating. The application can render the view and
 react to user input while its still waiting for some requested resources from
@@ -84,7 +84,7 @@ application (thus one website could also accommodate multiple angular
 applications). The defined variables are contained by creating a function that
 returns whatever the module is supposed to contain, thus creating a closure.
 Listing \ref{list:angularmodule} shows a module that creates a WeakMap and
-returns it. Modules can denote that they depend on other modules, this can be
+returns it. Modules can denote that they depend on other modules. This can be
 seen in listing \ref{list:depinj}. The \texttt{MoveableUtils} request that the
 \texttt{moveable} module is injected into it when initializing. Angular creates
 a dependency graph and resolves dependencies automatically.
@@ -165,7 +165,7 @@ Using react the view virtually becomes a function of its input. The input is the
 
 The parsing and rendering process can be described as follows:
 \begin{enumerate*}
-  \item Choose a graph node as the root
+  \item Choose a graph node as the root,
   \item call the node component with that graph node,
   \item instantiate corresponding components for each of the nodes attribute,
   \item if the graph node has child nodes call the node component again with each child node and return their return values or
@@ -225,7 +225,7 @@ Synchronizing the tree-view when the scene-graph changes is done by calling
 calculates the changes that need to be done to update the \gls{DOM} and applies these.
 
 If the tree-view changes the scene-graph, the same thing happens. Listing
-\ref{list:checkbox} show a check box component. It receives an property called
+\ref{list:checkbox} show a check box component. It receives a property called
 \texttt{owner}. That is a scene-graph node. Nodes in x3dom have the render
 property. If the property is true, that node and all its children are rendered,
 if not, they are not visible. The component is showing the state of the the

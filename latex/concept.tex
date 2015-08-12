@@ -85,7 +85,7 @@ against the following requirements:
   \item Custom \gls{HTML} elements as part of tree nodes (e.g.~multiple checkboxes or multiple inputs),
   \item ability to observe the tree node's state changing,
   \item binding to an arbitrary model and
-  \item detect inconsistencies between the model and the view and recover from them.
+  \item detecting inconsistencies between the model and the view and recovering from them.
 \end{enumerate*}
 
 \textbf{Partially not met requirements:}
@@ -99,11 +99,11 @@ against the following requirements:
 
 \begin{itemize*}
   \item Binding to an arbitrary model and
-  \item detect inconsistencies between the model and the view and recover from them.
+  \item detecting inconsistencies between the model and the view and recovering from them.
 \end{itemize*}
 
 None of the off-the-shelf solutions could satisfy all expectations. After
-evaluating a couple of solutions it was clear that the problem space was to
+evaluating a couple of solutions it was clear that the problem space was too
 specific and a custom solution is required.
 
 \subsubsection{Synchronization Process}
@@ -249,7 +249,7 @@ a scene of \texttt{inlines}, not to change anything inside the \texttt{inlines}.
 Also not all attributes are shown, but only the ones the user may be interested
 in (such as \texttt{DEF}, \texttt{translate} or \texttt{rotate}).
 
-One approach is to instantiate the tree-view-component with the a
+One approach is to instantiate the tree-view-component with a
 scene-graph-node as root node. For all child nodes the tree-view-component
 instatiates new tree-view-node-components. These tree-view-node-components
 create the corresponding tree-view-nodes while further traversing the
@@ -258,35 +258,33 @@ is created. If there are no child nodes left the tree-view creation is done.
 Each tree-view-node-component creates all \gls{DOM} elements necessary to represent
 the corresponding scene-graph-node in the \gls{DOM}. Also each
 tree-view-node-component observes its corresponding scene-graph-node for
-attribute mutations and added or removed child nodes and act accordingly.
+attribute mutations and added or removed child nodes and acts accordingly.
 
-Depending on how the scene-graph is mutated 3 main cases can be differentiated:
+Depending on how the scene-graph is mutated three main cases can be differentiated:
 
 \begin{description*}
-  \item[A scene-graph-node is added]
+  \item[a scene-graph-node is added]
     A new tree-view-node-component is instantiated, adding all \gls{DOM} elements making up the tree-view-node to the \gls{DOM}.
-  \item[A scene-graph-node is deleted]
+  \item[a scene-graph-node is deleted]
     The corresponding tree-view-node-component is destroyed and all \gls{DOM} elements making up that tree-view-node are removed from the \gls{DOM}.
-  \item[A scene-graph-node is mutated]
+  \item[a scene-graph-node is mutated]
     The corresponding \gls{DOM} elements that make up the  tree-view-node are altered to reflect the mutation.
 \end{description*}
 
-Tree-view-node can also be used to edit a scene-graph node's properties. When an
+Tree-view-nodes can also be used to edit scene-graph nodes' properties. When an
 input element that contains the x value of a transformation is edited its
 tree-view-node-component is notified of the change, by firing a change event to
-that the component subscribed, and applies the new value to the corresponding
+which the component subscribed, and applies the new value to the corresponding
 scene-graph-node.
 
-It is assumed that the updates will always lead to consistent state, where the
+It is assumed that the updates will always lead to consistent a state, where the
 scene-graph and the tree node converge. It is also assumed that an application
 may be buggy and in that case the synchronization process has no ability to
 detect if updates lead to an inconsistent state. It also has no ability to
 recover from an inconsistent state, though without the ability to detect
 inconsistencies this does not really matter.
 
-Following the two main problems are described.
-
-\clearpage
+In the following the two main problems are described.
 
 \begin{description*}
   \item[Problem 1: keeping the tree-view consistent with the scene-graph]
@@ -310,7 +308,7 @@ scene-graph and creating \gls{DOM} elements to represent the parts of the scene-
 is implemented and on every change the whole tree-view is recreated by doing
 this again.
 
-Problem 1 is disappears completely, because the incremental updates are gone and
+Problem 1 disappears completely, because the incremental updates are gone and
 Problem 2 is reduced to the following two steps:
 
 \begin{enumerate*}
@@ -330,8 +328,8 @@ only applies these to the \gls{DOM}.
 
 From a developer's point of view the application is programmed like it is
 completlely rerendered everytime something changes. But from the browser's point
-of view only the most minimal set of changes that are required to transform the
-\gls{DOM} into disired state are applied, thus greatly reducing the risk of a reflow.
+of view, only a minimal set of changes, only those that are required to transform the
+\gls{DOM} into the disired state, are applied, thus greatly reducing the risk of a reflow.
 
 The code below (listings \ref{oldvirtdom}, \ref{newvirtdom} and \ref{patch}) is
 for explanitary purposes to describe how react works. It does not resemble
@@ -398,7 +396,7 @@ support templates and two way data binding. Following only
 angular directives are examined, but the same should be possible with web
 components.
 
-An angular directive consists of a mostly logic less template and some
+An angular directive consists of a mostly logicless template and some
 javascript containing logic for creating the directive or reacting to
 events.
 
@@ -450,7 +448,7 @@ node: {
   </nodelist>
 </treenode>
   \end{minted}
-  \caption{the template expands itself, putting the node's name into a span and adding a nodelist directive the expands the node's children}
+  \caption{The template expands itself, putting the node's name into a span and adding a nodelist directive that expands the node's children.}
   \label{list:angular2}
 \end{listing}
 
@@ -466,7 +464,7 @@ node: {
   </nodelist>
 </treenode>
   \end{minted}
-  \caption{the nodelist expands the children array and renders a treenode for every child}
+  \caption{The nodelist expands the children array and renders a treenode for every child.}
   \label{list:angular3}
 \end{listing}
 
@@ -496,7 +494,7 @@ The scene-graph is traversed and for each eligible child node a new
 \texttt{treenode} is created. The double braces are angular's way
 to denote data-binding in templates. The data from the elements scope is
 automatically inserted and kept up to date. This data binding would then
-ensure that when the scene-graphs attributes are changed the model is
+ensure that when the \texttt{treenode}'s attributes are changed the model is
 kept in sync and the other way around.
 
 \subsection{Communication}
