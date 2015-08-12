@@ -1,0 +1,106 @@
+% !TEX root = seminararbeit.tex
+
+\section{Introduction}
+\label{sec:Prelude}
+
+The goal of the thesis is to create a \gls{3D} editor, using web technologies,
+which enables its users to postprocess \gls{X3D} scenes. These scenes are the
+product of a tool that was implemented as part of the DFG research
+project \gls{Roundtrip3D} \cite{Jung:2015:SDA:2802768.2802837}.
+% The scene are automatically derived from software models \ldots{}
+\subsection{Motivation}\label{motivation}
+
+As part of the Roundtrip3D project, a round-trip framework (hereafter
+referred to as \emph{R3D}) was developed. This framework also includes a
+graphical editor for SSIML models, to describe \gls{3D} applications. Then
+\gls{R3D} can be used to generate boilerplate code for multiple programming
+languages, such as JavaScript, Java or C++, and an \gls{X3D} file describing
+the scene. The \gls{X3D} file may contain references to other \gls{X3D} files
+containing the actual \gls{3D} data (e.g.~a car and its corresponding tires),
+hereafter called \emph{inlines}. These files are created by exporting
+objects from a \gls{3D} computer graphics software (e.g.~Blender,
+Maya or 3DS Max).\\
+The problem that arises is that each object is usually in the center of
+its own coordinate system. So they need to be translated, rotated and
+maybe even scaled, to result in the desired scene (e.g.~a car where the tires
+are in the places they belong to and not in the center of the chassis).
+The structure is mostly generated. Attribute values of respective nodes,
+such as transformation nodes, need to be adjusted in order to compose the
+overall \gls{3D} scene.
+
+% \includegraphics{Picture of a car with the tires in the center}\\
+% \includegraphics{Picture of a car with the tires where they belong to}
+
+This can be achieved by adjusting \emph{translate}, \emph{rotate} and
+\emph{scale} properties to arrange \gls{3D} objects. To exacerbate this problem
+further, the orientation the \gls{3D} artists chose for its object may be unknown, if
+% TODO: so what now? convention or no convention?
+their is no convention for \gls{3D} modeling. \sout{Usually their is a convention
+about origin of coord system, scaling and orientation} (no there isn't, still
+not sure what to put here). However, we cannot assume that these conventions are
+always met. The main problem is, that \gls{3D} transformations, such as translation,
+orientation and scale of single \gls{3D} geometries, need to be adjusted. So far,
+there is no graphical tool that meets both of these requirements:
+
+\begin{itemize*}
+  \item User friendly and straight forward composition functionalities for \gls{X3D} scenes and
+  \item preservation of (generated) information, such as node names or comments (necessary to merge the changed files back into the source model).
+\end{itemize*}
+
+\begin{figure}
+  \begin{minipage}{.5\textwidth}
+    \includegraphics[width=0.9\textwidth]{../assets/wheel1.png}
+  	\caption{One possible orientation.}
+  	\label{fig:wheel1}
+  \end{minipage}
+  \begin{minipage}{.5\textwidth}
+  	\includegraphics[width=0.9\textwidth]{../assets/wheel2.png}
+  	\caption{Another possible orientation.}
+  	\label{fig:wheel2}
+  \end{minipage}\\
+  \begin{minipage}{.5\textwidth}
+  	\includegraphics[width=0.9\textwidth]{../assets/wheel3.png}
+  	\caption{Yet another possible orientation.}
+  	\label{fig:wheel3}
+  \end{minipage}
+  \begin{minipage}{.5\textwidth}
+  	\includegraphics[width=0.9\textwidth]{../assets/wheel4.png}
+  	\caption{An improbable orientation, unless the \gls{3D} artist was very confused.}
+  	\label{fig:wheel4}
+  \end{minipage}
+  \caption*{Four possible orientations the \gls{3D} model of a wheel could have.}
+\end{figure}
+
+Figures \ref{fig:wheel1} - \ref{fig:wheel4} demonstrate multiple orientatins a \gls{3D} model of a wheel can have. \ref{fig:wheel1} to \ref{fig:wheel3} are common
+orientations, since it is disputable which of these could be considered be the
+norm. But if one depends on art from 3rd parties, the orientation and position
+could be completely arbitrary like in figure \ref{fig:wheel4}
+
+These properties could be added and adjusted via any text editor by opening the
+generated \gls{X3D} file, but the resulting workflow is not user-friendly. The
+following list explains the workflow using just a text editor.
+
+\begin{enumerate*}
+  \item Model the \gls{3D} application, including \gls{3D} the scene structure.
+  \item Generate the \gls{3D} scene and the application code.
+  \item Run the application and evaluate the scene and think about what objects need to go where and whether they need to be scaled.
+  \item Type random translation, rotation and scale values into the transform nodes.
+  \item Run the application again and evaluate whether the transformations are correct (since one does not know anything about the orientation of the object).
+  \item Go back to 4. until all objects are placed correctly.
+\end{enumerate*}
+
+Tools like Maya or Blender could also be used for this, but their import
+and export filter discard important metadata that is necessary for the
+round-trip transformation. This is what \gls{Roundtrip3D} is meant to be. \gls{Roundtrip3D} addresses both of these issues. It allows for loading the root \gls{X3D} file and changing all transformations, containing the inline nodes,
+using mouse interactions. For fine grained control \gls{Roundtrip3D} also
+contains a tree view that allows the user to input exact attributes for
+translations, rotations and scale.
+
+\subsection{Scope}\label{scope}
+
+This thesis addresses two issues:
+
+\begin{enumerate*}
+  \item Allowing for composing generated \gls{X3D} scenes (with focus on usability). E.g., besides a \gls{3D} view, a tree view for fine grained editing should not only visualize the \gls{3D} scene's structure, but also allow for entering concrete coordinate values.
+  \item During the editing process, the preservation of all information/metadata must be guaranteed.
+\end{enumerate*}

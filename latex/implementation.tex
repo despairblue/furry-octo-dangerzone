@@ -1,0 +1,262 @@
+% !TEX root = seminararbeit.tex
+
+\section{Implementation}
+\label{implementation}
+
+\subsection{Server}
+
+The server has a really small interface.
+When it gets a request it tries to to match the request to one of its routes, otherwise tries to serve the requested file from the file system (assuming it is a static file), otherwise answers with a 404, which means \texttt{Not Found}.
+
+Some of the routes it answers to are:
+\begin{description*}
+  \item[POST /projects/:project/src/:file]
+    saving files being uploaded
+  \item[GET /projects]
+    return all projects on the server
+  \item[GET /projects/:project]
+    return all information for the project \texttt{:project}
+\end{description*}
+
+\subsection{Client}
+
+\subsubsection{angular}
+\label{angular}
+
+AngularJS is used for:
+
+\begin{itemize*}
+  \item Bootstrapping the application
+  \item Modularization
+  \item Dependency management
+  \item Resource management
+  \item Routing
+  \item Less dynamic views
+\end{itemize*}
+
+\paragraph{Bootstrapping}
+\label{par:Bootstrapping and Routing}
+
+Listing \ref{list:bootstrap} initializes an SceGraToo. In the \texttt{config}
+function routes are defined. When a link is clicked the browser will not make a
+request to the server and load that page instead a new controller takes over and
+renders a different template. The advantage of this approach is that the user
+sees immediate feedback while navigating. The application can render the view and
+react to user input while its still waiting for some requested resources from
+the server (like a list of all available projects). This approach is called
+single-page application \cite{Mikowski:2013:SPW:2663433}.
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+window.angular.module('scegratooApp')
+  .config(function ($routeProvider) {
+    $routeProvider
+      .when('/', {
+        redirectTo: '/projects'
+      })
+      .when('/projects', {
+        templateUrl: 'views/projects.html',
+        controller: 'ProjectsCtrl'
+      })
+      .when('/projects/:project', {
+        templateUrl: 'views/project.html',
+        controller: 'ProjectCtrl'
+      })
+      .when('/projects/:project/:file*', {
+        templateUrl: 'views/projects/:project/x3d/:file.html',
+        controller: 'ProjectsProjectX3dFileCtrl'
+      })
+  })
+  \end{minted}
+  \caption{This is how \gls{Roundtrip3D} is initialized. It also shows how the routing is defined.}
+  \label{list:bootstrap}
+\end{listing}
+
+\paragraph{Modularisation and Dependency Injection}
+\label{par:modularisation}
+
+Each controller, view or service is contained in its own module and does not
+pollute the global name space. In a browser's javascript context the global
+name space refers to the name space that belongs to the \texttt{window} object.
+Defining variables in scripts defines this variable on the window object.
+Angular modules prevent this. Modules are registered on a specific angular
+application (thus one website could also accommodate multiple angular
+applications). The defined variables are contained by creating a function that
+returns whatever the module is supposed to contain, thus creating a closure.
+Listing \ref{list:angularmodule} shows a module that creates a WeakMap and
+returns it. Modules can denote that they depend on other modules, this can be
+seen in listing \ref{list:depinj}. The \texttt{MoveableUtils} request that the
+\texttt{moveable} module is injected into it when initializing. Angular creates
+a dependency graph and resolves dependencies automatically.
+
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+window.angular.module('scegratooApp')
+  .service('moveables', function () {
+    return new WeakMap()
+  })
+  \end{minted}
+  \caption{This module creates a WeakMap that can be injected in multiple other modules. These modules all share the same WeakMap since services are singletons. \texttt{service}'s first argument is the \texttt{service}'s name, that can be used by other modules by importing it.}
+  \label{list:angularmodule}
+\end{listing}
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+angular.module('scegratooApp')
+  .service('MoveableUtils', function (moveables) {
+    return {
+      logMoveables: () => console.log(moveables)
+    }
+  })
+  \end{minted}
+  \caption{This module requests the \texttt{moveables} module to be injected.}
+  \label{list:depinj}
+\end{listing}
+
+\paragraph{Views}
+\label{par:Views}
+
+Angular tempates are mostly logicless
+(except for ng-repeat iterators and ng-if statements). Listing \ref{list:view}
+shows a template that renders all prejects the corresponding controller
+retrieved from the server.
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{html}
+<sgt-navigation-bar>
+</sgt-navigation-bar>
+<div class="sash">
+  <h3>
+    Editable files for {{project.name}}
+  </h3>
+  <div ng-repeat="file in project.files | orderBy:'view'">
+    <div ng-show="file.view">
+      {{file.view}} -
+      <a
+        href="#/projects/{{projectName}}/ {{file.view}}/{{file.path}}">
+        {{file.path}}
+      </a>
+    </div>
+  </div>
+</div>
+  \end{minted}
+  \caption{A template that renders projects that the controller retrieved from the server}
+  \label{list:view}
+\end{listing}
+
+\subsubsection{react}
+\label{react}
+
+React is utilized by \gls{Roundtrip3D} to render the tree-view that gives a more
+structured view of the scene-graph than the rendered scene does.
+
+React works by creating components and nesting them. Listing
+\ref{list:reactcomponent} shows the \texttt{TreeView} component. The
+\texttt{TreeNode} is another component that handles a specific tree-view-node,
+components keep instantiating and returning components until the whole
+scene-graph is traversed. In listing \ref{list:reactentrypoint} it is shown how
+it is rendered to the \gls{DOM}. The \gls{HTML} syntax is simply syntactic sugar and is
+transpiled into normal javascript before being evaluated (the transpiled
+equivalent of listing \ref{list:reactentrypoint} is shown in listing
+\ref{list:reacttranspiled}).
+
+Using react the view virtually becomes a function of its input. The input is the root node of the scene-graph, the \gls{X3D} node.
+
+The parsing and rendering process can be described as follows:
+\begin{enumerate*}
+  \item Choose a graph node as the root
+  \item call the node component with that graph node,
+  \item instantiate corresponding components for each of the nodes attribute,
+  \item if the graph node has child nodes call the node component again with each child node and return their return values or
+  \item if the graph node has no children return an empty element.
+\end{enumerate*}
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+React.createClass({
+  displayName: 'TreeView',
+  propTypes: {
+    data: React.PropTypes.object.isRequired
+  },
+  render: function () {
+    if (this.props.data.runtime) {
+      return (
+        <TreeNode
+          data={this.props.data.querySelector('scene')}
+          runtime={this.props.data.runtime}
+        />
+      )
+    } else {
+      return <div/>
+    }
+  }
+})
+  \end{minted}
+  \caption{The TreeView component is instantiated with a node. Its render function returns an instantiated TreeNode unless the given node has no runtime property, in that case it just returns an empty div.}
+  \label{list:reactcomponent}
+\end{listing}
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+const treeViewContainer = document.querySelector('#container')
+const x3dNode = document.querySelector('x3d')
+React.render(<TreeView data={x3dNode} />, treeViewContainer)
+  \end{minted}
+  \caption{Shows how react renders to the \gls{DOM}. The \texttt{treeViewContainer} is the the \gls{DOM} element react will render into. \texttt{x3dNode} is the scene-graph in the \gls{DOM}.}
+  \label{list:reactentrypoint}
+\end{listing}
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+const treeViewContainer = document.querySelector('#container')
+const x3dNode = document.querySelector('x3d')
+React.render(React.createElement(TreeView, { data: x3dNode }), treeViewContainer)
+  \end{minted}
+  \caption{Shows the transpilation output of listing \ref{list:reactentrypoint}. This is standard compliant javascript.}
+  \label{list:reacttranspiled}
+\end{listing}
+
+\subsubsection{Synchronization Process}
+\label{synchronization-process}
+
+Synchronizing the tree-view when the scene-graph changes is done by calling
+\texttt{React.render} again, just like in listing \ref{list:reactentrypoint}. React
+calculates the changes that need to be done to update the \gls{DOM} and applies these.
+
+If the tree-view changes the scene-graph, the same thing happens. Listing
+\ref{list:checkbox} show a check box component. It receives an property called
+\texttt{owner}. That is a scene-graph node. Nodes in x3dom have the render
+property. If the property is true, that node and all its children are rendered,
+if not, they are not visible. The component is showing the state of the the
+\texttt{owner}'s render property's state. When the user clicks that check box the
+\texttt{owner}'s attribute is changed. The component does not have to update the
+\gls{DOM} node, react is doing it the next time \texttt{React.render} is called. This
+is a simple example but the concept holds up for more complicated interactions
+like adding new nodes or moving via drag and drop.
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+const TreeNodeAttributeRender = React.createClass({
+  displayName: 'TreeNodeAttributeRender',
+  propTypes: {
+    owner: React.PropTypes.object.isRequired,
+  },
+  changeHandler: function (event) {
+    if (event.currentTarget.checked) {
+      this.props.owner.setAttribute('render', true)
+    } else {
+      this.props.owner.setAttribute('render', false)
+    }
+  },
+  render: function () {
+    const attribute = this.props.owner.getAttribute('render')
+    const checked = render === 'true'
+
+    return <input type='checkbox' checked={checked} onChange={this.changeHandler} />
+  }
+})
+  \end{minted}
+  \caption{A component that renders a checkbox that show the \texttt{owner} render property's state. Clicking the checkbox changes the \texttt{owner}'s property's state.}
+  \label{list:checkbox}
+\end{listing}

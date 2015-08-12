@@ -1,0 +1,261 @@
+% This template is provided for all the participants of the seminar ``Spatio-temporal Logics and Reasoning''
+%%%%%%%%%%%%%%%%%%%%%
+% Author information:
+%%%%%%%%%%%%%%%%%%%%%
+% Jannik Strötgen
+% Institute of Computer Science
+% Database Systems Research Group
+% INF 348
+% 69120 Heidelberg
+% stroetgen@uni-hd.de
+%%%%%%%
+% Date: October 5, 2010
+%%%%%%%
+
+\documentclass[
+	 11pt,         % font size
+	 a4paper,      % paper format
+	 oneside,
+	 ]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% PACKAGES:
+
+% Use German :
+\usepackage[USenglish]{babel}
+% Input encoding
+\usepackage[utf8]{inputenc}
+% Font encoding
+\usepackage[T1]{fontenc}
+% Einbinden von URLs:
+\usepackage{url}
+% Hyperref
+\usepackage[bookmarks=true,colorlinks,pdfpagelabels,pdfstartview = FitH,bookmarksopen = true,bookmarksnumbered = true,linkcolor = black,plainpages = false,hypertexnames = false,citecolor = black,urlcolor=black]{hyperref}
+%\usepackage{hyperref}
+% Include Graphic-files:
+\usepackage{graphicx}
+% Include PDF links
+%\usepackage[pdftex, bookmarks=true]{hyperref}
+% Fuer Textsatz
+\usepackage{setspace}
+% For bibliography style
+\usepackage[numbers]{natbib}
+% for Latex symbols
+\usepackage{ marvosym }
+% tables
+\usepackage{ tabularx }
+% quates
+\usepackage[babel,german=quotes]{csquotes}
+% colors
+\usepackage[usenames, dvipsnames]{xcolor}
+% subscript
+% \usepackage{fixltx2e}
+% verzeichnisse zu toc hinzufügen
+\usepackage{tocbibind}
+% index
+\usepackage{makeidx}
+\usepackage{showidx} %DEBUG: remove
+% placement H for exactly here!
+\usepackage{float}
+% strikeout text
+\usepackage[normalem]{ulem}
+% tightly packed lists
+\usepackage{mdwlist}
+% long tables
+\usepackage{longtable}
+% better ruler support for tables
+\usepackage{booktabs}
+% source code highliting
+\usepackage{minted}
+% background color for listings
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+% neat quotes everywhere
+\usepackage{epigraph}
+\setlength\epigraphwidth{12cm}
+\setlength\epigraphrule{0pt}
+% for a glossary
+\usepackage[toc]{glossaries}
+\input{glossary}
+% caption* for unnumbered captions
+\usepackage{caption}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Titel, Autor, Seminar, Semester, Dozent %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\mytitle}{Web-based 3D-scene composition for further server-sided processing in the Roundtrip3D project}
+\newcommand{\mytitleShort}{SceGraToo}
+\newcommand{\myauthor}{Danny Arnold}
+\newcommand{\myseminar}{Web-basierte Komposition von 3D-Szenen für deren serverseitige Weiterverarbeitung im Roundtrip3D Projekt}
+\newcommand{\mydozent}{Prof. Jung}
+\newcommand{\mydozentTwo}{Matthias Lenk}
+\newcommand{\myseminarTwo}{serverseitige Weiterverarbeitung im Roundtrip3D Projekt}
+\newcommand{\mysemester}{Summer Semester 2015}
+
+% OTHER SETTINGS:
+% \setlength{\parindent}{0in}
+\renewcommand{\arraystretch}{1.5}
+
+% add listoflistings to the toc
+\renewcommand{\listoflistings}{
+  \cleardoublepage
+  \addcontentsline{toc}{section}{\listoflistingscaption}
+  \listof{listing}{\listoflistingscaption}
+}
+
+\newcommand{\emptypage}[0]{
+	% Empty Page
+	\clearpage
+	\thispagestyle{empty}
+	\mbox{}
+	\newpage
+}
+
+\newcommand{\headingspage}[0]{
+	% Empty Page
+	\clearpage
+	\thispagestyle{headings}
+	\mbox{}
+	\newpage
+}
+
+% Pagestyle:
+\pagestyle{myheadings}
+\markright{\myauthor: \mytitleShort}
+
+% start indexing
+\makeindex
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <TITLE> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{roman}
+\begin{titlepage}
+\begin{tabular}[l]{l}
+% Angaben zum Seminar
+TU Bergakademie Freiberg\\
+Faculty for Mathematics and Computer Science\\
+\mysemester\\
+German Title: \myseminar\\
+\phantom{German Title: }\myseminarTwo\\
+Supervisor: \mydozent\\
+\phantom{Supervisor: }\mydozentTwo\\
+\end{tabular}
+
+\vspace{4cm}
+\begin{center}
+\textbf{\large Bachelor Thesis} % Proseminararbeit,Studienarbeit, Interdisziplinaeres Projekt
+\vspace{0.5\baselineskip}
+
+% Titel wird ausgegeben (siehe oben)
+{\huge
+\mytitle
+}
+\end{center}
+
+\vfill
+% Persönliche Angaben
+\begin{tabular}[l]{ll}
+Name:           & \myauthor\\
+Matriculation Number: & 52315\\
+Major:    & Applied Computer Science\\
+Email: & danny.arnold@student.tu-freiberg.de\\
+Date: & \today \\
+\end{tabular}
+
+\end{titlepage}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% </TITLE> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\emptypage
+
+% Zeilenabstand
+\onehalfspacing
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <Antiplagiatserklärung> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{empty}
+\vspace*{100pt}
+I, \textbf{\myauthor}, declare that I have read and understood
+the material exemplifying and explaining cases of plagiarism, and that my paper contains no plagiarized
+material and is solely my own work. I am aware of the fact that should my paper be found to
+contain plagiarized material or to have been written in part or whole by someone else, this will
+entail serious consequences. These include the following:
+1. The reason for my failure will be recorded by the department.
+2. I will not be given credit for the course.
+3. The Honor Board may review my paper and suggest additional sanctions, including
+expulsion.
+Furthermore, I am aware that submitting the same or a revised paper in two separate courses without
+the instructors' explicit consent will result in similar consequences.\cite{Antiplagiatserklrung}
+\vspace*{50pt}
+
+Freiberg, \today \hspace{2cm} \underline{\phantom{Platz für die Unterschrift}}
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% </Antiplagiatserklärung> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <Danksagung> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TODO: translate
+\emptypage
+\thispagestyle{empty}
+\section*{Acknowledgment} % (fold)
+\label{sec:danksagung}
+
+% Danken möchte ich allen voran \mydozent \index{Froitzheim} und \mydozentTwo \index{Jasper} für dieses Seminar und all ihre Hilfe. Des Weiteren möchte ich mich bei \citeauthor{SeminarTemplate} für sein sehr gutes Latex-Template \cite{SeminarTemplate} bedanken, welches dieser Arbeit zu Grunde liegt, aber in vielen Bereichen angepasst wurde. Eine weitere sehr große Hilfe war das WikiBook \LaTeX~\cite{WikiLatex}, auch vielen Dank an alle Autoren dieses WikiBooks. \\
+
+% Mein Dank geht auch an die fleißigen Korrekturleser Friederike Klos \index{Klos, Friederike} und Felix Kästner \index{Kästner, Felix}.
+
+% Thanks!
+
+\begin{figure}[htbp]
+	\includegraphics[width=\textwidth]{../assets/my-little-pony-mlp-other-261396.jpeg}
+\end{figure}
+
+% section danksagung (end)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <Inhaltsverzeichnis> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\emptypage
+% Table of contents
+\setcounter{tocdepth}{5}
+\tableofcontents
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% </Inhaltsverzeichnis> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <Hauptteil der Arbeit> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\emptypage
+\pagenumbering{arabic}
+
+\include{prelude}
+
+\include{basics}
+
+\include{concept}
+
+% TODO: objects are missing, need to convert them to pdf
+\include{implementation}
+
+\include{result}
+
+\listoftables
+
+\clearpage
+\listoffigures
+
+\clearpage
+\listoflistings
+
+% References (Literaturverzeichnis):
+% a) Style (with abbreviations: use alpha):
+\bibliographystyle{plainnat-d}
+% b) The File:
+\clearpage
+\bibliography{seminararbeit}
+
+\clearpage
+\printindex
+
+\clearpage
+\printglossaries
+
+\emptypage
+
+\end{document}

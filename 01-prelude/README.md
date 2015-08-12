@@ -4,7 +4,6 @@ The scene are automatically derived from software models ...
 
 ### Motivation
 As part of the Roundtrip3D project, a round-trip framework (hereafter referred to as *R3D*) was developed. This framework also includes a graphical editor for SSIML models, to describe 3D applications.
-<!-- TODO: csrd paper -->
 Then the R3D can be used to generate boilerplate code for multiple programming languages, such as JavaScript, Java or C++, and an X3D file describing the scene.
 The X3D file may contain references to other X3D files containing the actual 3D data (e.g. a car and the corresponding tires), hereafter called *inlines* .
 These files are created by exporting objects from a 3D computer graphics software (e.g. [Blender], [Maya] or [3DS Max]).  

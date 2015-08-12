@@ -1,5 +1,14 @@
 ## Implementation
 ### Used Tech
+
+#### angular
+* dependency management
+* resource management
+* less dynamic templates
+
+#### react
+* highly dynamic views (like the tree view)
+
 ### Problems
 
 #### synchronization Process
@@ -102,10 +111,10 @@ After trying different solutions it turned out the a functional solution would a
 First Chaplin (a backbone successor) was used to implement SceGraToo, but soon the first version of it suffocated under it's own complexity (probably also due to the incompetence of its user - me).
 It turned out that MVC had serious flaws when trying to use it to describe an ever changing declarative scene-graph.
 The naive solution would be to observe the X3D node and rerender the whole tree structure whenever it changed, that would also mean to rerender every time an attribute is changed.
-To make that clear, that means rerendering everytime an object is moved with the mouse, since the translation is an attribute.
+To make that clear, that means rerendering every time an object is moved with the mouse, since the translation is an attribute.
 This thesis will not contain any benchmarks proving that manipulating the DOM from javascript is slow, rather than that it is left as an exercise to the reader to research it if she wants.
 React solves this issue quite elegantly by creating the dom structure in javascript and diffing it with the [DOM], only applying the minimum of changes to the DOM to realize the corresponding result.
 That made it possible to use the X3D node of the DOM as the only source of truth and minimize the state that needs to be kept to make the tree-view-controller work.
 
-#### Backbone and why it sucks
-#### Why Frameworks and Boilerplate in particular suck
+A solution that handles state manually can work, but requires more discipline and a more complicated mental model.
+The programmer has to keep all side effects and cascading effects in mind when changing parts of the program.

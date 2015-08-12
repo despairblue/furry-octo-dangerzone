@@ -135,3 +135,7 @@ Temporary Items
 
 # gitbook
 _book
+
+# pygments cache
+*.pygtex
+*.pygstyle
