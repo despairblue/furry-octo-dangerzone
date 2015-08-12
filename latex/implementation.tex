@@ -9,11 +9,18 @@
 \subsubsection{Koa}
 \label{koa}
 
-% TODO: move to implemenation
-Koa is pretty much boring unless I'd explain
-node.js's take on asynchronicity, callbacks, promises and then
-generators. Still, the server is way to simple to be of any interest for
-this project.
+The server has a really small interface.
+When it gets a request it tries to to match the request to one of its routes, otherwise tries to serve the requested file from the file system (assuming it is a static file), otherwise answers with a 404, which means \texttt{Not Found}.
+
+Some of the routes it answers to are:
+\begin{description*}
+  \item[POST /projects/:project/src/:file]
+    saving files being uploaded
+  \item[GET /projects]
+    return all projects on the server
+  \item[GET /projects/:project]
+    return all information for the project \texttt{:project}
+\end{description*}
 
 \subsection{Client}
 \label{used-tech}
@@ -21,194 +28,240 @@ this project.
 \subsubsection{angular}
 \label{angular}
 
+AngularJS is used for:
+
 \begin{itemize*}
-  \item dependency management
-  \item resource management
-  \item less dynamic templates
+  \item bootstrapping the application,
+  \item modularisation,
+  \item dependency management,
+  \item resource management,
+  \item routing and
+  \item less dynamic views.
 \end{itemize*}
+
+\paragraph{Bootstrapping}
+\label{par:Bootstrapping and Routing}
+
+Listing \ref{list:bootstrap} initializes an SceGraToo. In the \texttt{config}
+function routes are defined. When a link is clicked the browser will not make a
+request to the server and load that page instead a new controller takes over and
+renders a different templates. The advantage of this approach is that the user
+sees imediate feedback while navigating. The application can render the view and
+react to user input while its still waiting for some requested ressources from
+the server (like a list of all available projects). This approach is called
+single-page application \cite{Mikowski:2013:SPW:2663433}.
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+window.angular.module('scegratooApp')
+  .config(function ($routeProvider) {
+    $routeProvider
+      .when('/', {
+        redirectTo: '/projects'
+      })
+      .when('/projects', {
+        templateUrl: 'views/projects.html',
+        controller: 'ProjectsCtrl'
+      })
+      .when('/projects/:project', {
+        templateUrl: 'views/project.html',
+        controller: 'ProjectCtrl'
+      })
+      .when('/projects/:project/:file*', {
+        templateUrl: 'views/projects/:project/x3d/:file.html',
+        controller: 'ProjectsProjectX3dFileCtrl'
+      })
+  })
+  \end{minted}
+  \caption{This is how SceGraToo is initialiezed. It also shows how the routing is defined.}
+  \label{list:bootstrap}
+\end{listing}
+
+\paragraph{Modularisation and Dependency Injection}
+\label{par:modularisation}
+
+Each controller, view or service is contained in its own module and does not
+pollute the global name space. In a browser's javascript context the global
+namespace refers to the namespace that belongs to the \texttt{window} object.
+Defining variables in scripts defines this variable on the window object.
+Angular modules prevent this. Modules are registered on a specific angular
+application (thus one website could also accomodate multiple angular
+applications). The defined variables are contained by creating function that
+returns whatever the module is supposed to contain, thus creating a closure.
+Listing \ref{list:angularmodule} shows a module that creates a WeakMap and
+returns it. Modules can denote that they depend on other modules, this can be
+seen in listing \ref{list:depinj}. The \texttt{MoveableUtils} request that the
+\texttt{moveable} module is injected into it when initializing. Angular creates
+a dependency graph and resolves dependencies automatically.
+
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+window.angular.module('scegratooApp')
+  .service('moveables', function () {
+    return new WeakMap()
+  })
+  \end{minted}
+  \caption{This module creates a WeakMap that can be injected in multiple other modules. These modules all share the same WeakMap since services are singletons. \texttt{service}'s first argument is the \texttt{service}'s name, that can be used by other modules to import it.}
+  \label{list:angularmodule}
+\end{listing}
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+angular.module('scegratooApp')
+  .service('MoveableUtils', function (moveables) {
+    return {
+      logMoveables: () => console.log(moveables)
+    }
+  })
+  \end{minted}
+  \caption{This module requests the \texttt{moveables} module to be injected.}
+  \label{list:depinj}
+\end{listing}
+
+\paragraph{Views}
+\label{par:Views}
+
+Angular tempates are mostly logicless
+(except for ng-repeat iterators and ng-if statements). Listing \ref{list:view}
+shows a template that renders all prejects the corresponding controller
+retrieved from the server.
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{html}
+<sgt-navigation-bar>
+</sgt-navigation-bar>
+<div class="sash">
+  <h3>
+    Editable files for {{project.name}}
+  </h3>
+  <div ng-repeat="file in project.files | orderBy:'view'">
+    <div ng-show="file.view">
+      {{file.view}} -
+      <a
+        href="#/projects/{{projectName}}/ {{file.view}}/{{file.path}}">
+        {{file.path}}
+      </a>
+    </div>
+  </div>
+</div>
+  \end{minted}
+  \caption{A template that renders projects that the controller retrieved from the server}
+  \label{list:view}
+\end{listing}
 
 \subsubsection{react}
 \label{react}
 
-\begin{itemize*}
-  \item highly dynamic views (like the tree view)
-\end{itemize*}
+React is utilized by SceGraToo to render the tree-view that gives a more
+structured view of the scene-graph than the rendered scene does.
 
-\subsection{Problems}
-\label{problems}
+React works by creating compoents and nesting them. Listing
+\ref{list:reactcomponent} shows the \texttt{TreeView} component. The
+\texttt{TreeNode} is another component that handles a specific tree-view-node,
+components keep instantiating and returning components until the whole
+scene-graph is traversed. In listing \ref{list:reactentrypoint} it is shown how
+it is rendered to the DOM. The html syntax is simply syntactic sugar and is
+tanspiled into normal javascript before being evaluated (the transpiled
+equivalent of listin \ref{list:reactentrypoint} is shown in listing
+\ref{list:reacttranspiled}).
+
+Using react the view virtually becomes a function of its input. The input is the root node of the scene-graph, the x3d node.
+
+The parsing and rendering proces can be described as follows:
+\begin{enumerate*}
+  \item Choose a graph node as the root
+  \item call the node component with that graph node,
+  \item instantiate corresponding components for each of the nodes attribute,
+  \item if the graph node has child nodes call the node component again with each child node and return their return values or
+  \item if the graph node has no children return an empty element.
+\end{enumerate*}
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+React.createClass({
+  displayName: 'TreeView',
+  propTypes: {
+    data: React.PropTypes.object.isRequired
+  },
+  render: function () {
+    if (this.props.data.runtime) {
+      return (
+        <TreeNode
+          data={this.props.data.querySelector('scene')}
+          runtime={this.props.data.runtime}
+        />
+      )
+    } else {
+      return <div/>
+    }
+  }
+})
+  \end{minted}
+  \caption{The TreeView component is instantiated with a node. Its render function returns an instantiated TreeNode unless the given node has no runtime property, in that case it just returns an empty div.}
+  \label{list:reactcomponent}
+\end{listing}
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+const treeViewContainer = document.querySelector('#container')
+const x3dNode = document.querySelector('x3d')
+React.render(<TreeView data={x3dNode} />, treeViewContainer)
+  \end{minted}
+  \caption{}
+  \label{list:reactentrypoint}
+\end{listing}
+
+\begin{listing}
+  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+const treeViewContainer = document.querySelector('#container')
+const x3dNode = document.querySelector('x3d')
+React.render(React.createElement(TreeView, { data: x3dNode }), treeViewContainer)
+  \end{minted}
+  \caption{}
+  \label{list:}
+\end{listing}
 
 \subsubsection{Synchronization Process}
 \label{synchronization-process}
 
-This design leads to brittle code that is hard to maintain and hard to
-adapt to new use cases.
+Synchronizing the tree-view when the scene-graph changes is done by calling
+\texttt{React.render} again, just like in listing \ref{reactentrypoint}. React
+calculates the changes that need to be done to update the DOM and applies these.
 
-The first culrpit in this design is that the tree-view-controller
-mutates itself.
-
-Let's externalize the mutation observation and update capabilities into
-another actor: a mutation observer.
-
-The mutation observer can map each graph node to its corresponding tree
-node and thus change the tree node to represent the matching graph node
-again.
-
-The tree-view-controller does not mutate itself anymore. All the
-mutation logic that synchronizes the tree-view-controller with the
-scene-graph is in the mutation observer. But the scene-graph and the
-tree-view-controller can still diverge, since moving the mutation logic
-from the tree-view-controller to the mutation observer does not make it
-easier to reason about and thus less error prone.
-
-Assuming that the first operation (traversing the scene-graph and
-creating the tree-view-controller) is correctly implemented and
-resilient, the easiest way to make sure the tree-view-controller and the
-scene-graph are in sync would be to recreate the tree-view-controller
-whenever the scene-graph changes.
-
-At first sight that seems to be awfully slow, that needn't to be true.
-Instead of recreating the the whole tree using DOM elements, a
-model could be created using simple javascript objects. This virtual
-tree-view-controller can then be compared to the tree-view-controller
-already in the DOM and only the changes need to be applied.
-
-That might sound like it's no easier than doing the synchronization
-manually like in the first diagram, but the diff algorithm doesn't
-actually need to know what it's diffing. Meaning it could be developed
-and tested once and be used by all kinds of projects. That's one thing
-react provides. The rendering pipeline looks finally like this:\\
-
-React calls the virtual representation of what will be rendered
-\emph{virtual DOM}. The other important feature of react is it's way to
-build the virtual DOM. A is a factory that returns A virtual DOM node is
-the return value of component's render function, the render function can
-nest other virtual DOM nodes in its return value.
+If the tree-view changes the scene-graph, the same thing happens. Listing
+\ref{list:checkbox} show a checkbox component. It receives an property called
+\texttt{owner}. That is a scene-graph node. Nodes in x3dom hav the render
+property. If the property is true, that node and all its children are rendered,
+if not, they are not visible. The component is showing the state of the the
+\texttt{owner}'s render property's state. When the user clicks that checkbox the
+\texttt{owner}'s attribute is changed. The compnent does not have to update the
+DOM node, react is doing it the next time \texttt{React.render} is called. This
+is a simple example but the concept holds up for more complicated interactions
+like adding new nodes or moving via drag 'n drop.
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg]{javascript}
-// TreeNodeAttributeList :: [Attribute] -> div
-var TreeNodeAttributeList = React.createClass({
+const TreeNodeAttributeRender = React.createClass({
+  displayName: 'TreeNodeAttributeRender',
+  propTypes: {
+    owner: React.PropTypes.object.isRequired,
+  },
+  changeHandler: function (event) {
+    if (event.currentTarget.checked) {
+      this.props.owner.setAttribute('render', true)
+    } else {
+      this.props.owner.setAttribute('render', false)
+    }
+  },
   render: function () {
-    // the scene-graph node that was passed `createElement` by the caller
-    var node = this.props.node;
+    const attribute = this.props.owner.getAttribute('render')
+    const checked = render === 'true'
 
-    var whitelist = ['def', 'diffusecolor', 'orientation', 'position', 'render', 'rotation', 'scale', 'translation', 'url'];
-
-    var attributesToRender = node.attributes.filter(function (attribute) {
-      return whitelist.includes(attribute.name.toLowerCase());
-    })
-
-    return (
-      <div>
-        {
-          attributesToRender.map(function (attribute) {
-            return <TreeNodeAttribute attribute={a} owner={node}/>
-          })
-        }
-      </div>
-    );
+    return <input type='checkbox' checked={checked} onChange={this.changeHandler} />
   }
-});
+})
   \end{minted}
-  \caption{the usage of HTML tags is just syntactic sugar}
-  \label{list:treenodeattributeslist}
+  \caption{A component that renders a checkbox that show the \texttt{owner} render property's state. Clicking the checkbox changes the \texttt{owner}'s property's state.}
+  \label{list:checkbox}
 \end{listing}
-
-\begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{javascript}
-'use strict';
-
-// TreeNodeAttributeList :: [Attribute] -> div
-var TreeNodeAttributeList = React.createClass({
-  render: function render() {
-    // the scene-graph node that was passed `createElement` by the caller
-    var node = this.props.node;
-
-    var whitelist = ['def', 'diffusecolor', 'orientation', 'position', 'render', 'rotation', 'scale', 'translation', 'url'];
-
-    var attributesToRender = node.attributes.filter(function (attribute) {
-      return whitelist.includes(attribute.name.toLowerCase());
-    });
-
-    return React.createElement(
-      'div',
-      null,
-      attributesToRender.map(function (attribute) {
-        return React.createElement(TreeNodeAttribute, { attribute: a, owner: node });
-      })
-    );
-  }
-});
-  \end{minted}
-  \caption{the transpiled version}
-  \label{list:trenodeattributeslisttranspiled}
-\end{listing}
-
-Listing \ref{list:treenodeattributeslist} is the a simplified version of the code that renders a
-graph's nodes attributes into the tree-view-controller.
-The usage of HTML tags is just syntactic sugar and is transpiled into pure javascript (see listing \ref{list:trenodeattributeslisttranspiled}).
-This component simply decides what attributes should be rendered into the tree.
-\texttt{TreeNodeAttribute} is another component that will renders
-different elements depending on what attribute is passed in.
-
-Because the outputted html is only a function of its input it easy to
-parse the scene-graph:
-\begin{enumerate*}
-  \item choose a graph node as the root
-  \item call the node component with that graph node
-  \item if the graph node has child nodes call the node component again with each child node and return their return values wrapped in an element
-  \item if the graph node has no children return an empty element
-\end{enumerate*}
-
-\subsubsection{states}\label{states}
-
-% TODO: explaing the DOM
-\begin{itemize}
-  \item explaing the DOM
-  \item move to implemtation
-\end{itemize}
-
-Using something imperative like backbone it would be necessary to create
-a model (copying the information already in the DOM), a view (rendering
-that information to the DOM again) and a controller keeping track of the
-state changing the model where necessary and rerendering the view, and
-also keeping track of all it's children and removing them when they
-disappear or creating new ones whenever a new X3D element appears.
-
-\subsubsection{Functional Programming}\label{functional-programming}
-
-All SceGraToo does is listen to changes of the \gls{X3D} node and whenever it
-changes, may it be an attribute that changes or nodes that are added or
-removed, it calls one function that evaluates the X3D node (basically
-traversing it) and return the new structure. That structure is diffed
-against the tree-view that is already in the DOM and react calculates
-the minimal changes necessary to make the tree-view's old structure
-coherent with the newly calculated one.
-
-\subsection{Why the chosen approach will
-work}\label{why-the-chosen-approach-will-work}
-
-After trying different solutions it turned out the a functional solution
-would also suit SceGraToo the best. First Chaplin (a backbone successor)
-was used to implement SceGraToo, but soon the first version of it
-suffocated under it's own complexity (probably also due to the
-incompetence of its user - me). It turned out that MVC had serious flaws
-when trying to use it to describe an ever changing declarative
-scene-graph. The naive solution would be to observe the X3D node and
-rerender the whole tree structure whenever it changed, that would also
-mean to rerender every time an attribute is changed. To make that clear,
-that means rerendering every time an object is moved with the mouse,
-since the translation is an attribute. This thesis will not contain any
-benchmarks proving that manipulating the DOM from javascript is slow,
-rather than that it is left as an exercise to the reader to research it
-if she wants. React solves this issue quite elegantly by creating the
-dom structure in javascript and diffing it with the DOM, only
-applying the minimum of changes to the DOM to realize the corresponding
-result. That made it possible to use the X3D node of the DOM as the only
-source of truth and minimize the state that needs to be kept to make the
-tree-view-controller work.
-
-A solution that handles state manually can work, but requires more
-discipline and a more complicated mental model. The programmer has to
-keep all side effects and cascading effects in mind when changing parts
-of the program.
