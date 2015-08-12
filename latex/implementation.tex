@@ -4,16 +4,12 @@
 \label{implementation}
 
 \subsection{Server}
-\label{used-tech}
-
-\subsubsection{Koa}
-\label{koa}
 
 The server has a really small interface.
 When it gets a request it tries to to match the request to one of its routes, otherwise tries to serve the requested file from the file system (assuming it is a static file), otherwise answers with a 404, which means \texttt{Not Found}.
 
 Some of the routes it answers to are:
-\begin{description*} 
+\begin{description*}
   \item[POST /projects/:project/src/:file]
     saving files being uploaded
   \item[GET /projects]
@@ -23,7 +19,6 @@ Some of the routes it answers to are:
 \end{description*}
 
 \subsection{Client}
-\label{used-tech}
 
 \subsubsection{angular}
 \label{angular}
@@ -73,7 +68,7 @@ window.angular.module('scegratooApp')
       })
   })
   \end{minted}
-  \caption{This is how SceGraToo is initialized. It also shows how the routing is defined.}
+  \caption{This is how \gls{Roundtrip3D} is initialized. It also shows how the routing is defined.}
   \label{list:bootstrap}
 \end{listing}
 
@@ -153,7 +148,7 @@ retrieved from the server.
 \subsubsection{react}
 \label{react}
 
-React is utilized by SceGraToo to render the tree-view that gives a more
+React is utilized by \gls{Roundtrip3D} to render the tree-view that gives a more
 structured view of the scene-graph than the rendered scene does.
 
 React works by creating components and nesting them. Listing
@@ -161,12 +156,12 @@ React works by creating components and nesting them. Listing
 \texttt{TreeNode} is another component that handles a specific tree-view-node,
 components keep instantiating and returning components until the whole
 scene-graph is traversed. In listing \ref{list:reactentrypoint} it is shown how
-it is rendered to the DOM. The \gls{HTML}syntax is simply syntactic sugar and is
+it is rendered to the \gls{DOM}. The \gls{HTML} syntax is simply syntactic sugar and is
 transpiled into normal javascript before being evaluated (the transpiled
 equivalent of listing \ref{list:reactentrypoint} is shown in listing
 \ref{list:reacttranspiled}).
 
-Using react the view virtually becomes a function of its input. The input is the root node of the scene-graph, the \gls{X3D}node.
+Using react the view virtually becomes a function of its input. The input is the root node of the scene-graph, the \gls{X3D} node.
 
 The parsing and rendering process can be described as follows:
 \begin{enumerate*}
@@ -208,7 +203,7 @@ const treeViewContainer = document.querySelector('#container')
 const x3dNode = document.querySelector('x3d')
 React.render(<TreeView data={x3dNode} />, treeViewContainer)
   \end{minted}
-  \caption{Shows how react renders to the DOM. The \texttt{treeViewContainer} is the the DOM element react will render into. \texttt{x3dNode} is the scene-graph in the DOM.}
+  \caption{Shows how react renders to the \gls{DOM}. The \texttt{treeViewContainer} is the the \gls{DOM} element react will render into. \texttt{x3dNode} is the scene-graph in the \gls{DOM}.}
   \label{list:reactentrypoint}
 \end{listing}
 
@@ -227,7 +222,7 @@ React.render(React.createElement(TreeView, { data: x3dNode }), treeViewContainer
 
 Synchronizing the tree-view when the scene-graph changes is done by calling
 \texttt{React.render} again, just like in listing \ref{list:reactentrypoint}. React
-calculates the changes that need to be done to update the DOM and applies these.
+calculates the changes that need to be done to update the \gls{DOM} and applies these.
 
 If the tree-view changes the scene-graph, the same thing happens. Listing
 \ref{list:checkbox} show a check box component. It receives an property called
@@ -236,7 +231,7 @@ property. If the property is true, that node and all its children are rendered,
 if not, they are not visible. The component is showing the state of the the
 \texttt{owner}'s render property's state. When the user clicks that check box the
 \texttt{owner}'s attribute is changed. The component does not have to update the
-DOM node, react is doing it the next time \texttt{React.render} is called. This
+\gls{DOM} node, react is doing it the next time \texttt{React.render} is called. This
 is a simple example but the concept holds up for more complicated interactions
 like adding new nodes or moving via drag and drop.
 

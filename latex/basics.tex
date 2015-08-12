@@ -5,16 +5,14 @@
 
 \subsection{Scene-Graph}\label{scene-graph}
 
-Scene-graphs can be used to group and organize 3D objects, their properties and
+Scene-graphs can be used to group and organize \gls{3D} objects, their properties and
 concerning transformations. A gls{DAG} can be used to represent a scene-graph.
 It starts with a root node that is associated with one or more children. Each
 child can be an object or a group, again containing more children. A group can
 contain associated transformation information, like \emph{translation},
 \emph{rotation} or \emph{scaling}. This structure has certain advantages
 compared to applying all transformations to the raw meshes and sending
-everything to the \gls{GPU}. \cite{realityprime}
-
-\gls{SSIML} \cite{Lenk:2012:MID:2338714.2338742} scene-graphs differ from the
+everything to the \gls{GPU}. \cite{realityprime} \gls{SSIML} \cite{Lenk:2012:MID:2338714.2338742} scene-graphs differ from the
 above definition and there are three types of nodes:
 
 \begin{itemize*}
@@ -40,7 +38,7 @@ represents it is possible to let the CPU do more of the heavy
 lifting and unburden the \gls{GPU}.
 
 \begin{quote}
-  Rather than do the heavy work at the OpenGL and polygon level,
+  Rather than do the heavy work at the \gls{OpenGL} and polygon level,
   scene-graph architects realized they could better perform culling at
   higher level abstractions for greater efficiency. If we can remove the
   invisible objects first, then we make the hardware do less work and
@@ -93,28 +91,26 @@ That way the memory footprint of an application can be reduced.
   </Transform>
 </Group>
   \end{minted}
-  \caption{Example \gls{X3D}group showing the use of \texttt{def} and \texttt{use}.}
+  \caption{Example \gls{X3D} group showing the use of \texttt{def} and \texttt{use}.}
   \label{list:defuse}
 \end{listing}
 
 
 \subsection{X3D}
-\label{x3d}
-
-X3D \cite{x3d} is the XML representation of VRML which was designed as a
-universal interactive 3D exchange format, much like \gls{HTML}is for written
-documents or \gls{SVG} for vector graphics. Due to its XML structure it can be
-integrated in \gls{HTML}documents, thus the Frauenhofer Institute pursued to
-implement a runtime that could interpret and visualize X3D in the browser, by
-using a WebGL context. It is called x3dom \cite{x3dom} and it is extensively used
+\label{x3d} \gls{X3D} \cite{x3d} is the \gls{XML} representation of \gls{VRML} which was designed as a
+universal interactive \gls{3D} exchange format, much like \gls{HTML} is for written
+documents or \gls{SVG} for vector graphics. Due to its \gls{XML} structure it can be
+integrated in \gls{HTML} documents, thus the Frauenhofer Institute pursued to
+implement a runtime that could interpret and visualize \gls{X3D} in the browser, by
+using a \gls{WebGL} context. It is called x3dom \cite{x3dom} and it is extensively used
 by SceGraToo, the tool that arose from this thesis.
 
-\subsubsection{x3dom}
+\subsection{x3dom}
 \label{par:x3dom}
 
 As said in the previous section, x3dom was developed by the Frauenhofer
-Institute to realize the vision that started VRML in the first place: \emph{mark
-up interactive 3D content for the web}. On the web there are two entirely
+Institute to realize the vision that started \gls{VRML} in the first place: \emph{mark
+up interactive \gls{3D} content for the web}. On the web there are two entirely
 different approaches to describe the same thing:
 
 \begin{itemize*}
@@ -125,11 +121,11 @@ different approaches to describe the same thing:
 \begin{longtable}[c]{@{}lll@{}}
   \caption{The matrix in this table classifies x3dom together with other common web technologies \cite{x3dom}.\label{tab:feature_matrix}}\\
   \toprule
-  & 2D & 3D\tabularnewline
+  & 2D & \gls{3D} \tabularnewline
   \midrule
   \endhead
   Declarative & \gls{SVG} \cite{svg} & x3dom \cite{x3dom} \tabularnewline
-  Imperative  & Canvas \cite{canvas} & WebGL \cite{webgl} \tabularnewline
+  Imperative  & Canvas \cite{canvas} & \gls{WebGL} \cite{webgl} \tabularnewline
   \bottomrule
 \end{longtable}
 
@@ -141,7 +137,7 @@ perfectly.
 \label{ssiml}
 
 Heterogeneous developer groups, groups that are comprised of people from
-different backgrounds (programmers, 3D designers) have their difficulties
+different backgrounds (programmers, \gls{3D} designers) have their difficulties
 working together. They work in different domains and use different tools
 adjusted to that domain. \cite{Glinz:2015:SUS:2802768.2802838}
 
@@ -160,8 +156,8 @@ It also serves as a code generation template.
 
 \subsection{Roundtrip 3D}\label{roundtrip-3d}
 
-As stated above, when developing 3D applications, many different
-developers are involved, i.e.~3D designers, programmers and, ideally,
+As stated above, when developing \gls{3D} applications, many different
+developers are involved, i.e.~\gls{3D} designers, programmers and, ideally,
 also software designers (see figure \ref{fig:ssimldiagram}).
 
 % TODO: convert to pdf
@@ -184,8 +180,8 @@ else's.
 The next section examines efforts and applications in the field of
 
 \begin{itemize*}
-  \item collaborative remote working on 3D models and
-  \item online 3D editors.
+  \item collaborative remote working on \gls{3D} models and
+  \item online \gls{3D} editors.
 \end{itemize*}
 
 \subsubsection{3D Meteor}
@@ -198,7 +194,7 @@ The next section examines efforts and applications in the field of
 	\label{fig:3dmeteor}
 \end{figure}
 
-This simple 3D editor allows the user to add and remove colored blocks to a
+This simple \gls{3D} editor allows the user to add and remove colored blocks to a
 scene. The synchronization is leveraging meteor's database collection
 subscription features. Meteor applications are comprised of a client side and a
 server side. The client can subscribe to database collections and gets
@@ -208,7 +204,7 @@ object with an x, y and z property describing its position. When a box is
 added to the collection the collection is synchronized with the server. The
 server informs all other browser instances that show this scene of the new box.
 These browser instances reevalute the template that renders the x3dom scene to
-the DOM and the the DOM is updated to contain the new box, thus synchronizing
+the \gls{DOM} and the the \gls{DOM} is updated to contain the new box, thus synchronizing
 the scene with the browser instance. \cite{3dmeteor}
 
 \subsubsection{Blender Plugin}
@@ -237,7 +233,7 @@ object can apply them to his working copy. They can actually be applied
 to any object that has the same number of vertices. That is also a
 shortcoming. Adding or removing vertices cannot be handled by the
 plugin. It is also not in real time, so it is more comparable to version
-control system like git, just for \gls{3D} models.
+control system like \gls{git} just for \gls{3D} models.
 
 \subsubsection{Gizmos}\label{gizmos}
 
@@ -245,7 +241,7 @@ Gizmos, also called manipulators, are handles or bounding boxes with
 handles that manipulate their containing objects in a predefined way when
 dragged. \cite{wikigizmo}
 
-In X3D gizmos can be realized with specialized X3DDragSensorNodes \cite{x3ddragsensornode}, like:
+In \gls{X3D} gizmos can be realized with specialized X3DDragSensorNodes \cite{x3ddragsensornode}, like:
 
 \begin{description*}
 \item[SphereSensor]
@@ -350,18 +346,18 @@ different applications.
 \label{component-editor30}
 
 On the 12th of June 2015 the x3dom maintainers released their Component Editor. \cite{componenteditor}
-It was released after the the work on SceGraToo started.
+It was released after the the work on \gls{Roundtrip3D} started.
 Its development took about a year and three people working part-time on it. \cite{componenteditoreffort}
 Although it does offer all the wanted scene composition features, it lacks the ability to:
 
 \begin{itemize*}
-  \item Load an existing \gls{X3D}file,
-  \item save the scene as an \gls{X3D}file and
-  \item upload \gls{X3D}files that can be included as inlines.
+  \item Load an existing \gls{X3D} file,
+  \item save the scene as an \gls{X3D} file and
+  \item upload \gls{X3D} files that can be included as inlines.
 \end{itemize*}
 
-Scenes can only be loaded and saved as a JSON representation (see listing~\ref{componenteditorjson}).
-Conversion between the formats may be possible, but meta information like IDs in comments would be lost.
+Scenes can only be loaded and saved as a \gls{JSON} representation (see listing~\ref{componenteditorjson}).
+Conversion between the formats may be possible, but meta information like \gls{ID}s in comments would be lost.
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg]{json}
@@ -377,7 +373,7 @@ Conversion between the formats may be possible, but meta information like IDs in
   }
 }
   \end{minted}
-  \caption{The JSON format used by the component editor to save scenes.}
+  \caption{The \gls{JSON} format used by the component editor to save scenes.}
   \label{componenteditorjson}
 \end{listing}
 
@@ -388,13 +384,13 @@ Using web sockets instead of AJAX is an interesting approach.
 \cite{Marion:2012:RCS:2338714.2338721} Especially the cut down on latency. It is
 over all very similar to the approach that was considered for SceGraToo, but not
 implemented due to time constraints. In the end the differences between
-SceGraToo's requirements and theirs outweigh the similarities. SceGraToo not only
+SceGraToo's requirements and theirs outweigh the similarities. \gls{Roundtrip3D} not only
 has to visualize a scene, but also manipulate it. And to achieve a spector mode
 like in this work not only the viewpoint would have to be synchronized but also
 the whole scene. This can either be done by sending the whole scene to the other
 clients on every change, or sending change sets, which poses an interesting
-challenge. They visualize a specific dataset in a threejs's specific JSON format
-\cite{threejs-format}. SceGraToo only needs to render X3D scenes, converting the
+challenge. They visualize a specific dataset in a threejs's specific \gls{JSON} format
+\cite{threejs-format}. \gls{Roundtrip3D} only needs to render \gls{X3D} scenes, converting the
 scene into another format and have it rendered by another scene graph framework
 is unnesesary, since x3dom does a pretty good job doing this.
 
@@ -402,7 +398,7 @@ is unnesesary, since x3dom does a pretty good job doing this.
 \label{paraviewweb-pvweb}
 
 Simple to use out of the box, but needs a paraview server instance and
-paraview does not support \gls{X3D}as an input format. So using this is unfortunately
+paraview does not support \gls{X3D} as an input format. So using this is unfortunately
 not possible unless an import filter is written. The visualization is
 mainly meant to explore data sets. There is no easy way to manipulate
 the input data. This can only happen by extending the visualization

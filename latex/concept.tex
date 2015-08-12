@@ -5,7 +5,7 @@
 
 % TODO: skizze wie dom rendering funktioniert oder auch nicht, da es ziemlich uninteressant ist
 
-In the following sections the initial design concept of SceGraToo is illustrated.
+In the following sections the initial design concept of \gls{Roundtrip3D} is illustrated.
 
 \subsection{Server}
 \label{server}
@@ -20,7 +20,7 @@ SceGraToo's server is not going to be complex. \footnote{Complex servers can be
 written in nodejs as well, it is just not encourages, since most people tend to
 refactor there infrastructure into micro services.}
 
-Listing \ref{list:nodejs} shows a server that is looking up a user from the database and returning it as JSON to the browser.
+Listing \ref{list:nodejs} shows a server that is looking up a user from the database and returning it as \gls{JSON} to the browser.
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg]{javascript}
@@ -82,7 +82,7 @@ off-the-shelf solutions, like angular or JQuery plugins, were tested
 against the following requirements:
 
 \begin{enumerate*}
-  \item Custom \gls{HTML} elements as part of tree nodes (e.g. multiple checkboxes or multiple inputs),
+  \item Custom \gls{HTML} elements as part of tree nodes (e.g.~multiple checkboxes or multiple inputs),
   \item ability to observe the tree node's state changing,
   \item binding to an arbitrary model and
   \item detect inconsistencies between the model and the view and recover from them.
@@ -107,7 +107,6 @@ evaluating a couple of solutions it was clear that the problem space was to
 specific and a custom solution is required.
 
 \subsubsection{Synchronization Process}
-\label{synchronization-process}
 
 Of all requirements, the most complicated part is keeping the tree-view in sync
 with the scene-graph while the scene-graph is being modified and vice
@@ -118,19 +117,19 @@ versa.
 
 \begin{description*}
   \item[scene-graph]
-    The X3D representation of the scene as part of the DOM, see listing~\ref{list:x3dscene} and the screenshot in figure \ref{fig:x3dom-dom} from the Chrome DevTools.
+    The \gls{X3D} representation of the scene as part of the \gls{DOM}, see listing~\ref{list:x3dscene} and the screenshot in figure \ref{fig:x3dom-dom} from the Chrome DevTools.
   \item[scene-graph-node]
-    A specific scene graph node (e.g. \texttt{inline}, \texttt{transform} or \texttt{scene}).
+    A specific scene graph node (e.g.~\texttt{inline}, \texttt{transform} or \texttt{scene}).
   \item[tree-view-component]
     Comprises all functionality related to parsing the scene-graph and creating the tree-view out of individual tree-view-node-components.
   \item[tree-view]
-    The \gls{HTML}representation of the tree-view-component as part of the DOM, see figure \ref{fig:tree-view} and listing \ref{list:tree-view} (\gls{HTML}output
+    The \gls{HTML} representation of the tree-view-component as part of the \gls{DOM}, see figure \ref{fig:tree-view} and listing \ref{list:tree-view} (\gls{HTML} output
     shortened and simplified).
   \item[tree-view-node-component]
     Comprises all functionality related to synchronizing changes from a scene-graph-node to the corresponding
     tree-view-node and vice-versa.
   \item[tree-view-node]
-    The \gls{HTML}representation of the tree-view-node-component as part of the DOM, see figure \ref{fig:tree-view-node-dom} and figure \ref{fig:tree-view-node-rendered}.
+    The \gls{HTML} representation of the tree-view-node-component as part of the \gls{DOM}, see figure \ref{fig:tree-view-node-dom} and figure \ref{fig:tree-view-node-rendered}.
 \end{description*}
 
 \begin{figure}
@@ -143,21 +142,21 @@ versa.
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{../assets/x3dom-dom.png}
-  \caption{The X3D scene inside the DOM.}
+  \caption{The \gls{X3D} scene inside the \gls{DOM}.}
   \label{fig:x3dom-dom}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{../assets/treeview-dom.png}
-  \caption{About half of the DOM elements that make up a tree-view of only three tree-view-nodes: a \texttt{scene}, a \texttt{transform} and an \texttt{inline}.}
+  \caption{About half of the \gls{DOM} elements that make up a tree-view of only three tree-view-nodes: a \texttt{scene}, a \texttt{transform} and an \texttt{inline}.}
   \label{fig:treeview-dom}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{../assets/treeview-node-dom.png}
-  \caption{The DOM elements that make up a tree-view-node for an \texttt{inline}.}
+  \caption{The \gls{DOM} elements that make up a tree-view-node for an \texttt{inline}.}
   \label{fig:tree-view-node-dom}
 \end{figure}
 
@@ -195,7 +194,7 @@ versa.
 </scene>
 </x3d>
   \end{minted}
-	\caption{X3D example scene.}
+	\caption{ \gls{X3D} example scene.}
 	\label{list:x3dscene}
 \end{listing}
 
@@ -256,20 +255,20 @@ instatiates new tree-view-node-components. These tree-view-node-components
 create the corresponding tree-view-nodes while further traversing the
 scene-graph. For each scene-graph-node a corresponding tree-view-node-component
 is created. If there are no child nodes left the tree-view creation is done.
-Each tree-view-node-component creates all DOM elements necessary to represent
-the corresponding scene-graph-node in the DOM. Also each
+Each tree-view-node-component creates all \gls{DOM} elements necessary to represent
+the corresponding scene-graph-node in the \gls{DOM}. Also each
 tree-view-node-component observes its corresponding scene-graph-node for
 attribute mutations and added or removed child nodes and act accordingly.
 
 Depending on how the scene-graph is mutated 3 main cases can be differentiated:
 
 \begin{description*}
-  \item[a scene-graph-node is added]
-    a new tree-view-node-component is instantiated, adding all DOM elements making up the tree-view-node to the DOM
-  \item[a scene-graph-node is deleted]
-    the corresponding tree-view-node-component is destroyed and all DOM elements making up that tree-view-node are removed from the DOM
-  \item[a scene-graph-node is mutated]
-    the corresponding DOM elements that make up the  tree-view-node are altered to reflect the mutation
+  \item[A scene-graph-node is added]
+    A new tree-view-node-component is instantiated, adding all \gls{DOM} elements making up the tree-view-node to the \gls{DOM}.
+  \item[A scene-graph-node is deleted]
+    The corresponding tree-view-node-component is destroyed and all \gls{DOM} elements making up that tree-view-node are removed from the \gls{DOM}.
+  \item[A scene-graph-node is mutated]
+    The corresponding \gls{DOM} elements that make up the  tree-view-node are altered to reflect the mutation.
 \end{description*}
 
 Tree-view-node can also be used to edit a scene-graph node's properties. When an
@@ -307,7 +306,7 @@ Following the two main problems are described.
 \end{description*}
 
 This can be greatly simplified if only the functionality for parsing the
-scene-graph and creating DOM elements to represent the parts of the scene-graph
+scene-graph and creating \gls{DOM} elements to represent the parts of the scene-graph
 is implemented and on every change the whole tree-view is recreated by doing
 this again.
 
@@ -320,19 +319,19 @@ Problem 2 is reduced to the following two steps:
 \end{enumerate*}
 
 Rerendering everything on every change is usually inefficient. Removing a big part
-of the DOM and replacing it would kick of a \emph{reflow}, which is the browser's
+of the \gls{DOM} and replacing it would kick of a \emph{reflow}, which is the browser's
 process of laying out the content. This process is blocking, meaning the user can't
 scroll or otherwise interact with the application. \cite{reflow}
 
 React is used to minimize the possibility of a reflow happening. React
-calculates a lightweight representation of what the DOM should be like and
-compares that to what the DOM is already. It calculates a set of patches and
-only applies these to the DOM.
+calculates a lightweight representation of what the \gls{DOM} should be like and
+compares that to what the \gls{DOM} is already. It calculates a set of patches and
+only applies these to the \gls{DOM}.
 
 From a developer's point of view the application is programmed like it is
 completlely rerendered everytime something changes. But from the browser's point
 of view only the most minimal set of changes that are required to transform the
-DOM into disired state are applied, thus greatly reducing the risk of a reflow.
+\gls{DOM} into disired state are applied, thus greatly reducing the risk of a reflow.
 
 The code below (listings \ref{oldvirtdom}, \ref{newvirtdom} and \ref{patch}) is
 for explanitary purposes to describe how react works. It does not resemble
@@ -503,6 +502,6 @@ kept in sync and the other way around.
 \subsection{Communication}
 \label{interaction}
 
-The client comunicates with the server via a small HTTP API returning JSON.
+The client comunicates with the server via a small HTTP API returning \gls{JSON}.
 Making a GET request to \texttt{/projects} returns all projects stored on the server.
 Making a GET request to \texttt{/projects/unicorn} returns all data about unicorn project.
