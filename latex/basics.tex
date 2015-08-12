@@ -170,7 +170,7 @@ graphical editor for \hyperref[ssiml]{SSIML} models. It offers an
 approach for merging a developer's changes back into the main model.
 After all working copies are merged back into the main model (dropping
 unwanted or conflicting changes), all working copies are regenerated and
-delivered to the individual developers. After each roundtrip every
+delivered to the individual developers. After each round-trip every
 developer has a copy of the project that is consistent with everyone
 else's.
 
@@ -190,7 +190,7 @@ The next section examines efforts and applications in the field of
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=12cm]{../assets/3dmeteor.png}
-  \caption{This is a scene in 3dmeteor showing a house and a garden of cubes.}
+  \caption{This is a scene in 3d Meteor showing a house and a garden of cubes.}
 	\label{fig:3dmeteor}
 \end{figure}
 
@@ -203,7 +203,7 @@ thing that actually is synchronized is an array of \emph{boxes}. A box is an
 object with an x, y and z property describing its position. When a box is
 added to the collection the collection is synchronized with the server. The
 server informs all other browser instances that show this scene of the new box.
-These browser instances reevalute the template that renders the x3dom scene to
+These browser instances reevaluate the template that renders the x3dom scene to
 the \gls{DOM} and the the \gls{DOM} is updated to contain the new box, thus synchronizing
 the scene with the browser instance. \cite{3dmeteor}
 
@@ -212,7 +212,7 @@ the scene with the browser instance. \cite{3dmeteor}
 
 As part of an asset management system the Université du Québec à
 Montréal implemented a plugin for Blender for collaborative working. An
-artist can record changes to wiremeshes and store them on a server.
+artist can record changes to wire-meshes and store them on a server.
 Another artist can download these changes and apply them to his working
 copy. The change sets are a simple list of vertices and their movement in the
 x, y and z space (see listing \ref{blenderplugin}). \cite{LCR07}
@@ -385,14 +385,14 @@ Using web sockets instead of AJAX is an interesting approach.
 over all very similar to the approach that was considered for SceGraToo, but not
 implemented due to time constraints. In the end the differences between
 SceGraToo's requirements and theirs outweigh the similarities. \gls{Roundtrip3D} not only
-has to visualize a scene, but also manipulate it. And to achieve a spector mode
+has to visualize a scene, but also manipulate it. And to achieve a spectator mode
 like in this work not only the viewpoint would have to be synchronized but also
 the whole scene. This can either be done by sending the whole scene to the other
 clients on every change, or sending change sets, which poses an interesting
 challenge. They visualize a specific dataset in a threejs's specific \gls{JSON} format
 \cite{threejs-format}. \gls{Roundtrip3D} only needs to render \gls{X3D} scenes, converting the
 scene into another format and have it rendered by another scene graph framework
-is unnesesary, since x3dom does a pretty good job doing this.
+is unnecessary, since x3dom does a pretty good job doing this.
 
 \subsubsection{ParaViewWeb}
 \label{paraviewweb-pvweb}

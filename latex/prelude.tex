@@ -4,7 +4,7 @@
 \label{sec:Prelude}
 
 The goal of the thesis is to create a \gls{3D} editor, using web technologies,
-which enables its users to postprocess \gls{X3D} scenes. These scenes are the
+which enables its users to post-process \gls{X3D} scenes. These scenes are the
 product of a tool that was implemented as part of the DFG research
 project \gls{Roundtrip3D} \cite{Jung:2015:SDA:2802768.2802837}.
 % The scene are automatically derived from software models \ldots{}
@@ -36,7 +36,7 @@ This can be achieved by adjusting \emph{translate}, \emph{rotate} and
 further, the orientation the \gls{3D} artists chose for its object may be unknown, if
 % TODO: so what now? convention or no convention?
 their is no convention for \gls{3D} modeling. \sout{Usually their is a convention
-about origin of coord system, scaling and orientation} (no there isn't, still
+about origin of coordinate system, scaling and orientation} (no there isn't, still
 not sure what to put here). However, we cannot assume that these conventions are
 always met. The main problem is, that \gls{3D} transformations, such as translation,
 orientation and scale of single \gls{3D} geometries, need to be adjusted. So far,
@@ -77,8 +77,8 @@ norm. But if one depends on art from 3rd parties, the orientation and position
 could be completely arbitrary like in figure \ref{fig:wheel4}
 
 These properties could be added and adjusted via any text editor by opening the
-generated \gls{X3D} file, but the resulting workflow is not user-friendly. The
-following list explains the workflow using just a text editor.
+generated \gls{X3D} file, but the resulting work-flow is not user-friendly. The
+following list explains the work-flow using just a text editor.
 
 \begin{enumerate*}
   \item Model the \gls{3D} application, including \gls{3D} the scene structure.
@@ -90,7 +90,7 @@ following list explains the workflow using just a text editor.
 \end{enumerate*}
 
 Tools like Maya or Blender could also be used for this, but their import
-and export filter discard important metadata that is necessary for the
+and export filter discard important meta-data that is necessary for the
 round-trip transformation. This is what \gls{Roundtrip3D} is meant to be. \gls{Roundtrip3D} addresses both of these issues. It allows for loading the root \gls{X3D} file and changing all transformations, containing the inline nodes,
 using mouse interactions. For fine grained control \gls{Roundtrip3D} also
 contains a tree view that allows the user to input exact attributes for
@@ -102,5 +102,5 @@ This thesis addresses two issues:
 
 \begin{enumerate*}
   \item Allowing for composing generated \gls{X3D} scenes (with focus on usability). E.g., besides a \gls{3D} view, a tree view for fine grained editing should not only visualize the \gls{3D} scene's structure, but also allow for entering concrete coordinate values.
-  \item During the editing process, the preservation of all information/metadata must be guaranteed.
+  \item During the editing process, the preservation of all information/meta-data must be guaranteed.
 \end{enumerate*}
