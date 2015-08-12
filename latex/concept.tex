@@ -15,7 +15,7 @@ In the following sections the initial design concept of SceGraToo is illustrated
   Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices. \cite{nodejs}
 \end{quote}
 
-Node is used because it's inherently easy writing small servers with it, and
+Node is used because it is inherently easy writing small servers with it, and
 SceGraToo's server is not going to be complex. \footnote{Complex servers can be
 written in nodejs as well, it is just not encourages, since most people tend to
 refactor there infrastructure into micro services.}
@@ -82,7 +82,7 @@ off-the-shelf solutions, like angular or JQuery plugins, were tested
 against the following requirements:
 
 \begin{enumerate*}
-  \item Custom html elements as part of tree nodes (e.g. multiple checkboxes or multiple inputs),
+  \item Custom \gls{HTML} elements as part of tree nodes (e.g. multiple checkboxes or multiple inputs),
   \item ability to observe the tree node's state changing,
   \item binding to an arbitrary model and
   \item detect inconsistencies between the model and the view and recover from them.
@@ -92,7 +92,7 @@ against the following requirements:
 
 \begin{itemize*}
   \item Custom elements as part of tree nodes and
-  \item ability to listen to changes to the tree node
+  \item ability to listen to changes to the tree node.
 \end{itemize*}
 
 \textbf{Requirements none of the tested tools met:}
@@ -118,19 +118,19 @@ versa.
 
 \begin{description*}
   \item[scene-graph]
-    the X3D representation of the scene as part of the DOM, see listing~\ref{list:x3dscene} and the screenshot in figure \ref{fig:x3dom-dom} from the Chrome DevTools
+    The X3D representation of the scene as part of the DOM, see listing~\ref{list:x3dscene} and the screenshot in figure \ref{fig:x3dom-dom} from the Chrome DevTools.
   \item[scene-graph-node]
-    a specific scene graph node (e.g. \texttt{inline}, \texttt{transform} or \texttt{scene})
+    A specific scene graph node (e.g. \texttt{inline}, \texttt{transform} or \texttt{scene}).
   \item[tree-view-component]
-    comprises all functionality related to parsing the scene-graph and creating the tree-view out of individual tree-view-node-components
+    Comprises all functionality related to parsing the scene-graph and creating the tree-view out of individual tree-view-node-components.
   \item[tree-view]
-    the HTML representation of the tree-view-component as part of the DOM, see figure \ref{fig:tree-view} and listing \ref{list:tree-view} (html output
-    shortened and simplified)
+    The \gls{HTML}representation of the tree-view-component as part of the DOM, see figure \ref{fig:tree-view} and listing \ref{list:tree-view} (\gls{HTML}output
+    shortened and simplified).
   \item[tree-view-node-component]
-    comprises all functionality related to synchronizing changes from a scene-graph-node to the corresponding
-    tree-view-node and vice-versa
+    Comprises all functionality related to synchronizing changes from a scene-graph-node to the corresponding
+    tree-view-node and vice-versa.
   \item[tree-view-node]
-    the HTML representation of the tree-view-node-component as part of the DOM, see figure \ref{fig:tree-view-node-dom} and figure \ref{fig:tree-view-node-rendered}
+    The \gls{HTML}representation of the tree-view-node-component as part of the DOM, see figure \ref{fig:tree-view-node-dom} and figure \ref{fig:tree-view-node-rendered}.
 \end{description*}
 
 \begin{figure}
@@ -195,7 +195,7 @@ versa.
 </scene>
 </x3d>
   \end{minted}
-	\caption{X3D example scene}
+	\caption{X3D example scene.}
 	\label{list:x3dscene}
 \end{listing}
 
@@ -239,7 +239,7 @@ versa.
   </li>
 </div>
   \end{minted}
-  \caption{example tree view structure, structure is simplified}
+  \caption{Example tree view structure, structure is simplified.}
   \label{list:tree-view}
 \end{listing}
 
@@ -251,13 +251,13 @@ Also not all attributes are shown, but only the ones the user may be interested
 in (such as \texttt{DEF}, \texttt{translate} or \texttt{rotate}).
 
 One approach is to instantiate the tree-view-component with the a
-scene-graph-node a root node. For all child nodes the tree-view-component
+scene-graph-node as root node. For all child nodes the tree-view-component
 instatiates new tree-view-node-components. These tree-view-node-components
 create the corresponding tree-view-nodes while further traversing the
 scene-graph. For each scene-graph-node a corresponding tree-view-node-component
 is created. If there are no child nodes left the tree-view creation is done.
 Each tree-view-node-component creates all DOM elements necessary to represent
-the corresponding scene-graph-node in the the DOM. Also each
+the corresponding scene-graph-node in the DOM. Also each
 tree-view-node-component observes its corresponding scene-graph-node for
 attribute mutations and added or removed child nodes and act accordingly.
 
@@ -299,10 +299,10 @@ Following the two main problems are described.
   \item[Problem 2: implementation effort]
     For every new feature four things have to implemented:
     \begin{enumerate*}
-      \item Code for parsing the the scene-graph,
-      \item code to generate the tree-view-node,
-      \item code to synchronize changes to a scene-graph-node to the corresponding tree-view-node and
-      \item code to synchronize changes to a tree-view-node to the corresponding scene-graph-node.
+      \item Code for parsing the scene-graph
+      \item Code to generate the tree-view-node
+      \item Code to synchronize changes to a scene-graph-node to the corresponding tree-view-node
+      \item Code to synchronize changes to a tree-view-node to the corresponding scene-graph-node
     \end{enumerate*}
 \end{description*}
 
@@ -315,8 +315,8 @@ Problem 1 is disappears completely, because the incremental updates are gone and
 Problem 2 is reduced to the following two steps:
 
 \begin{enumerate*}
-  \item Code for parsing the scene-graph and generating the tree-view and
-  \item code to synchronize changes to a tree-view-node to the corresponding scene-graph-node.
+  \item Code for parsing the scene-graph and generating the tree-view
+  \item Code to synchronize changes to a tree-view-node to the corresponding scene-graph-node
 \end{enumerate*}
 
 Rerendering everything on every change is usually inefficient. Removing a big part
@@ -329,7 +329,7 @@ calculates a lightweight representation of what the DOM should be like and
 compares that to what the DOM is already. It calculates a set of patches and
 only applies these to the DOM.
 
-From a developer's point of view the application is programmed like it's
+From a developer's point of view the application is programmed like it is
 completlely rerendered everytime something changes. But from the browser's point
 of view only the most minimal set of changes that are required to transform the
 DOM into disired state are applied, thus greatly reducing the risk of a reflow.
@@ -388,7 +388,7 @@ document.querySelector('[data-reactid=".0.0.0"]')
 
 That means as long as the code that parses the scene-graph and generates the
 lightweight representation of the tree-view is correct, the tree-view will
-represent the current state of the scene-graph
+represent the current state of the scene-graph.
 
 \paragraph{Data Binding}
 \label{data-binding}
@@ -430,7 +430,7 @@ node: {
   ]
 }
   \end{minted}
-  \caption{example input data}
+  \caption{Example input data.}
   \label{list:templatedata}
 \end{listing}
 
@@ -439,7 +439,7 @@ node: {
 <treenode node="node">
 </treenode>
   \end{minted}
-  \caption{the initial template, node is the node from the data in listing \ref{list:templatedata}}
+  \caption{The initial template, node is the node from the data in listing \ref{list:templatedata}.}
   \label{list:angular1}
 \end{listing}
 
@@ -485,12 +485,12 @@ node: {
   </nodelist>
 </treenode>
   \end{minted}
-  \caption{the treenode directive expands the nodes and renders their names, since there are no nodes left to render they stop}
+  \caption{The treenode directive expands the nodes and renders their names, since there are no nodes left to render they stop.}
   \label{list:angular4}
 \end{listing}
 
 
-Again, this is not an accurate depiction of how angular works, it's just
+Again, this is not an accurate depiction of how angular works, it is just
 for illustration purposes.
 
 The scene-graph is traversed and for each eligible child node a new

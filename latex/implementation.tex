@@ -13,7 +13,7 @@ The server has a really small interface.
 When it gets a request it tries to to match the request to one of its routes, otherwise tries to serve the requested file from the file system (assuming it is a static file), otherwise answers with a 404, which means \texttt{Not Found}.
 
 Some of the routes it answers to are:
-\begin{description*}
+\begin{description*} 
   \item[POST /projects/:project/src/:file]
     saving files being uploaded
   \item[GET /projects]
@@ -31,12 +31,12 @@ Some of the routes it answers to are:
 AngularJS is used for:
 
 \begin{itemize*}
-  \item bootstrapping the application,
-  \item modularization,
-  \item dependency management,
-  \item resource management,
-  \item routing and
-  \item less dynamic views.
+  \item Bootstrapping the application
+  \item Modularization
+  \item Dependency management
+  \item Resource management
+  \item Routing
+  \item Less dynamic views
 \end{itemize*}
 
 \paragraph{Bootstrapping}
@@ -45,7 +45,7 @@ AngularJS is used for:
 Listing \ref{list:bootstrap} initializes an SceGraToo. In the \texttt{config}
 function routes are defined. When a link is clicked the browser will not make a
 request to the server and load that page instead a new controller takes over and
-renders a different templates. The advantage of this approach is that the user
+renders a different template. The advantage of this approach is that the user
 sees immediate feedback while navigating. The application can render the view and
 react to user input while its still waiting for some requested resources from
 the server (like a list of all available projects). This approach is called
@@ -86,7 +86,7 @@ name space refers to the name space that belongs to the \texttt{window} object.
 Defining variables in scripts defines this variable on the window object.
 Angular modules prevent this. Modules are registered on a specific angular
 application (thus one website could also accommodate multiple angular
-applications). The defined variables are contained by creating function that
+applications). The defined variables are contained by creating a function that
 returns whatever the module is supposed to contain, thus creating a closure.
 Listing \ref{list:angularmodule} shows a module that creates a WeakMap and
 returns it. Modules can denote that they depend on other modules, this can be
@@ -102,7 +102,7 @@ window.angular.module('scegratooApp')
     return new WeakMap()
   })
   \end{minted}
-  \caption{This module creates a WeakMap that can be injected in multiple other modules. These modules all share the same WeakMap since services are singletons. \texttt{service}'s first argument is the \texttt{service}'s name, that can be used by other modules to import it.}
+  \caption{This module creates a WeakMap that can be injected in multiple other modules. These modules all share the same WeakMap since services are singletons. \texttt{service}'s first argument is the \texttt{service}'s name, that can be used by other modules by importing it.}
   \label{list:angularmodule}
 \end{listing}
 
@@ -161,12 +161,12 @@ React works by creating components and nesting them. Listing
 \texttt{TreeNode} is another component that handles a specific tree-view-node,
 components keep instantiating and returning components until the whole
 scene-graph is traversed. In listing \ref{list:reactentrypoint} it is shown how
-it is rendered to the DOM. The html syntax is simply syntactic sugar and is
+it is rendered to the DOM. The \gls{HTML}syntax is simply syntactic sugar and is
 transpiled into normal javascript before being evaluated (the transpiled
 equivalent of listing \ref{list:reactentrypoint} is shown in listing
 \ref{list:reacttranspiled}).
 
-Using react the view virtually becomes a function of its input. The input is the root node of the scene-graph, the x3d node.
+Using react the view virtually becomes a function of its input. The input is the root node of the scene-graph, the \gls{X3D}node.
 
 The parsing and rendering process can be described as follows:
 \begin{enumerate*}
@@ -208,7 +208,7 @@ const treeViewContainer = document.querySelector('#container')
 const x3dNode = document.querySelector('x3d')
 React.render(<TreeView data={x3dNode} />, treeViewContainer)
   \end{minted}
-  \caption{}
+  \caption{Shows how react renders to the DOM. The \texttt{treeViewContainer} is the the DOM element react will render into. \texttt{x3dNode} is the scene-graph in the DOM.}
   \label{list:reactentrypoint}
 \end{listing}
 
@@ -218,15 +218,15 @@ const treeViewContainer = document.querySelector('#container')
 const x3dNode = document.querySelector('x3d')
 React.render(React.createElement(TreeView, { data: x3dNode }), treeViewContainer)
   \end{minted}
-  \caption{}
-  \label{list:}
+  \caption{Shows the transpilation output of listing \ref{list:reactentrypoint}. This is standard compliant javascript.}
+  \label{list:reacttranspiled}
 \end{listing}
 
 \subsubsection{Synchronization Process}
 \label{synchronization-process}
 
 Synchronizing the tree-view when the scene-graph changes is done by calling
-\texttt{React.render} again, just like in listing \ref{reactentrypoint}. React
+\texttt{React.render} again, just like in listing \ref{list:reactentrypoint}. React
 calculates the changes that need to be done to update the DOM and applies these.
 
 If the tree-view changes the scene-graph, the same thing happens. Listing
@@ -238,7 +238,7 @@ if not, they are not visible. The component is showing the state of the the
 \texttt{owner}'s attribute is changed. The component does not have to update the
 DOM node, react is doing it the next time \texttt{React.render} is called. This
 is a simple example but the concept holds up for more complicated interactions
-like adding new nodes or moving via drag 'n drop.
+like adding new nodes or moving via drag and drop.
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg]{javascript}

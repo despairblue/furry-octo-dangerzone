@@ -5,12 +5,11 @@
 
 \subsection{Scene-Graph}\label{scene-graph}
 
-Scene-graphs can be used to group and organize 3D objects, their
-properties and concerning transformations. A directed acyclic graph
-(DAG) can be used to represent a scene-graph. It starts with a root node
-that is associated with one or more children. Each child can be an
-object or a group, again containing more children. A group can contain
-associated transformation information, like \emph{translation},
+Scene-graphs can be used to group and organize 3D objects, their properties and
+concerning transformations. A gls{DAG} can be used to represent a scene-graph.
+It starts with a root node that is associated with one or more children. Each
+child can be an object or a group, again containing more children. A group can
+contain associated transformation information, like \emph{translation},
 \emph{rotation} or \emph{scaling}. This structure has certain advantages
 compared to applying all transformations to the raw meshes and sending
 everything to the \gls{GPU}. \cite{realityprime}
@@ -94,7 +93,7 @@ That way the memory footprint of an application can be reduced.
   </Transform>
 </Group>
   \end{minted}
-  \caption{Example x3d group showing the use of \texttt{def} and \texttt{use}.}
+  \caption{Example \gls{X3D}group showing the use of \texttt{def} and \texttt{use}.}
   \label{list:defuse}
 \end{listing}
 
@@ -103,11 +102,11 @@ That way the memory footprint of an application can be reduced.
 \label{x3d}
 
 X3D \cite{x3d} is the XML representation of VRML which was designed as a
-universal interactive 3D exchange format, much like HTML is for written
+universal interactive 3D exchange format, much like \gls{HTML}is for written
 documents or \gls{SVG} for vector graphics. Due to its XML structure it can be
-integrated in HTML documents, thus the Frauenhofer Institute pursued to
+integrated in \gls{HTML}documents, thus the Frauenhofer Institute pursued to
 implement a runtime that could interpret and visualize X3D in the browser, by
-using a WebGL context. It's called x3dom \cite{x3dom} and it's extensively used
+using a WebGL context. It is called x3dom \cite{x3dom} and it is extensively used
 by SceGraToo, the tool that arose from this thesis.
 
 \subsubsection{x3dom}
@@ -124,7 +123,7 @@ different approaches to describe the same thing:
 \end{itemize*}
 
 \begin{longtable}[c]{@{}lll@{}}
-  \caption{The matrix in this table classifies x3dom together with other common web technologies \cite{x3dom}.}\\
+  \caption{The matrix in this table classifies x3dom together with other common web technologies \cite{x3dom}.\label{tab:feature_matrix}}\\
   \toprule
   & 2D & 3D\tabularnewline
   \midrule
@@ -133,14 +132,11 @@ different approaches to describe the same thing:
   Imperative  & Canvas \cite{canvas} & WebGL \cite{webgl} \tabularnewline
   \bottomrule
 \end{longtable}
-\begin{table}
-  \caption{The matrix in this table classifies x3dom together with other common web technologies \cite{x3dom}.}
-  \label{tab:feature_matrix}
-\end{table}
 
 As can be seen in table \ref{tab:feature_matrix} x3dom complements the already existing technologies
 perfectly.
 
+\clearpage
 \subsection{SSIML}
 \label{ssiml}
 
@@ -155,7 +151,7 @@ parties easier.
 
 It also serves as a code generation template.
 
-\begin{figure}[htbp]
+\begin{figure}
   \centering
   \includegraphics[width=12cm]{../assets/SSIML.png}
 	\caption{This figure shows the graphical editor for SSIML. In particular it shows a scene comprising a bike. \cite{roundtrip3dwebsite}}
@@ -198,7 +194,7 @@ The next section examines efforts and applications in the field of
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=12cm]{../assets/3dmeteor.png}
-  \caption{This is a scene in 3dmeteor showing a house and a beautiful garden of cubes.}
+  \caption{This is a scene in 3dmeteor showing a house and a garden of cubes.}
 	\label{fig:3dmeteor}
 \end{figure}
 
@@ -208,7 +204,7 @@ subscription features. Meteor applications are comprised of a client side and a
 server side. The client can subscribe to database collections and gets
 automatically notified of changes to that collection by the server. The only
 thing that actually is synchronized is an array of \emph{boxes}. A box is an
-object with an x, y and z property describing its position. When when a box is
+object with an x, y and z property describing its position. When a box is
 added to the collection the collection is synchronized with the server. The
 server informs all other browser instances that show this scene of the new box.
 These browser instances reevalute the template that renders the x3dom scene to
@@ -241,23 +237,23 @@ object can apply them to his working copy. They can actually be applied
 to any object that has the same number of vertices. That is also a
 shortcoming. Adding or removing vertices cannot be handled by the
 plugin. It is also not in real time, so it is more comparable to version
-control system like git, just for 3d models.
+control system like git, just for \gls{3D} models.
 
 \subsubsection{Gizmos}\label{gizmos}
 
 Gizmos, also called manipulators, are handles or bounding boxes with
-handles that manipulate it's containgin object in a predefined way when
+handles that manipulate their containing objects in a predefined way when
 dragged. \cite{wikigizmo}
 
 In X3D gizmos can be realized with specialized X3DDragSensorNodes \cite{x3ddragsensornode}, like:
 
 \begin{description*}
 \item[SphereSensor]
-  ``SphereSensor converts pointing device motion into a spherical rotation around the origin of the local coordinate system.,, \cite{spheresensor}
+  SphereSensor converts pointing device motion into a spherical rotation around the origin of the local coordinate system. \cite{spheresensor}
 \item[CylinderSensor]
-  ``The CylinderSensor node converts pointer motion (for example, from a mouse) into rotation values, using an invisible cylinder of infinite height, aligned with local Y-axis.,, \cite{cylindersensor}
+  The CylinderSensor node converts pointer motion (for example, from a mouse) into rotation values, using an invisible cylinder of infinite height, aligned with local Y-axis. \cite{cylindersensor}
 \item[PlaneSensor]
-  ``PlaneSensor converts pointing device motion into 2D translation, parallel to the local Z=0 plane. Hint: You can constrain translation output to one axis by setting the respective minPosition and maxPosition members to equal values for that axis.,, \cite{planesensor}
+  PlaneSensor converts pointing device motion into 2D translation, parallel to the local Z=0 plane. Hint: You can constrain translation output to one axis by setting the respective minPosition and maxPosition members to equal values for that axis. \cite{planesensor}
 \end{description*}
 
 The sensors track drag events on their siblings. In the example in figure
@@ -267,18 +263,18 @@ cyan handle. Part of the structure of the scene can be seen in listing
 \ref{planesensor}.
 
 Every time it detects a drag event it converts it into a 2D
-transformation and raises an \texttt{onOutPutChange} event. The callback
-\texttt{processTranslationGizmoEvent} is registered as an event handler.
+transformation and raises an \texttt{onOutPutChange} event.\\
+The callback \texttt{processTranslationGizmoEvent} is registered as an event handler.
 In this function the position of the handle is adjusted to make it
-follow the drag movement, also the position of the teapot is adjust.
+follow the drag movement, also the position of the teapot is adjusted.
 
-Having the handles being 3d objects within the scene, that look
+Having the handles being \gls{3D} objects within the scene, that look
 touchable and intractable, make it easier for users find their way
 around the application. Instead of having to learn keyboard shortcuts
 users simply use their intuition and knowledge about how to interact with
 objects in the real world.
 
-The figures \ref{blender1} to \ref{fig:x3dgizmo} show different gizmos from
+The pictures in \ref{blender} to \ref{fig:x3dgizmo} show different gizmos from
 different applications.
 
 \begin{listing}
@@ -308,34 +304,33 @@ different applications.
   </transform>
 </group>
   \end{minted}
-  \caption{This shows a group containing a planeSensor. It shows a part of the scene depicted in figure \ref{fig:x3dgizmo}}
+  \caption{This shows a group containing a planeSensor. It shows a part of the scene depicted in figure \ref{fig:x3dgizmo}.}
   \label{planesensor}
 \end{listing}
 
 \begin{figure}[htbp]
   \begin{minipage}{.5\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Translate.jpg}
-  	\caption{translation gizmo \cite{blenderwiki}}
-    \label{blender1}
+    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Translate.jpg}\\
+  	a) A translation gizmo. \cite{blenderwiki}
   \end{minipage}
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Translate.jpg}\\
-  	\caption{rotation gizmo \cite{blenderwiki}}
+  	b) Rotation gizmo. \cite{blenderwiki}
   \end{minipage}\\
   \begin{minipage}{.5\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Scale.jpg}
-  	\caption{scale gizmo \cite{blenderwiki}}
+    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Scale.jpg}\\
+  	c) Scale gizmo. \cite{blenderwiki}
   \end{minipage}
   \begin{minipage}{.5\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Combo.jpg}
-  	\caption{all gizmos together \cite{blenderwiki}}
-    \label{blender4}
+    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Combo.jpg}\\
+  	d) All gizmos together. \cite{blenderwiki}
   \end{minipage}
   \caption{The same cube in Blender with different gizmos/transformers enabled.}
+  \label{blender}
 \end{figure}
 \begin{figure}[]
   \centering
@@ -360,9 +355,9 @@ Its development took about a year and three people working part-time on it. \cit
 Although it does offer all the wanted scene composition features, it lacks the ability to:
 
 \begin{itemize*}
-  \item Load an existing x3d file,
-  \item save the scene as an x3d file and
-  \item upload x3d files that can be included as inlines.
+  \item Load an existing \gls{X3D}file,
+  \item save the scene as an \gls{X3D}file and
+  \item upload \gls{X3D}files that can be included as inlines.
 \end{itemize*}
 
 Scenes can only be loaded and saved as a JSON representation (see listing~\ref{componenteditorjson}).
@@ -393,7 +388,7 @@ Using web sockets instead of AJAX is an interesting approach.
 \cite{Marion:2012:RCS:2338714.2338721} Especially the cut down on latency. It is
 over all very similar to the approach that was considered for SceGraToo, but not
 implemented due to time constraints. In the end the differences between
-SceGraToo's requirements and theirs outway the similarities. SceGraToo not only
+SceGraToo's requirements and theirs outweigh the similarities. SceGraToo not only
 has to visualize a scene, but also manipulate it. And to achieve a spector mode
 like in this work not only the viewpoint would have to be synchronized but also
 the whole scene. This can either be done by sending the whole scene to the other
@@ -403,11 +398,11 @@ challenge. They visualize a specific dataset in a threejs's specific JSON format
 scene into another format and have it rendered by another scene graph framework
 is unnesesary, since x3dom does a pretty good job doing this.
 
-\subsubsection{ParaViewWeb pvweb}
+\subsubsection{ParaViewWeb}
 \label{paraviewweb-pvweb}
 
 Simple to use out of the box, but needs a paraview server instance and
-paraview does not support x3d as an input format. So using this is unfortunately
+paraview does not support \gls{X3D}as an input format. So using this is unfortunately
 not possible unless an import filter is written. The visualization is
 mainly meant to explore data sets. There is no easy way to manipulate
 the input data. This can only happen by extending the visualization
