@@ -1,5 +1,5 @@
 %% File: `plainnat.bst'
-%% A modification of `plain.bst' for use with natbib package 
+%% A modification of `plain.bst' for use with natbib package
 %%
 %% Copyright 1993-1999 Patrick W Daly
 %% Max-Planck-Institut f\"ur Aeronomie
@@ -212,7 +212,7 @@ FUNCTION {format.names}
     { s nameptr "{vv~}{ll}{, jj}{, ff}" format.name$ 't :=}
     { s nameptr "{ff~}{vv~}{ll}{, jj}" format.name$ 't :=}
     if$
-    
+
      nameptr #1 >
         { namesleft #1 >
             { ", " * t * }
@@ -880,6 +880,16 @@ FUNCTION {misc}
   howpublished output
   format.date output
   format.issn output
+  "haha"
+  format.url output
+  new.block
+  note output
+  fin.entry
+  empty.misc.check
+}
+
+FUNCTION {webpage}
+{ output.bibitem
   format.url output
   new.block
   note output
