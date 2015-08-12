@@ -17,8 +17,8 @@ In the following sections the initial design concept of \gls{SceGraToo} is illus
 
 Node is used because it is inherently easy writing small servers with it, and
 SceGraToo's server is not going to be complex. \footnote{Complex servers can be
-written in nodejs as well, it is just not encouraged, since most people tend to
-refactor there infrastructure into micro services.}
+written in Node.js as well, it is just not encouraged, since most people tend to
+refactor their infrastructure into micro services.}
 
 Listing \ref{list:nodejs} shows a server that is looking up a user from the database and returning it as \gls{JSON} to the browser.
 
@@ -38,7 +38,7 @@ http.createServer((request, response) => {
   })
 }).listen(1337, '127.0.0.1')
   \end{minted}
-  \caption{an example server in nodejs, using the http module in its standard library}
+  \caption{an example server in Node.js, using the http module in its standard library}
   \label{list:nodejs}
 \end{listing}
 
