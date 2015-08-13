@@ -8,7 +8,7 @@
 The server has a really small interface.
 When it gets a request it tries to to match the request to one of its routes, otherwise tries to serve the requested file from the file system (assuming it is a static file), otherwise answers with a 404, which means \texttt{Not Found}.
 
-Some of the routes it answers to are:
+Some of the routes the server answers to are:
 \begin{description*}
   \item[POST /projects/:project/src/:file]
     saving files being uploaded
@@ -20,7 +20,7 @@ Some of the routes it answers to are:
 
 \subsection{Client}
 
-\subsubsection{angular}
+\subsubsection{Angular}
 \label{angular}
 
 AngularJS is used for:
@@ -38,11 +38,11 @@ AngularJS is used for:
 \label{par:Bootstrapping and Routing}
 
 Listing \ref{list:bootstrap} initializes SceGraToo. In the \texttt{config}
-function routes are defined. When a link is clicked the browser will not make a
+function, routes are defined. When a link is clicked, the browser will not make a
 request to the server and load that page. Instead a new controller takes over and
 renders a different template. The advantage of this approach is that the user
-sees immediate feedback while navigating. The application can render the view and
-react to user input while its still waiting for some requested resources from
+sees immediate feedback, while navigating. The application can render the view and
+react to user input, while its still waiting for some requested resources from
 the server (like a list of all available projects). This approach is called
 single-page application \cite{Mikowski:2013:SPW:2663433}.
 
@@ -76,16 +76,16 @@ window.angular.module('scegratooApp')
 \label{par:modularisation}
 
 Each controller, view or service is contained in its own module and does not
-pollute the global name space. In a browser's javascript context the global
-name space refers to the name space that belongs to the \texttt{window} object.
-Defining variables in scripts defines this variable on the window object.
+pollute the global namespace. In a browser's javascript context the global
+namespace refers to the namespace that belongs to the \texttt{window} object.
+Defining variables in scripts define these variable on the window object.
 Angular modules prevent this. Modules are registered on a specific angular
 application (thus one website could also accommodate multiple angular
 applications). The defined variables are contained by creating a function that
 returns whatever the module is supposed to contain, thus creating a closure.
-Listing \ref{list:angularmodule} shows a module that creates a WeakMap and
+Listing \ref{list:angularmodule} shows a module that creates a \texttt{WeakMap} and
 returns it. Modules can denote that they depend on other modules. This can be
-seen in listing \ref{list:depinj}. The \texttt{MoveableUtils} request that the
+seen in Listing \ref{list:depinj}. The \texttt{MoveableUtils} request that the
 \texttt{moveable} module is injected into it when initializing. Angular creates
 a dependency graph and resolves dependencies automatically.
 
@@ -97,7 +97,7 @@ window.angular.module('scegratooApp')
     return new WeakMap()
   })
   \end{minted}
-  \caption{This module creates a WeakMap that can be injected in multiple other modules. These modules all share the same WeakMap since services are singletons. \texttt{service}'s first argument is the \texttt{service}'s name, that can be used by other modules by importing it.}
+  \caption{This module creates a \texttt{WeakMap} that can be injected in multiple other modules. These modules all share the same \texttt{WeakMap} since services are singletons. \texttt{service}'s first argument is the \texttt{service}'s name, that can be used by other modules by importing it.}
   \label{list:angularmodule}
 \end{listing}
 
@@ -145,7 +145,7 @@ retrieved from the server.
   \label{list:view}
 \end{listing}
 
-\subsubsection{react}
+\subsubsection{React}
 \label{react}
 
 React is utilized by \gls{SceGraToo} to render the tree-view that gives a more
@@ -155,10 +155,10 @@ React works by creating components and nesting them. Listing
 \ref{list:reactcomponent} shows the \texttt{TreeView} component. The
 \texttt{TreeNode} is another component that handles a specific tree-view-node,
 components keep instantiating and returning components until the whole
-scene-graph is traversed. In listing \ref{list:reactentrypoint} it is shown how
+scene-graph is traversed. In Listing \ref{list:reactentrypoint} it is shown how
 it is rendered to the \gls{DOM}. The \gls{HTML} syntax is simply syntactic sugar and is
 transpiled into normal javascript before being evaluated (the transpiled
-equivalent of listing \ref{list:reactentrypoint} is shown in listing
+equivalent of Listing \ref{list:reactentrypoint} is shown in Listing
 \ref{list:reacttranspiled}).
 
 Using react the view virtually becomes a function of its input. The input is the root node of the scene-graph, the \gls{X3D} node.
@@ -213,7 +213,7 @@ const treeViewContainer = document.querySelector('#container')
 const x3dNode = document.querySelector('x3d')
 React.render(React.createElement(TreeView, { data: x3dNode }), treeViewContainer)
   \end{minted}
-  \caption{Shows the transpilation output of listing \ref{list:reactentrypoint}. This is standard compliant javascript.}
+  \caption{Shows the transpilation output of Listing \ref{list:reactentrypoint}. This is standard compliant javascript.}
   \label{list:reacttranspiled}
 \end{listing}
 
@@ -221,7 +221,7 @@ React.render(React.createElement(TreeView, { data: x3dNode }), treeViewContainer
 \label{synchronization-process}
 
 Synchronizing the tree-view when the scene-graph changes is done by calling
-\texttt{React.render} again, just like in listing \ref{list:reactentrypoint}. React
+\texttt{React.render} again, just like in Listing \ref{list:reactentrypoint}. React
 calculates the changes that need to be done to update the \gls{DOM} and applies these.
 
 If the tree-view changes the scene-graph, the same thing happens. Listing
@@ -229,7 +229,7 @@ If the tree-view changes the scene-graph, the same thing happens. Listing
 \texttt{owner}. That is a scene-graph node. Nodes in x3dom have the render
 property. If the property is true, that node and all its children are rendered,
 if not, they are not visible. The component is showing the state of the the
-\texttt{owner}'s render property's state. When the user clicks that check box the
+\texttt{owner}'s render property's state. When the user clicks the check box, the
 \texttt{owner}'s attribute is changed. The component does not have to update the
 \gls{DOM} node, react is doing it the next time \texttt{React.render} is called. This
 is a simple example but the concept holds up for more complicated interactions
@@ -257,6 +257,6 @@ const TreeNodeAttributeRender = React.createClass({
   }
 })
   \end{minted}
-  \caption{A component that renders a checkbox that show the \texttt{owner} render property's state. Clicking the checkbox changes the \texttt{owner}'s property's state.}
+  \caption{A component that renders a check box that show the \texttt{owner} render property's state. Clicking the check box changes the \texttt{owner}'s property's state.}
   \label{list:checkbox}
 \end{listing}

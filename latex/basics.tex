@@ -12,7 +12,7 @@ child node can be an object or a group, again containing more child nodes. A gro
 contain associated transformation information, like \emph{translation},
 \emph{rotation} or \emph{scaling}. This structure has certain advantages
 compared to applying all transformations to the raw meshes and sending
-everything to the \gls{GPU}. \cite{realityprime} \gls{SSIML} \cite{Lenk:2012:MID:2338714.2338742} scene-graphs differ from the
+everything to the \gls{GPU}. \cite{realityprime} \gls{SSIML} scene-graphs differ from the
 above definition and there are three types of nodes:
 
 \begin{itemize*}
@@ -58,7 +58,7 @@ transformation thus applies to all objects contained by the group.
 With the ability to address nodes it is possible to reuse their
 information. For a car, it would be enough to have only one node
 containing the geometry for a tire, all other tires are merely referencing
-the tire with the geometry information (see listing \ref{list:defuse}).
+the tire with the geometry information (see Listing \ref{list:defuse}).
 That way the memory footprint of an application can be reduced.
 
 \begin{listing}
@@ -91,14 +91,14 @@ That way the memory footprint of an application can be reduced.
   </Transform>
 </Group>
   \end{minted}
-  \caption{Example \gls{X3D} group showing the use of \texttt{def} and \texttt{use}.}
+  \caption{Example \gls{X3D} group, showing the use of \texttt{def} and \texttt{use}.}
   \label{list:defuse}
 \end{listing}
 
 
 \subsection{X3D}
 \label{x3d} \gls{X3D} \cite{x3d} is the \acr{XML} representation of \acr{VRML} which was designed as a
-universal interactive \gls{3D} exchange format, much like \acr{HTML} is for textual
+universal interactive \gls{3D} exchange format, much like what \acr{HTML} is for textual
 documents or \acrshort{SVG} for vector graphics. Due to its \gls{XML} structure it can be
 integrated in \gls{HTML} documents. The Frauenhofer Institute pursued to
 implement a environment that could interpret and visualize \gls{X3D} in the browser, by
@@ -129,7 +129,7 @@ different approaches to describe the same thing:
   \bottomrule
 \end{longtable}
 
-As can be seen in table \ref{tab:feature_matrix}, x3dom complements the already existing technologies
+As can be seen in Table \ref{tab:feature_matrix}, x3dom complements the already existing technologies
 perfectly.
 
 \clearpage
@@ -141,7 +141,7 @@ different backgrounds (e.g.~programmers and \gls{3D} designers), have their diff
 working together. They work in different domains and use different tools
 adjusted to that domain. \cite{Glinz:2015:SUS:2802768.2802838}
 
-SSIML is a graphical approach to unify the scene-graph model and the the
+SSIML is a graphical approach to unify the scene-graph model and the
 application model, thus making the communication between the different
 parties easier.
 
@@ -150,14 +150,14 @@ It also serves as a code generation template for \gls{R3D}, as mentioned in Sect
 \begin{figure}
   \centering
   \includegraphics[width=12cm]{../assets/SSIML.png}
-	\caption{This figure shows the graphical editor for SSIML. In particular it shows a scene describing a bike. \cite{roundtrip3dwebsite}}
+	\caption{This Figure shows the graphical editor for SSIML. In particular it shows a scene describing a bike. \cite{roundtrip3dwebsite}}
 	\label{fig:ssimldiagram}
 \end{figure}
 
 \subsection{Roundtrip 3D}\label{roundtrip-3d}
 
 As stated above, when developing \gls{3D} applications, many different kinds of
-developers are involved, i.e.~\gls{3D} designers, programmers and, ideally, 
+developers are involved, i.e.~\gls{3D} designers, programmers and, ideally,
 software designers. Figure \ref{fig:ssimldiagram} shows the \gls{R3D} editor with an example \gls{SSIML} diagram.
 
 % TODO: convert to pdf
@@ -170,7 +170,7 @@ graphical editor for \hyperref[ssiml]{SSIML} models. It offers an
 approach for merging a developer's changes back into the main model.
 After all working copies are merged back into the main model (dropping
 unwanted or conflicting changes), all working copies are regenerated and
-delivered to the individual developers. After each round-trip every
+delivered to the individual developers. After each round-trip, every
 developer has a copy of the project that is consistent with everyone
 else's.
 
@@ -201,21 +201,21 @@ server side part. The client can subscribe to database collections and
 automatically gets notified of changes to that collection by the server. The only
 thing that is synchronized is an array of \emph{boxes}. A box is an
 object with an x, y and z property describing its position. When a box is
-added to the collection the collection is synchronized with the server. The
-server informs all other browser instances that show this scene that this box was added to the \emph{boxes} collection.
+added to the collection, the collection is synchronized with the server. The
+server informs all other browser instances that show this scene, that this box was added to the \emph{boxes} collection.
 These browser instances reevaluate the template that renders the x3dom scene to
-the \gls{DOM} and the the \gls{DOM} is updated to contain the new box, thus synchronizing
+the \gls{DOM} and update the \gls{DOM} to contain the new box, thus synchronizing
 all browser instances. \cite{3dmeteor}
 
 \subsubsection{Blender Plugin}
 \label{blender-plugin}
 
-As part of an asset management system the Université du Québec à
+As part of an asset management system, the Université du Québec à
 Montréal implemented a plugin for Blender to enable collaborative working. An
 artist can record changes to wire-meshes and store them on a server.
 Another artist can download these changes and apply them to his working
 copy. A set of changes is a simple list of vertices and their movement in the
-x, y and z direction (see listing \ref{blenderplugin}). \cite{LCR07}
+x, y and z direction (see Listing \ref{blenderplugin}). \cite{LCR07}
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg]{text}
@@ -228,18 +228,18 @@ x, y and z direction (see listing \ref{blenderplugin}). \cite{LCR07}
   \label{blenderplugin}
 \end{listing}
 
-These sets are saved on the server. Another user working on the same
-object can apply them to his working copy. They can actually be applied
-to any object that has the same number of vertices. That is also a
-shortcoming. Adding or removing vertices cannot be handled by the
-plugin. It is also not in real time, so it is more comparable to version
+These sets are saved on the server. Other users, working on the same
+object, can apply them to their working copies. They can actually be applied
+to any object that has the same number of vertices. That is also one of the
+shortcomings. Adding or removing vertices cannot be handled by the
+plugin. And the synchronization is not in real time. As a result it is more comparable to version
 control system like \gls{git}, but for \gls{3D} models.
 
 \subsubsection{Gizmos}\label{gizmos}
 
 Gizmos, also called manipulators, are handles or bounding boxes with
 handles that manipulate their containing objects in a predefined way when
-dragged. \cite{wikigizmo}
+being dragged. \cite{wikigizmo}
 
 In \gls{X3D}, gizmos can be realized with specialized X3DDragSensorNodes \cite{x3ddragsensornode}, like:
 
@@ -252,10 +252,10 @@ In \gls{X3D}, gizmos can be realized with specialized X3DDragSensorNodes \cite{x
   PlaneSensor converts pointing device motion into 2D translation, parallel to the local Z=0 plane. Hint: You can constrain translation output to one axis by setting the respective minPosition and maxPosition members to equal values for that axis. \cite{planesensor}
 \end{description*}
 
-The sensors track drag events on their siblings. In the example in figure
+The sensors track drag events on their siblings. In the example in Figure
 \ref{fig:x3dgizmo}, which is taken directly from the x3dom website, the
 PlaneSensor tracks drag events on the cones and the cylinder that make up the
-cyan handle. Part of the structure of the scene can be seen in listing
+cyan handle. Part of the structure of the scene can be seen in Listing
 \ref{planesensor}.
 
 Every time it detects a drag event it converts it into a 2D
@@ -270,7 +270,7 @@ around the application. Instead of having to learn keyboard shortcuts
 users simply use their intuition and knowledge about how to interact with
 objects in the real world.
 
-The pictures in \ref{blender} to \ref{fig:x3dgizmo} show different gizmos from
+The Figures \ref{blender} to \ref{fig:x3dgizmo} show different gizmos from
 different applications.
 
 \begin{listing}
@@ -300,7 +300,7 @@ different applications.
   </transform>
 </group>
   \end{minted}
-  \caption{This shows a group containing a planeSensor. It shows a part of the scene depicted in figure \ref{fig:x3dgizmo}.}
+  \caption{This features the group containing a planeSensor, that is part of the scene depicted in Figure \ref{fig:x3dgizmo}.}
   \label{planesensor}
 \end{listing}
 
@@ -347,7 +347,7 @@ different applications.
 
 On the 12th of June 2015 the x3dom maintainers released their Component Editor. \cite{componenteditor}
 It was released after the the work on \gls{SceGraToo} started.
-Its development took about a year and three people working part-time on it. \cite{componenteditoreffort}
+Its development took about a year and three people working on it part-time. \cite{componenteditoreffort}
 Although it does offer all the wanted scene composition features, it lacks the ability to:
 
 \begin{itemize*}
@@ -356,7 +356,7 @@ Although it does offer all the wanted scene composition features, it lacks the a
   \item upload \gls{X3D} files that can be included as inlines.
 \end{itemize*}
 
-Scenes can only be loaded and saved as a \gls{JSON} representation (see listing~\ref{componenteditorjson}).
+Scenes can only be loaded and saved as a \gls{JSON} representation (see Listing~\ref{componenteditorjson}).
 Conversion between the formats may be possible, but meta information like \glspl{ID} in comments would be lost.
 
 \begin{listing}
@@ -380,25 +380,25 @@ Conversion between the formats may be possible, but meta information like \glspl
 \subsubsection{Real-Time Collaborative Scientific WebGL Visualization with Web Sockets}
 \label{rtcswvwws}
 
-Using web sockets instead of AJAX is an interesting approach.
+Using web sockets instead of AJAX is an well performing approach.
 \cite{Marion:2012:RCS:2338714.2338721} Especially the cut down on latency. It is
 over all very similar to the approach that was considered for SceGraToo, but not
 implemented due to time constraints. In the end the differences between
-SceGraToo's requirements and theirs outweigh the similarities. \gls{SceGraToo} not only
-has to visualize a scene, but also manipulate it. And to achieve a spectator mode
-like in this work not only the viewpoint would have to be synchronized but also
+SceGraToo's requirements and theirs outweigh the similarities. Besides visualizing a scene,
+\gls{SceGraToo} also has to manipulate it. So, to achieve a spectator mode,
+like in this work, not only the viewpoint would have to be synchronized but also
 the whole scene. This can either be done by sending the whole scene to the other
 clients on every change, or sending change sets, which poses an interesting
 challenge. They visualize a specific dataset in a threejs's specific \gls{JSON} format
 \cite{threejs-format}. \gls{SceGraToo} only needs to render \gls{X3D} scenes. Converting the
 scene into another format and having it rendered by another scene graph framework
-is unnecessary, since x3dom does a pretty good job doing this.
+is unnecessary, since x3dom does a good job doing this.
 
 \subsubsection{ParaViewWeb}
 \label{paraviewweb-pvweb}
 
-Simple to use out of the box, but needs a paraview server instance and
-paraview does not support \gls{X3D} as an input format. So using this is unfortunately
+It is simple to use out of the box, but needs a paraview server instance and
+paraview does not support \gls{X3D} as an input format. So using this, is unfortunately
 not possible unless an import filter is written. The visualization is
 mainly meant to explore data sets. There is no easy way to manipulate
 the input data. This can only happen by extending the visualization
