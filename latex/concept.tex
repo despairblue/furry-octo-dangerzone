@@ -5,6 +5,9 @@
 
 % TODO: skizze wie dom rendering funktioniert oder auch nicht, da es ziemlich uninteressant ist
 
+\gls{SceGraToo} uses a client server architecture. The scene data is stored on the server
+and is to be extended by \gls{X3D} files that are uploaded from within a web browser.
+
 In the following sections the initial design concept of \gls{SceGraToo} is illustrated.
 
 \subsection{Server}
@@ -17,12 +20,11 @@ In the following sections the initial design concept of \gls{SceGraToo} is illus
   ``Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.'' \cite{nodejs}
 \end{quote}
 
-Node is used because it is inherently easy writing small servers with it, and
+Node.js is used because it is inherently straight forward writing small servers with it, and
 SceGraToo's server is not going to be complex. \footnote{Complex servers can be
-written in Node.js as well. It is just not encouraged, since most people tend to
-refactor their infrastructure into micro services.}
+written in Node.js as well.}
 
-Listing \ref{list:nodejs} shows a server that is looking up a user from the database and returning it as \gls{JSON} to the browser.
+Listing \ref{list:nodejs} shows a server that looks up users from the database and returns them as \gls{JSON} to the browser.
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
@@ -52,7 +54,7 @@ http.createServer((request, response) => {
 
 Koa is used to make writing the server, and using asynchronouse functions in request handlers simpler and clearer.
 See Listing \ref{list:koajs} for the same example from Listing \ref{list:nodejs} written with koajs.
-It is not only shorter, but also simplier and clearer.
+It is not only shorter, but also more straight forward.
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
@@ -79,8 +81,8 @@ and the other way is to make it so complicated that there are no obvious
 deficiencies. The first method is far more difficult.''}{--- Hoare, Turing Award Lecture 1980}
 
 The tree-view is the most important part of SceGraToo. It shows the
-structure rather than the visual representation. Different
-off-the-shelf solutions, like angular or JQuery plugins, were tested
+structure rather than the rendered representation. Different
+off-the-shelf solutions, like angular or JQuery plug-ins, were tested
 against the following requirements:
 
 \begin{enumerate*}
@@ -196,7 +198,7 @@ versa.
 </scene>
 </x3d>
   \end{minted}
-	\caption{ \gls{X3D} example scene.}
+	\caption{Generated \gls{X3D} example scene.}
 	\label{list:x3dscene}
 \end{listing}
 
@@ -240,14 +242,14 @@ versa.
   </li>
 </div>
   \end{minted}
-  \caption{Example of a tree-view, the structure is simplified.}
+  \caption{Simplified tree-view structure.}
   \label{list:tree-view}
 \end{listing}
 
 The aim is to keep the tree-view a consistent representation of the scene-graph.
 The tree-view filters some nodes and attributes. As an example, nodes contained
 in an \texttt{inline} are not shown, since  SceGraToo's task is only to compose
-a scene of \texttt{inlines}, not to change anything inside the \texttt{inlines}.
+a scene of \texttt{inlines}, not to change something inside the \texttt{inlines}.
 Also not all attributes are shown, but only the ones the user may be interested
 in (such as \texttt{DEF}, \texttt{translate} or \texttt{rotate}).
 
@@ -268,7 +270,7 @@ Depending on how the scene-graph is mutated, three main cases can be differentia
   \item[a scene-graph-node is added]
     A new tree-view-node-component is instantiated, adding all \gls{DOM} elements making up the tree-view-node to the \gls{DOM}.
   \item[a scene-graph-node is deleted]
-    The corresponding tree-view-node-component is destroyed and all \gls{DOM} elements making up that tree-view-node are removed from the \gls{DOM}.
+    The corresponding tree-view-node-compo\-nent is destroyed and all \gls{DOM} elements making up that tree-view-node are removed from the \gls{DOM}.
   \item[a scene-graph-node is mutated]
     The corresponding \gls{DOM} elements that make up the  tree-view-node are altered to reflect the mutation.
 \end{description*}
@@ -279,14 +281,13 @@ tree-view-node-component is notified of the change, by firing a change event, to
 which the component subscribed, and applies the new value to the corresponding
 scene-graph-node.
 
-It is assumed, that the updates will always lead to consistent a state, where the
+It is assumed, that the updates will always lead to a consistent state, where the
 scene-graph and the tree node converge. It is also assumed, that an application
 may be buggy and in that case the synchronization process has no ability to
 detect if updates lead to an inconsistent state. It also has no ability to
-recover from an inconsistent state, though without the ability to detect
-inconsistencies this does not really matter.
+recover from an inconsistent state.
 
-In the following, the two main problems are described.
+In the following, two main issues are described.
 
 \begin{description*}
   \item[Problem 1: keeping the tree-view consistent with the scene-graph]
@@ -296,42 +297,41 @@ In the following, the two main problems are described.
     specific properties or saving state in the tree-view that is not part of
     the scene-graph, e.g~the possibility to collapse parts of the tree.
   \item[Problem 2: implementation effort]
-    For every new feature four things have to implemented:
+    For every new feature four pieces of code have to be written:
     \begin{enumerate*}
-      \item Code for parsing the scene-graph
-      \item Code to generate the tree-view-node
-      \item Code to synchronize changes to a scene-graph-node to the corresponding tree-view-node
-      \item Code to synchronize changes to a tree-view-node to the corresponding scene-graph-node
+      \item Source code for parsing the scene-graph
+      \item Source code to generate the tree-view-node
+      \item Source code to synchronize changes to a scene-graph-node to the corresponding tree-view-node
+      \item Source code to synchronize changes to a tree-view-node to the corresponding scene-graph-node
     \end{enumerate*}
 \end{description*}
 
-This can be greatly simplified if only the functionality for parsing the
+This can be simplified if only the functionality for parsing the
 scene-graph, and  for creating the \gls{DOM} elements that represent the scene-graph,
-is implemented and on every change the whole tree-view is recreated by doing
-this again.
+is implemented and, on every change, the whole tree-view is recreated by repeating these steps.
 
-Problem 1 disappears completely, because the incremental updates are gone and
+Problem 1 is solved completely, because incremental updates are gone and
 Problem 2 is reduced to the following two steps:
 
 \begin{enumerate*}
-  \item Code for parsing the scene-graph and generating the tree-view
-  \item Code to synchronize changes to a tree-view-node to the corresponding scene-graph-node
+  \item Source code for parsing the scene-graph and generating the tree-view
+  \item Source code to synchronize changes to a tree-view-node to the corresponding scene-graph-node
 \end{enumerate*}
 
-Rerendering everything on every change is usually inefficient. Removing a big part
-of the \gls{DOM} and replacing it would kick of a \emph{reflow}, which is the browser's
+Rerendering the whole part of the \gls{DOM} on every change usually is inefficient. Removing a big part
+of the \gls{DOM} and replacing it would lead to a \emph{reflow}, which is the browser's
 process of laying out the content. This process is blocking, meaning the user can't
 scroll or otherwise interact with the application. \cite{reflow}
 
-React is used to minimize the possibility of a reflow happening. React
-calculates a lightweight representation of what the \gls{DOM} should be like and
-compares that to what the \gls{DOM} is already. It calculates a set of patches and
+React is used to minimize the possibility of a reflow. React
+calculates a lightweight representation of what the \gls{DOM} (called the virtual DOM) should be like and
+compares that to the present \gls{DOM}. It calculates a set of patches and
 only applies these to the \gls{DOM}.
 
-From a developer's point of view the application is programmed like it is
-completlely rerendered everytime something changes. But from the browser's point
+From a developer's point of view, the application is programmed like it is
+completlely rerendered everytime something changes. From the browser's point
 of view only a minimal set of changes, only those that are required to transform the
-\gls{DOM} into the disired state, are applied, thus greatly reducing the risk of a \emph{reflow}.
+\gls{DOM} into the desired state, are applied, thus enormously reducing the risk of a \emph{reflow}.
 
 The code below (Listings \ref{oldvirtdom}, \ref{newvirtdom} and \ref{patch}) is
 for explanitary purposes to describe how react works. It does not resemble
@@ -385,7 +385,7 @@ document.querySelector('[data-reactid=".0.0.0"]')
   \label{patch}
 \end{listing}
 
-That means, as long as the code that parses the scene-graph and generates the
+That means, as long as the code to parse the scene-graph and to generate the
 lightweight representation of the tree-view is correct, the tree-view will
 represent the current state of the scene-graph.
 
@@ -399,7 +399,7 @@ angular directives are examined, but the same should be possible with web
 components.
 
 An angular directive consists of a mostly logicless template and some
-javascript containing logic for creating the directive or reacting to
+JavaScript containing logic for creating the directive or reacting to
 events.
 
 For each node a directive is instantiated, which creates a template
@@ -438,7 +438,7 @@ node: {
 <treenode node="node">
 </treenode>
   \end{minted}
-  \caption{The initial template, node is the node from the data in Listing \ref{list:templatedata}.}
+  \caption{The initial template, node is the node from the data in Listing~\ref{list:templatedata}.}
   \label{list:angular1}
 \end{listing}
 
@@ -489,12 +489,12 @@ node: {
 \end{listing}
 
 
-Again, this is not an accurate depiction of how angular works, it is just
-for illustration purposes.
+Again, this is not an accurate depiction of how angular works internally, it is
+the mental model a developer, working with angular, has.
 
-The scene-graph is traversed and for each eligible child node a new
-\texttt{treenode} is created. The double braces are angular's way
-to denote data-binding in templates. The data from the elements scope is
+The scene-graph is traversed and, for each eligible child node, a new
+\texttt{treenode} is created. The double braces are angular's syntax
+to denote data-binding in templates. Data from the elements scope is
 automatically inserted and kept up to date. Then, the data-binding would
 ensure, that the tree-view and the model are kept in sync when the
 \texttt{treenode}'s attributes are changed and the other way around.
@@ -502,6 +502,6 @@ ensure, that the tree-view and the model are kept in sync when the
 \subsection{Communication}
 \label{interaction}
 
-The client communicates with the server via a small HTTP API returning \gls{JSON}.
-Making a GET request to \texttt{/projects} returns all projects stored on the server.
-Making a GET request to \texttt{/projects/unicorn} returns all data about unicorn project.
+The client communicates with the server via a small HTTP API returning \gls{JSON} encoded data.
+Issuing a GET request to \texttt{/projects} returns all projects stored on the server.
+Issuing a GET request to \texttt{/projects/unicorn} returns all data about unicorn project.

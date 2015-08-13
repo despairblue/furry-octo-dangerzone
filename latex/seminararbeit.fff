@@ -1,8 +1,3 @@
-\begin{figure}[htbp]
-\includegraphics[width=\textwidth]{../assets/my-little-pony-mlp-other-261396.jpeg}
-\end{figure}
-\efloatseparator
- 
 \begin{figure}
   \begin{minipage}{.5\textwidth}
     \centering
@@ -31,16 +26,31 @@
  
 \begin{figure}
   \centering
-  \includegraphics[width=12cm]{../assets/SSIML.png}
+  \includegraphics[width=\textwidth]{../assets/car.png}
+  \caption{The rendered car from Listing \ref{list:defuse}.}
+  \label{fig:defuse}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../assets/SSIML.png}
 \caption{This Figure shows the graphical editor for SSIML. In particular it shows a scene describing a bike \cite{roundtrip3dwebsite}}.
 \label{fig:ssimldiagram}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+  \includegraphics[width=\textwidth]{../assets/csrd2014.png}
+  \caption{The development work-flow described proposed by \gls{R3D} \cite{Jung:2015:SDA:2802768.2802837}.}
+  \label{fig:csrd}
 \end{figure}
 \efloatseparator
  
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=12cm]{../assets/3dmeteor.png}
-  \caption{This is a scene in 3d Meteor showing a house and a garden of cubes.}
+  \caption{This is a scene in 3D Meteor showing, a house and a garden of cubes.}
 \label{fig:3dmeteor}
 \end{figure}
 \efloatseparator
@@ -74,14 +84,14 @@
 \begin{figure}[]
   \centering
   \includegraphics[width=12cm]{../assets/threejs-editor.png}
-\caption{ Shows translate gizmos along the x, y and z axis as well as gizmos that translate the cube along the xy, xz, yz and frustum plane \cite{threejseditor}.}
+\caption{ Translate gizmos along x, y and z axes as well as gizmos that translate the cube along the xy, xz, yz and frustum planes \cite{threejseditor}.}
 \end{figure}
 \efloatseparator
  
 \begin{figure}[]
   \centering
   \includegraphics[width=12cm]{../assets/x3dom-gizmo-example.png}
-\caption{ Shows an official x3dom tutorial for using sensors to create gizmos \cite{x3dgizmo}. }
+\caption{ An official x3dom tutorial for using X3D sensors to create gizmos \cite{x3dgizmo}. }
 \label{fig:x3dgizmo}
 \end{figure}
 \efloatseparator

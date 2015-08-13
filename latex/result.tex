@@ -1,8 +1,41 @@
 % !TEX root = seminararbeit.tex
 
-\section{Results}\label{results}
+\section{Conclusion}\label{results}
 
 % Die vorliegende Arbeit beschäftigt sich mit der iterativen Entwicklung einer Augmented Reality Anwendung für das Android-Betriebssystem. Ziel dabei war es eine Anwendung zu entwerfen, die als Vorlage für die Generierung mittels der SSIML-Sprachfamilie dient. Dafür wurden ver- schiedene bereits vorhandene Frameworks auf ihre Tauglichkeit für diesen Zweck überprüft. Da- nach wurde ein High-Level Framework für Android entworfen, mit welchem es möglich ist durch minimalem Programmieraufwand eine Augmented Reality Anwendung zu erzeugen. Dieses Fra- mework dient als Adapter zu low-level Frameworks und reduziert den vom Entwickler benötigten Quellcode auf ein Minimum, wodurch eine Codegenerierung mittels domänenspezifischer Spra- chen gut umgesetzt werden kann. Leider war es nicht möglich bestimmte Eigenschaften einer Augmented Reality Anwendung umzusetzen da sie den Rahmen dieser Arbeit sprengen würde. Das Überlagern von 3D-Objekte durch ein reales Objekt, oder ein sich nach der Umgebungs- beleuchtung anpassendes Lichtsystem gehören hier zu. Außerdem wäre es möglich das Sensor System um Kollisionssensoren oder Annäherungssensoren zu erweitern. Abschließend kann fest- gestellt werden, das Hilfe des in dieser Arbeit vorgestellte Augmented Reality Framework es mög- lich ist eine performante AR-Anwendung ohne große Probleme mittels der SSIML-Sprachfamilie zu Erzeugen.
+% Die vorliegende Arbeit beschäftigt sich mit der iterativen Entwicklung einer
+% Augmented Reality Anwendung für das Android-Betriebssystem. Ziel dabei war es
+% eine Anwendung zu entwerfen, die als Vorlage für die Generierung mittels der
+% SSIML-Sprachfamilie dient. Dafür wurden ver- schiedene bereits vorhandene
+% Frameworks auf ihre Tauglichkeit für diesen Zweck überprüft. Da- nach wurde
+% ein High-Level Framework für Android entworfen, mit welchem es möglich ist
+% durch minimalem Programmieraufwand eine Augmented Reality Anwendung zu erzeugen.
+% Dieses Fra- mework dient als Adapter zu low-level Frameworks und reduziert den
+% vom Entwickler benötigten Quellcode auf ein Minimum, wodurch eine
+% Codegenerierung mittels domänenspezifischer Spra- chen gut umgesetzt werden
+% kann. Leider war es nicht möglich bestimmte Eigenschaften einer Augmented
+% Reality Anwendung umzusetzen da sie den Rahmen dieser Arbeit sprengen würde.
+% Das Überlagern von 3D-Objekte durch ein reales Objekt, oder ein sich nach der
+% Umgebungs- beleuchtung anpassendes Lichtsystem gehören hier zu. Außerdem wäre
+% es möglich das Sensor System um Kollisionssensoren oder Annäherungssensoren zu
+% erweitern. Abschließend kann fest- gestellt werden, das Hilfe des in dieser
+% Arbeit vorgestellte Augmented Reality Framework es mög- lich ist eine
+% performante AR-Anwendung ohne große Probleme mittels der SSIML-Sprachfamilie zu
+% Erzeugen.
 
-\subsection{Why Scegratoo is the best since sliced
-Bread}\label{why-scegratoo-is-the-best-since-sliced-bread}
+The presented work explores the planning and the implementation of a \gls{3D} composition tool. The created tool, \gls{SceGraToo}, enables the user to:
+
+\begin{itemize}
+  \item Upload a \gls{R3D} project,
+  \item visualize it,
+  \item translate, rotate and scale any object,
+  \item remove objects,
+  \item reorder the the objects in the the treeview,
+  \item add new objects via dragging them over the tree-view and dropping them on any group or transform node,
+  \item save the changed scene on the server and
+  \item download it again.
+\end{itemize}
+
+And all of that is possible from within the browser.
+
+What couldn't be implemented, due to time constraints, is a way to synchronize a scene between browser sessions and allow multiple users to change one scene.

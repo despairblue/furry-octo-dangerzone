@@ -57,11 +57,10 @@ transformation thus applies to all objects contained by the group.
 
 \subsubsection{Reuse}\label{reuse}
 
-With the ability to address nodes it is possible to reuse their
-information. For a car, it would be enough to have only one node
+With the ability to address nodes it is possible to reuse them (and all contained information and child nodes). For a car, it would be enough to have only one node
 containing the geometry for a tire, all other tires are merely referencing
 the tire with the geometry information (see Listing \ref{list:defuse}).
-That way the memory footprint of an application can be reduced.
+That way the memory footprint and the overall complexity of an application can be reduced.
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
@@ -93,9 +92,16 @@ That way the memory footprint of an application can be reduced.
   </Transform>
 </Group>
   \end{minted}
-  \caption{Example \gls{X3D} group, showing the use of \texttt{def} and \texttt{use}.}
+  \caption{Example \gls{X3D} group, showing the use of \texttt{def} and \texttt{use}. Figure~\ref{fig:defuse} shows the rendered car.}
   \label{list:defuse}
 \end{listing}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../assets/car.png}
+  \caption{The rendered car from Listing \ref{list:defuse}.}
+  \label{fig:defuse}
+\end{figure}
 
 
 \subsection{X3D}
@@ -113,7 +119,7 @@ by SceGraToo, the tool that arose from this thesis.
 As said in the previous section, x3dom was developed by the Frauenhofer
 Institute to realize the vision that started \gls{VRML} in the first place: \emph{mark
 up interactive \gls{3D} content for the web}. On the web there are two entirely
-different approaches to describe the same thing:
+different approaches to describe 2D or 3D graphics:
 
 \begin{itemize*}
   \item imperative
@@ -138,8 +144,8 @@ perfectly.
 \subsection{SSIML}
 \label{ssiml}
 
-Heterogeneous developer groups, groups comprising people from
-different backgrounds (e.g.~programmers and \gls{3D} designers), have their difficulties
+Heterogeneous developer groups, are comprised of people with
+different different skills and terminologies (e.g.~programmers and \gls{3D} designers), have their difficulties
 working together. They work in different domains and use different tools
 adjusted to that domain \cite{Glinz:2015:SUS:2802768.2802838}.
 
@@ -147,11 +153,11 @@ SSIML is a graphical approach to unify the scene-graph model and the
 application model, thus making the communication between the different
 parties easier.
 
-It also serves as a code generation template for \gls{R3D}, as mentioned in Section \ref{motivation}.
+Going further, it also serves as a code generation template for \gls{R3D}, as mentioned in Section \ref{motivation}.
 
 \begin{figure}
   \centering
-  \includegraphics[width=12cm]{../assets/SSIML.png}
+  \includegraphics[width=\textwidth]{../assets/SSIML.png}
 	\caption{This Figure shows the graphical editor for SSIML. In particular it shows a scene describing a bike \cite{roundtrip3dwebsite}}.
 	\label{fig:ssimldiagram}
 \end{figure}
@@ -161,29 +167,31 @@ It also serves as a code generation template for \gls{R3D}, as mentioned in Sect
 As stated above, when developing \gls{3D} applications, many different kinds of
 developers are involved, i.e.~\gls{3D} designers, programmers and, ideally,
 software designers. Figure \ref{fig:ssimldiagram} shows the \gls{R3D} editor with an example \gls{SSIML} diagram.
+Figure \ref{fig:csrd} shows the proposed work-flow.
 
-% TODO: convert to pdf
-% \includegraphics{../assets/csrd2014.svg}\\
-% Roundtrip3D proposed process
-% \href{http://dx.doi.org/10.1007/s00450-014-0258-8}{JLV15}
+\begin{figure}
+  \includegraphics[width=\textwidth]{../assets/csrd2014.png}
+  \caption{The development work-flow described proposed by \gls{R3D} \cite{Jung:2015:SDA:2802768.2802837}.}
+  \label{fig:csrd}
+\end{figure}
 
 Roundtrip3D was a research project that, amongst others, resulted in a
-graphical editor for \hyperref[ssiml]{SSIML} models. It offers an
+graphical editor for \gls{SSIML} models. It offers an
 approach for merging a developer's changes back into the main model.
 After all working copies are merged back into the main model (dropping
 unwanted or conflicting changes), all working copies are regenerated and
 delivered to the individual developers. After each round-trip, every
 developer has a copy of the project that is consistent with everyone
-else's.
+else's. \cite{Jung:2015:SDA:2802768.2802837}
 
 \subsection{Related Work}
 \label{related-work}
 
-This section examines existing efforts and applications in the field of
+As described in section~\ref{motivation}, efforts in the following fields are essential for this work.
 
 \begin{itemize*}
-  \item collaborative remote working on \gls{3D} models and
-  \item online \gls{3D} editors.
+  \item Collaborative remote working on \gls{3D} models.
+  \item Online \gls{3D} editors.
 \end{itemize*}
 
 \subsubsection{3D Meteor}
@@ -192,28 +200,28 @@ This section examines existing efforts and applications in the field of
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=12cm]{../assets/3dmeteor.png}
-  \caption{This is a scene in 3d Meteor showing, a house and a garden of cubes.}
+  \caption{This is a scene in 3D Meteor showing, a house and a garden of cubes.}
 	\label{fig:3dmeteor}
 \end{figure}
 
-This simple \gls{3D} editor allows the user to add and remove colored blocks to a
+This simple \gls{3D} editor allows users to add and remove colored blocks to a
 scene. A scene can be opened and edited by multiple users simultaneously. The synchronization is leveraging meteor's database collection
 subscription features. Meteor applications are comprised of a client side and a
 server side part. The client can subscribe to database collections and
 automatically gets notified of changes to that collection by the server. The only
 thing that is synchronized is an array of \emph{boxes}. A box is an
-object with an x, y and z property, describing its position. When a box is
+object with an x, y, z and a color property, describing its position. When a box is
 added to the collection, the collection is synchronized with the server. The
 server informs all other browser instances that show this scene, that this box was added to the \emph{boxes} collection.
 These browser instances reevaluate the template that renders the x3dom scene to
 the \gls{DOM} and update the \gls{DOM} to contain the new box, thus synchronizing
 all browser instances. \cite{3dmeteor}
 
-\subsubsection{Blender Plugin}
+\subsubsection{Blender Plug-in}
 \label{blender-plugin}
 
 As part of an asset management system, the Université du Québec à
-Montréal implemented a plugin for Blender to enable collaborative working. An
+Montréal implemented a plug-in for Blender to enable collaborative working. An
 artist can record changes to wire-meshes and store them on a server.
 Another artist can download these changes and apply them to his working
 copy. A set of changes is a simple list of vertices and their movement in the
@@ -234,7 +242,7 @@ These sets are saved on the server. Other users, working on the same
 object, can apply them to their working copies. They can actually be applied
 to any object that has the same number of vertices. That is also one of the
 shortcomings. Adding or removing vertices cannot be handled by the
-plugin. And the synchronization is not in real time. As a result it is more comparable to version
+plug-in. And the synchronization is not in real time. As a result it is more comparable to version
 control systems, like \gls{git}, but for \gls{3D} models.
 
 \subsubsection{Gizmos}\label{gizmos}
@@ -254,8 +262,8 @@ In \gls{X3D}, gizmos can be realized with specialized X3DDragSensorNodes \cite{x
   PlaneSensor converts pointing device motion into 2D translation, parallel to the local Z=0 plane. Hint: You can constrain translation output to one axis by setting the respective minPosition and maxPosition members to equal values for that axis \cite{planesensor}.
 \end{description*}
 
-The sensors track drag events on their siblings. In the example in Figure
-\ref{fig:x3dgizmo}, which is taken directly from the x3dom website, the
+The sensors track drag events on their siblings. In the example in
+Figure~\ref{fig:x3dgizmo}, the
 PlaneSensor tracks drag events on the cones and the cylinder that make up the
 cyan handle. Part of the structure of the scene can be seen in Listing
 \ref{planesensor}.
@@ -272,7 +280,7 @@ around the application. Instead of having to learn keyboard shortcuts,
 users simply use their intuition and knowledge about how to interact with
 objects in the real world.
 
-The Figures \ref{blender} to \ref{fig:x3dgizmo} show different gizmos from
+Figures \ref{blender} to \ref{fig:x3dgizmo} show different gizmos from
 different applications.
 
 \begin{listing}
@@ -333,12 +341,12 @@ different applications.
 \begin{figure}[]
   \centering
   \includegraphics[width=12cm]{../assets/threejs-editor.png}
-	\caption{ Shows translate gizmos along the x, y and z axis as well as gizmos that translate the cube along the xy, xz, yz and frustum plane \cite{threejseditor}.}
+	\caption{ Translate gizmos along x, y and z axes as well as gizmos that translate the cube along the xy, xz, yz and frustum planes \cite{threejseditor}.}
 \end{figure}
 \begin{figure}[]
   \centering
   \includegraphics[width=12cm]{../assets/x3dom-gizmo-example.png}
-	\caption{ Shows an official x3dom tutorial for using sensors to create gizmos \cite{x3dgizmo}. }
+	\caption{ An official x3dom tutorial for using X3D sensors to create gizmos \cite{x3dgizmo}. }
 	\label{fig:x3dgizmo}
 \end{figure}
 
@@ -354,11 +362,11 @@ Although it does offer all the wanted scene composition features, it lacks the a
 
 \begin{itemize*}
   \item Load an existing \gls{X3D} file,
-  \item save the scene as an \gls{X3D} file and
+  \item serialize 3D scenes to \gls{X3D} files and
   \item upload \gls{X3D} files that can be included as inlines.
 \end{itemize*}
 
-Scenes can only be loaded and saved as a \gls{JSON} representation (see Listing~\ref{componenteditorjson}).
+Scenes can only be deserialized and serialized as a \gls{JSON} representation (see Listing~\ref{componenteditorjson}).
 Conversion between the formats may be possible, but meta information like \glspl{ID} in comments would be lost.
 
 \begin{listing}
@@ -382,26 +390,26 @@ Conversion between the formats may be possible, but meta information like \glspl
 \subsubsection{Real-Time Collaborative Scientific WebGL Visualization with Web Sockets}
 \label{rtcswvwws}
 
-Using web sockets instead of AJAX is an well performing approach
+Using web sockets instead of AJAX is an well promising approach performance wise
 \cite{Marion:2012:RCS:2338714.2338721}. Especially the cut down on latency. It is
 over all very similar to the approach that was considered for SceGraToo, but not
-implemented due to time constraints. In the end the differences between
+implemented due to its complexity. In the end, the differences between
 SceGraToo's requirements and theirs outweigh the similarities. Besides visualizing a scene,
 \gls{SceGraToo} also has to manipulate it. So, to achieve a spectator mode,
 like in this work, not only the viewpoint would have to be synchronized, but also
 the whole scene. This can either be done by sending the whole scene to the other
-clients on every change, or sending change sets, which poses the interesting
-challenge of generating them. They visualize a specific dataset in a threejs's specific \gls{JSON} format
+clients on every change, or sending change sets, which poses a challenging task.
+They visualize a specific dataset in a threejs's specific \gls{JSON} format
 \cite{threejs-format}. \gls{SceGraToo} only needs to render \gls{X3D} scenes. Converting the
 scene into another format and having it rendered by another scene graph framework
-is unnecessary, since x3dom does a good job doing this.
+is unnecessary, since x3dom is pretty good at this.
 
 \subsubsection{ParaViewWeb}
 \label{paraviewweb-pvweb}
 
 It is simple to use out of the box, but needs a paraview server instance and
 paraview does not support \gls{X3D} as an input format. So using this, is unfortunately
-not possible unless an import filter is written. The visualization is
-mainly meant to explore data sets. There is no easy way to manipulate
-the input data. This can only happen by extending the visualization
-pipeline via python scripts on the server.
+not possible unless an X3D importer is written. The visualization is
+mainly meant to explore data sets. There is no straight forward way to manipulate
+the data. This can only happen by extending the visualization
+pipeline via python scripts on the server. \cite{paraviewweb}
