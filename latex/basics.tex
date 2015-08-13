@@ -3,6 +3,8 @@
 \section{Basics and Related Work}
 \label{basics-and-related-work}
 
+% TODO: put text here
+
 \subsection{Scene-Graph}\label{scene-graph}
 
 Scene-graphs can be used to group and organize \gls{3D} objects, their properties and
@@ -31,10 +33,10 @@ for every polygon.\\
 With a scene-graph it is possible to start from the root and traverse the
 graph, testing the bounding box of each group and only sending it to the
 \gls{GPU} if it is completely visible. If it is not, the whole sub-tree is not
-sent to the \gls{GPU}. If it is partially visible the same process is applied
+sent to the \gls{GPU}. If it is partially visible, the same process is applied
 to the sub-tree.\\
 By using a structure that retains more information about what it
-represents it is possible to let the CPU do more of the heavy
+represents, it is possible to let the CPU do more of the heavy
 lifting and unburden the \gls{GPU}.
 
 \begin{quote}
@@ -62,7 +64,7 @@ the tire with the geometry information (see Listing \ref{list:defuse}).
 That way the memory footprint of an application can be reduced.
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{html}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
 <Group>
   <Transform>
     <Shape def="chassis">
@@ -101,11 +103,11 @@ That way the memory footprint of an application can be reduced.
 universal interactive \gls{3D} exchange format, much like what \acr{HTML} is for textual
 documents or \acrshort{SVG} for vector graphics. Due to its \gls{XML} structure it can be
 integrated in \gls{HTML} documents. The Frauenhofer Institute pursued to
-implement a environment that could interpret and visualize \gls{X3D} in the browser, by
+implement an environment that could interpret and visualize \gls{X3D} in the browser, by
 using a \gls{WebGL} context. It is called x3dom \cite{x3dom} and it is extensively used
 by SceGraToo, the tool that arose from this thesis.
 
-\subsection{x3dom}
+\subsection{X3dom}
 \label{par:x3dom}
 
 As said in the previous section, x3dom was developed by the Frauenhofer
@@ -190,7 +192,7 @@ This section examines existing efforts and applications in the field of
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=12cm]{../assets/3dmeteor.png}
-  \caption{This is a scene in 3d Meteor showing a house and a garden of cubes.}
+  \caption{This is a scene in 3d Meteor showing, a house and a garden of cubes.}
 	\label{fig:3dmeteor}
 \end{figure}
 
@@ -200,7 +202,7 @@ subscription features. Meteor applications are comprised of a client side and a
 server side part. The client can subscribe to database collections and
 automatically gets notified of changes to that collection by the server. The only
 thing that is synchronized is an array of \emph{boxes}. A box is an
-object with an x, y and z property describing its position. When a box is
+object with an x, y and z property, describing its position. When a box is
 added to the collection, the collection is synchronized with the server. The
 server informs all other browser instances that show this scene, that this box was added to the \emph{boxes} collection.
 These browser instances reevaluate the template that renders the x3dom scene to
@@ -218,7 +220,7 @@ copy. A set of changes is a simple list of vertices and their movement in the
 x, y and z direction (see Listing \ref{blenderplugin}). \cite{LCR07}
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{text}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{text}
 95 [0.0000, 0.0000, 0.0000]
 295 [0.0027, 0.0013, 0.0000]
 309 [0.2123, 0.1001, 0.0000]
@@ -233,7 +235,7 @@ object, can apply them to their working copies. They can actually be applied
 to any object that has the same number of vertices. That is also one of the
 shortcomings. Adding or removing vertices cannot be handled by the
 plugin. And the synchronization is not in real time. As a result it is more comparable to version
-control system like \gls{git}, but for \gls{3D} models.
+control systems, like \gls{git}, but for \gls{3D} models.
 
 \subsubsection{Gizmos}\label{gizmos}
 
@@ -258,7 +260,7 @@ PlaneSensor tracks drag events on the cones and the cylinder that make up the
 cyan handle. Part of the structure of the scene can be seen in Listing
 \ref{planesensor}.
 
-Every time it detects a drag event it converts it into a 2D
+Every time it detects a drag event, it converts it into a 2D
 transformation and raises an \texttt{onOutPutChange} event.\\
 The callback \texttt{processTranslationGizmoEvent} is registered as an event handler.
 In this function the position of the handle is adjusted to make it
@@ -266,7 +268,7 @@ follow the drag movement, also the position of the teapot is adjusted.
 
 Having the handles being \gls{3D} objects within the scene, that look
 touchable and interactable, make it easier for users to find their way
-around the application. Instead of having to learn keyboard shortcuts
+around the application. Instead of having to learn keyboard shortcuts,
 users simply use their intuition and knowledge about how to interact with
 objects in the real world.
 
@@ -274,7 +276,7 @@ The Figures \ref{blender} to \ref{fig:x3dgizmo} show different gizmos from
 different applications.
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{html}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
 <group>
   <planeSensor autoOffset='true' axisRotation='1 0 0 -1.57' minPosition='-6 0' maxPosition='6 0' onoutputchange='processTranslationGizmoEvent(event)'>
   </planeSensor>
@@ -360,7 +362,7 @@ Scenes can only be loaded and saved as a \gls{JSON} representation (see Listing~
 Conversion between the formats may be possible, but meta information like \glspl{ID} in comments would be lost.
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{json}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{json}
 {
   "0": {
     "type": "Box",
@@ -386,10 +388,10 @@ over all very similar to the approach that was considered for SceGraToo, but not
 implemented due to time constraints. In the end the differences between
 SceGraToo's requirements and theirs outweigh the similarities. Besides visualizing a scene,
 \gls{SceGraToo} also has to manipulate it. So, to achieve a spectator mode,
-like in this work, not only the viewpoint would have to be synchronized but also
+like in this work, not only the viewpoint would have to be synchronized, but also
 the whole scene. This can either be done by sending the whole scene to the other
-clients on every change, or sending change sets, which poses an interesting
-challenge. They visualize a specific dataset in a threejs's specific \gls{JSON} format
+clients on every change, or sending change sets, which poses the interesting
+challenge of generating them. They visualize a specific dataset in a threejs's specific \gls{JSON} format
 \cite{threejs-format}. \gls{SceGraToo} only needs to render \gls{X3D} scenes. Converting the
 scene into another format and having it rendered by another scene graph framework
 is unnecessary, since x3dom does a good job doing this.

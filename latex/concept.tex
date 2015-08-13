@@ -10,6 +10,8 @@ In the following sections the initial design concept of \gls{SceGraToo} is illus
 \subsection{Server}
 \label{server}
 
+% TODO: put text here
+
 \subsubsection{Node.js}
 \begin{quote}
   ``Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.'' \cite{nodejs}
@@ -17,13 +19,13 @@ In the following sections the initial design concept of \gls{SceGraToo} is illus
 
 Node is used because it is inherently easy writing small servers with it, and
 SceGraToo's server is not going to be complex. \footnote{Complex servers can be
-written in Node.js as well, it is just not encouraged, since most people tend to
+written in Node.js as well. It is just not encouraged, since most people tend to
 refactor their infrastructure into micro services.}
 
 Listing \ref{list:nodejs} shows a server that is looking up a user from the database and returning it as \gls{JSON} to the browser.
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
 const http = require('http')
 const db = require('db')
 
@@ -53,7 +55,7 @@ See Listing \ref{list:koajs} for the same example from Listing \ref{list:nodejs}
 It is not only shorter, but also simplier and clearer.
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
 const db = require('db')
 const koa = require('koa')
 const app = koa()
@@ -76,7 +78,7 @@ One way is to make it so simple that there are obviously no deficiencies
 and the other way is to make it so complicated that there are no obvious
 deficiencies. The first method is far more difficult.''}{--- Hoare, Turing Award Lecture 1980}
 
-The tree-view is the most important part of SceGraToo, it shows the
+The tree-view is the most important part of SceGraToo. It shows the
 structure rather than the visual representation. Different
 off-the-shelf solutions, like angular or JQuery plugins, were tested
 against the following requirements:
@@ -168,7 +170,7 @@ versa.
 \end{figure}
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{html}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
 <x3d version="3.0" profile="Interaction" width="708px" height="354px">
 <!-- id=69b81d54-6e7a-4967-acca-b8c89ba90782 -->
 <scene render="true" bboxcenter="0,0,0" bboxsize="-1,-1,-1" pickmode="idBuf" dopickpass="true">
@@ -199,7 +201,7 @@ versa.
 \end{listing}
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{html}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
 <div>
   <li>
     <div>
@@ -260,7 +262,7 @@ the corresponding scene-graph-node in the \gls{DOM}. Also each
 tree-view-node-component observes its corresponding scene-graph-node for
 attribute mutations and added or removed child nodes and acts accordingly.
 
-Depending on how the scene-graph is mutated three main cases can be differentiated:
+Depending on how the scene-graph is mutated, three main cases can be differentiated:
 
 \begin{description*}
   \item[a scene-graph-node is added]
@@ -288,7 +290,7 @@ In the following, the two main problems are described.
 
 \begin{description*}
   \item[Problem 1: keeping the tree-view consistent with the scene-graph]
-    The difficulty to make sure that incremental updates are error-free
+    The difficulty, to make sure that incremental updates are error-free,
     exacerbates even more when further functionality is
     added to the tree-view,  like checkboxes for
     specific properties or saving state in the tree-view that is not part of
@@ -328,7 +330,7 @@ only applies these to the \gls{DOM}.
 
 From a developer's point of view the application is programmed like it is
 completlely rerendered everytime something changes. But from the browser's point
-of view, only a minimal set of changes, only those that are required to transform the
+of view only a minimal set of changes, only those that are required to transform the
 \gls{DOM} into the disired state, are applied, thus greatly reducing the risk of a \emph{reflow}.
 
 The code below (Listings \ref{oldvirtdom}, \ref{newvirtdom} and \ref{patch}) is
@@ -336,7 +338,7 @@ for explanitary purposes to describe how react works. It does not resemble
 react's implementation in any way:
 
 \begin{listing}[H]
-  \begin{minted}[breaklines,bgcolor=bg]{html}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
 <ol data-reactid=".0">
   <li data-reactid=".0.0">scene
     <ol data-reactid=".0.0.0">
@@ -354,7 +356,7 @@ react's implementation in any way:
 \end{listing}
 
 \begin{listing}[H]
-  \begin{minted}[breaklines,bgcolor=bg]{html}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
 <ol data-reactid=".0">
   <li data-reactid=".0.0">scene
     <ol data-reactid=".0.0.0">
@@ -373,7 +375,7 @@ react's implementation in any way:
 \end{listing}
 
 \begin{listing}[H]
-  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
 var li = document.createElement('li')
 li.innerText = 'group'
 document.querySelector('[data-reactid=".0.0.0"]')
@@ -390,8 +392,8 @@ represent the current state of the scene-graph.
 \paragraph{Data Binding}
 \label{data-binding}
 
-Another idea is to utilize templates and data binding. Frameworks, like
-angular, or web components implementations, like polymer,
+Another idea is to utilize templates and data binding. Frameworks (like
+angular) or web components implementations (like polymer)
 support templates and two way data binding. Following only
 angular directives are examined, but the same should be possible with web
 components.
@@ -414,7 +416,7 @@ expand again (Listing \ref{list:angular4}). This recursive expanding stops when 
 \texttt{treenode} is childless.
 
 \begin{listing}[H]
-  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
 node: {
   name: "scene",
   children: [
@@ -432,7 +434,7 @@ node: {
 \end{listing}
 
 \begin{listing}[H]
-  \begin{minted}[breaklines,bgcolor=bg]{html}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
 <treenode node="node">
 </treenode>
   \end{minted}
@@ -441,7 +443,7 @@ node: {
 \end{listing}
 
 \begin{listing}[H]
-  \begin{minted}[breaklines,bgcolor=bg]{html}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
 <treenode node="node">
   <span>{{node.name}}</span>
   <nodelist ng-repeat='node in children' children='children'>
@@ -453,7 +455,7 @@ node: {
 \end{listing}
 
 \begin{listing}[H]
-  \begin{minted}[breaklines,bgcolor=bg]{html}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
 <treenode node="node">
   <span>{{node.name}}</span>
   <nodelist ng-repeat='node in children' children='children'>
@@ -469,7 +471,7 @@ node: {
 \end{listing}
 
 \begin{listing}[H]
-  \begin{minted}[breaklines,bgcolor=bg]{html}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
 <treenode node="node">
   <span>{{node.name}}</span>
   <nodelist ng-repeat='node in children' children='children'>

@@ -3,10 +3,12 @@
 \section{Implementation}
 \label{implementation}
 
+% TODO: put text here
+
 \subsection{Server}
 
 The server has a really small interface.
-When it gets a request it tries to to match the request to one of its routes, otherwise tries to serve the requested file from the file system (assuming it is a static file), otherwise answers with a 404, which means \texttt{Not Found}.
+When it gets a request it tries to match the request to one of its routes, otherwise tries to serve the requested file from the file system (assuming it is a static file), otherwise answers with a 404, which means \texttt{Not Found}.
 
 Some of the routes the server answers to are:
 \begin{description*}
@@ -19,6 +21,8 @@ Some of the routes the server answers to are:
 \end{description*}
 
 \subsection{Client}
+
+% TODO: put text here
 
 \subsubsection{Angular}
 \label{angular}
@@ -38,7 +42,7 @@ AngularJS is used for:
 \label{par:Bootstrapping and Routing}
 
 Listing \ref{list:bootstrap} initializes SceGraToo. In the \texttt{config}
-function, routes are defined. When a link is clicked, the browser will not make a
+function routes are defined. When a link is clicked, the browser will not make a
 request to the server and load that page. Instead a new controller takes over and
 renders a different template. The advantage of this approach is that the user
 sees immediate feedback, while navigating. The application can render the view and
@@ -47,7 +51,7 @@ the server (like a list of all available projects). This approach is called
 single-page application \cite{Mikowski:2013:SPW:2663433}.
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
 window.angular.module('scegratooApp')
   .config(function ($routeProvider) {
     $routeProvider
@@ -78,12 +82,12 @@ window.angular.module('scegratooApp')
 Each controller, view or service is contained in its own module and does not
 pollute the global namespace. In a browser's javascript context the global
 namespace refers to the namespace that belongs to the \texttt{window} object.
-Defining variables in scripts define these variable on the window object.
+Defining variables in a script defines these variables on the window object.
 Angular modules prevent this. Modules are registered on a specific angular
 application (thus one website could also accommodate multiple angular
 applications). The defined variables are contained by creating a function that
 returns whatever the module is supposed to contain, thus creating a closure.
-Listing \ref{list:angularmodule} shows a module that creates a \texttt{WeakMap} and
+Listing \ref{list:angularmodule} shows a module that creates an \texttt{Array} and
 returns it. Modules can denote that they depend on other modules. This can be
 seen in Listing \ref{list:depinj}. The \texttt{MoveableUtils} request that the
 \texttt{moveable} module is injected into it when initializing. Angular creates
@@ -91,18 +95,18 @@ a dependency graph and resolves dependencies automatically.
 
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
 window.angular.module('scegratooApp')
   .service('moveables', function () {
-    return new WeakMap()
+    return new Array()
   })
   \end{minted}
-  \caption{This module creates a \texttt{WeakMap} that can be injected in multiple other modules. These modules all share the same \texttt{WeakMap} since services are singletons. \texttt{service}'s first argument is the \texttt{service}'s name, that can be used by other modules by importing it.}
+  \caption{This module creates an \texttt{Array} that can be injected in multiple other modules. These modules all share the same \texttt{Array}, since services are singletons. \texttt{service}'s first argument is the \texttt{service}'s name, that can be used by other modules by importing it.}
   \label{list:angularmodule}
 \end{listing}
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
 angular.module('scegratooApp')
   .service('MoveableUtils', function (moveables) {
     return {
@@ -117,13 +121,13 @@ angular.module('scegratooApp')
 \paragraph{Views}
 \label{par:Views}
 
-Angular tempates are mostly logicless
+Angular templates are mostly logicless
 (except for ng-repeat iterators and ng-if statements). Listing \ref{list:view}
-shows a template that renders all prejects the corresponding controller
+shows a template that renders all projects the corresponding controller
 retrieved from the server.
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{html}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
 <sgt-navigation-bar>
 </sgt-navigation-bar>
 <div class="sash">
@@ -153,27 +157,27 @@ structured view of the scene-graph than the rendered scene does.
 
 React works by creating components and nesting them. Listing
 \ref{list:reactcomponent} shows the \texttt{TreeView} component. The
-\texttt{TreeNode} is another component that handles a specific tree-view-node,
-components keep instantiating and returning components until the whole
+\texttt{TreeNode} is another component that handles a specific tree-view-node.
+Components keep instantiating and returning components until the whole
 scene-graph is traversed. In Listing \ref{list:reactentrypoint} it is shown how
 it is rendered to the \gls{DOM}. The \gls{HTML} syntax is simply syntactic sugar and is
 transpiled into normal javascript before being evaluated (the transpiled
 equivalent of Listing \ref{list:reactentrypoint} is shown in Listing
 \ref{list:reacttranspiled}).
 
-Using react the view virtually becomes a function of its input. The input is the root node of the scene-graph, the \gls{X3D} node.
+Using react, the view virtually becomes a function of its input. The input is the root node of the scene-graph, the \gls{X3D} node.
 
 The parsing and rendering process can be described as follows:
 \begin{enumerate*}
   \item Choose a graph node as the root,
   \item call the node component with that graph node,
   \item instantiate corresponding components for each of the nodes attribute,
-  \item if the graph node has child nodes call the node component again with each child node and return their return values or
-  \item if the graph node has no children return an empty element.
+  \item if the graph node has child nodes, call the node component again with each child node and return their return values or
+  \item if the graph node has no children, return an empty element.
 \end{enumerate*}
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
 React.createClass({
   displayName: 'TreeView',
   propTypes: {
@@ -198,7 +202,7 @@ React.createClass({
 \end{listing}
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
 const treeViewContainer = document.querySelector('#container')
 const x3dNode = document.querySelector('x3d')
 React.render(<TreeView data={x3dNode} />, treeViewContainer)
@@ -208,7 +212,7 @@ React.render(<TreeView data={x3dNode} />, treeViewContainer)
 \end{listing}
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
 const treeViewContainer = document.querySelector('#container')
 const x3dNode = document.querySelector('x3d')
 React.render(React.createElement(TreeView, { data: x3dNode }), treeViewContainer)
@@ -220,7 +224,7 @@ React.render(React.createElement(TreeView, { data: x3dNode }), treeViewContainer
 \subsubsection{Synchronization Process}
 \label{synchronization-process}
 
-Synchronizing the tree-view when the scene-graph changes is done by calling
+Synchronizing the tree-view when the scene-graph changes, is done by calling
 \texttt{React.render} again, just like in Listing \ref{list:reactentrypoint}. React
 calculates the changes that need to be done to update the \gls{DOM} and applies these.
 
@@ -231,12 +235,12 @@ property. If the property is true, that node and all its children are rendered,
 if not, they are not visible. The component is showing the state of the the
 \texttt{owner}'s render property's state. When the user clicks the check box, the
 \texttt{owner}'s attribute is changed. The component does not have to update the
-\gls{DOM} node, react is doing it the next time \texttt{React.render} is called. This
-is a simple example but the concept holds up for more complicated interactions
+\gls{DOM} node. React is doing it the next time \texttt{React.render} is called. This
+is a simple example, but the concept holds up for more complicated interactions
 like adding new nodes or moving via drag and drop.
 
 \begin{listing}
-  \begin{minted}[breaklines,bgcolor=bg]{javascript}
+  \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
 const TreeNodeAttributeRender = React.createClass({
   displayName: 'TreeNodeAttributeRender',
   propTypes: {

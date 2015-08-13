@@ -1,0 +1,136 @@
+\begin{figure}[htbp]
+\includegraphics[width=\textwidth]{../assets/my-little-pony-mlp-other-261396.jpeg}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/wheel1.png}\\
+    a)
+  \end{minipage}
+  \begin{minipage}{.5\textwidth}
+    \centering
+   \includegraphics[width=0.9\textwidth]{../assets/wheel2.png}\\
+    b)
+  \end{minipage}\\
+  \begin{minipage}{.5\textwidth}
+    \centering
+   \includegraphics[width=0.9\textwidth]{../assets/wheel3.png}\\
+    c)
+  \end{minipage}
+  \begin{minipage}{.5\textwidth}
+    \centering
+   \includegraphics[width=0.9\textwidth]{../assets/wheel4.png}\\
+    d)
+  \end{minipage}
+  \caption{Figures \ref{fig:wheel}a-c show common orientations the \gls{3D} model of a wheel could have. Figure \ref{fig:wheel}d shoes the worst case.}
+\label{fig:wheel}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+  \centering
+  \includegraphics[width=12cm]{../assets/SSIML.png}
+\caption{This Figure shows the graphical editor for SSIML. In particular it shows a scene describing a bike \cite{roundtrip3dwebsite}}.
+\label{fig:ssimldiagram}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=12cm]{../assets/3dmeteor.png}
+  \caption{This is a scene in 3d Meteor showing a house and a garden of cubes.}
+\label{fig:3dmeteor}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htbp]
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Translate.jpg}\\
+   a) A translation gizmo \cite{blenderwiki}.
+  \end{minipage}
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Rotate.jpg}\\
+   b) Rotation gizmo \cite{blenderwiki}.
+  \end{minipage}\\
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Scale.jpg}\\
+   c) Scale gizmo \cite{blenderwiki}.
+  \end{minipage}
+  \begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Combo.jpg}\\
+   d) All gizmos together \cite{blenderwiki}.
+  \end{minipage}
+  \caption{The same cube in Blender with different gizmos/transformers enabled.}
+  \label{blender}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[]
+  \centering
+  \includegraphics[width=12cm]{../assets/threejs-editor.png}
+\caption{ Shows translate gizmos along the x, y and z axis as well as gizmos that translate the cube along the xy, xz, yz and frustum plane \cite{threejseditor}.}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[]
+  \centering
+  \includegraphics[width=12cm]{../assets/x3dom-gizmo-example.png}
+\caption{ Shows an official x3dom tutorial for using sensors to create gizmos \cite{x3dgizmo}. }
+\label{fig:x3dgizmo}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../assets/treeview.png}
+  \caption{The rendered tree-view.}
+  \label{fig:tree-view}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../assets/x3dom-dom.png}
+  \caption{The \gls{X3D} scene inside the \gls{DOM}.}
+  \label{fig:x3dom-dom}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../assets/treeview-dom.png}
+  \caption{About half of the \gls{DOM} elements that make up a tree-view of only three tree-view-nodes: a \texttt{scene}, a \texttt{transform} and an \texttt{inline}.}
+  \label{fig:treeview-dom}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../assets/treeview-node-dom.png}
+  \caption{The \gls{DOM} elements that make up a tree-view-node for an \texttt{inline}.}
+  \label{fig:tree-view-node-dom}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+  \centering
+  \includegraphics[width=.5\textwidth]{../assets/tree-view-node-rendered.png}
+  \caption{The rendered tree-view-node of an \texttt{inline}.}
+  \label{fig:tree-view-node-rendered}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{../assets/concepts-startup.png}
+  \caption{This is angulars bootstrapping process \cite{angularbootstrap}.}
+  \label{fig:angularbootstrap}
+\end{figure}
+\efloatseparator
+ 

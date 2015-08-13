@@ -80,6 +80,9 @@
 \newcommand{\acr}[1]{\glsunset{#1}\acs{#1} (\acl{#1})}
 % caption* for unnumbered captions
 \usepackage{caption}
+% put all figures at the end
+\usepackage[nomarkers,figuresonly]{endfloat}
+\renewcommand{\efloatseparator}{\mbox{}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Titel, Autor, Seminar, Semester, Dozent %
@@ -132,15 +135,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <TITLE> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagenumbering{roman}
 \begin{titlepage}
-\begin{tabular}[l]{l}
 % Angaben zum Seminar
+\noindent
+\begin{tabular}[l]{l}
 TU Bergakademie Freiberg\\
 Faculty for Mathematics and Computer Science\\
 \mysemester\\
-German Title: \myseminar\\
-\phantom{German Title: }\myseminarTwo\\
-Supervisor: \mydozent\\
-\phantom{Supervisor: }\mydozentTwo\\
+\end{tabular}\\
+\begin{tabular}[l]{ll}
+German Title: & \myseminar\\
+\phantom{German Title: } & \myseminarTwo\\
+Supervisor: & \mydozent\\
+\phantom{Supervisor: } & \mydozentTwo\\
 \end{tabular}
 
 \vspace{4cm}
@@ -191,20 +197,20 @@ Freiberg, \today \hspace{2cm} \underline{\phantom{Platz für die Unterschrift}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <Danksagung> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TODO: translate
-\emptypage
-\thispagestyle{empty}
-\section*{Acknowledgment} % (fold)
-\label{sec:danksagung}
-
-% Danken möchte ich allen voran \mydozent \index{Froitzheim} und \mydozentTwo \index{Jasper} für dieses Seminar und all ihre Hilfe. Des Weiteren möchte ich mich bei \citeauthor{SeminarTemplate} für sein sehr gutes Latex-Template \cite{SeminarTemplate} bedanken, welches dieser Arbeit zu Grunde liegt, aber in vielen Bereichen angepasst wurde. Eine weitere sehr große Hilfe war das WikiBook \LaTeX~\cite{WikiLatex}, auch vielen Dank an alle Autoren dieses WikiBooks. \\
-
-% Mein Dank geht auch an die fleißigen Korrekturleser Friederike Klos \index{Klos, Friederike} und Felix Kästner \index{Kästner, Felix}.
-
-% Thanks!
-
-\begin{figure}[htbp]
-	\includegraphics[width=\textwidth]{../assets/my-little-pony-mlp-other-261396.jpeg}
-\end{figure}
+% \emptypage
+% \thispagestyle{empty}
+% \section*{Acknowledgment} % (fold)
+% \label{sec:danksagung}
+%
+% % Danken möchte ich allen voran \mydozent \index{Froitzheim} und \mydozentTwo \index{Jasper} für dieses Seminar und all ihre Hilfe. Des Weiteren möchte ich mich bei \citeauthor{SeminarTemplate} für sein sehr gutes Latex-Template \cite{SeminarTemplate} bedanken, welches dieser Arbeit zu Grunde liegt, aber in vielen Bereichen angepasst wurde. Eine weitere sehr große Hilfe war das WikiBook \LaTeX~\cite{WikiLatex}, auch vielen Dank an alle Autoren dieses WikiBooks. \\
+%
+% % Mein Dank geht auch an die fleißigen Korrekturleser Friederike Klos \index{Klos, Friederike} und Felix Kästner \index{Kästner, Felix}.
+%
+% % Thanks!
+%
+% \begin{figure}[htbp]
+% 	\includegraphics[width=\textwidth]{../assets/my-little-pony-mlp-other-261396.jpeg}
+% \end{figure}
 
 % section danksagung (end)
 
@@ -231,13 +237,10 @@ Freiberg, \today \hspace{2cm} \underline{\phantom{Platz für die Unterschrift}}
 
 \include{result}
 
-\listoftables
+% \listoftables
 
-\clearpage
-\listoffigures
-
-\clearpage
-\listoflistings
+% \clearpage
+% \listoffigures
 
 % References (Literaturverzeichnis):
 % a) Style (with abbreviations: use alpha):
@@ -246,11 +249,13 @@ Freiberg, \today \hspace{2cm} \underline{\phantom{Platz für die Unterschrift}}
 \clearpage
 \bibliography{seminararbeit}
 
-\clearpage
-\printindex
-
+% \clearpage
+% \printindex
 \clearpage
 \printglossaries
+
+\clearpage
+\listoflistings
 
 \emptypage
 
