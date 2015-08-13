@@ -75,8 +75,9 @@
 \setlength\epigraphwidth{12cm}
 \setlength\epigraphrule{0pt}
 % for a glossary
-\usepackage[toc]{glossaries}
+\usepackage[toc,shortcuts]{glossaries}
 \input{glossary}
+\newcommand{\acr}[1]{\glsunset{#1}\acs{#1} (\acl{#1})}
 % caption* for unnumbered captions
 \usepackage{caption}
 
