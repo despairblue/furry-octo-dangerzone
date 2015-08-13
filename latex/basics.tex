@@ -12,7 +12,7 @@ child node can be an object or a group, again containing more child nodes. A gro
 contain associated transformation information, like \emph{translation},
 \emph{rotation} or \emph{scaling}. This structure has certain advantages
 compared to applying all transformations to the raw meshes and sending
-everything to the \gls{GPU}. \cite{realityprime} \gls{SSIML} scene-graphs differ from the
+everything to the \gls{GPU} \cite{realityprime}. \gls{SSIML} scene-graphs differ from the
 above definition and there are three types of nodes:
 
 \begin{itemize*}
@@ -139,7 +139,7 @@ perfectly.
 Heterogeneous developer groups, groups comprising people from
 different backgrounds (e.g.~programmers and \gls{3D} designers), have their difficulties
 working together. They work in different domains and use different tools
-adjusted to that domain. \cite{Glinz:2015:SUS:2802768.2802838}
+adjusted to that domain \cite{Glinz:2015:SUS:2802768.2802838}.
 
 SSIML is a graphical approach to unify the scene-graph model and the
 application model, thus making the communication between the different
@@ -150,7 +150,7 @@ It also serves as a code generation template for \gls{R3D}, as mentioned in Sect
 \begin{figure}
   \centering
   \includegraphics[width=12cm]{../assets/SSIML.png}
-	\caption{This Figure shows the graphical editor for SSIML. In particular it shows a scene describing a bike. \cite{roundtrip3dwebsite}}
+	\caption{This Figure shows the graphical editor for SSIML. In particular it shows a scene describing a bike \cite{roundtrip3dwebsite}}.
 	\label{fig:ssimldiagram}
 \end{figure}
 
@@ -245,11 +245,11 @@ In \gls{X3D}, gizmos can be realized with specialized X3DDragSensorNodes \cite{x
 
 \begin{description*}
 \item[SphereSensor]
-  SphereSensor converts pointing device motion into a spherical rotation around the origin of the local coordinate system. \cite{spheresensor}
+  SphereSensor converts pointing device motion into a spherical rotation around the origin of the local coordinate system \cite{spheresensor}.
 \item[CylinderSensor]
-  The CylinderSensor node converts pointer motion (for example, from a mouse) into rotation values, using an invisible cylinder of infinite height, aligned with local Y-axis. \cite{cylindersensor}
+  The CylinderSensor node converts pointer motion (for example, from a mouse) into rotation values, using an invisible cylinder of infinite height, aligned with local Y-axis \cite{cylindersensor}.
 \item[PlaneSensor]
-  PlaneSensor converts pointing device motion into 2D translation, parallel to the local Z=0 plane. Hint: You can constrain translation output to one axis by setting the respective minPosition and maxPosition members to equal values for that axis. \cite{planesensor}
+  PlaneSensor converts pointing device motion into 2D translation, parallel to the local Z=0 plane. Hint: You can constrain translation output to one axis by setting the respective minPosition and maxPosition members to equal values for that axis \cite{planesensor}.
 \end{description*}
 
 The sensors track drag events on their siblings. In the example in Figure
@@ -308,22 +308,22 @@ different applications.
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Translate.jpg}\\
-  	a) A translation gizmo. \cite{blenderwiki}
+  	a) A translation gizmo \cite{blenderwiki}.
   \end{minipage}
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Rotate.jpg}\\
-  	b) Rotation gizmo. \cite{blenderwiki}
+  	b) Rotation gizmo \cite{blenderwiki}.
   \end{minipage}\\
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Scale.jpg}\\
-  	c) Scale gizmo. \cite{blenderwiki}
+  	c) Scale gizmo \cite{blenderwiki}.
   \end{minipage}
   \begin{minipage}{.5\textwidth}
     \centering
     \includegraphics[width=0.9\textwidth]{../assets/Manual-Manipulators-Combo.jpg}\\
-  	d) All gizmos together. \cite{blenderwiki}
+  	d) All gizmos together \cite{blenderwiki}.
   \end{minipage}
   \caption{The same cube in Blender with different gizmos/transformers enabled.}
   \label{blender}
@@ -331,12 +331,12 @@ different applications.
 \begin{figure}[]
   \centering
   \includegraphics[width=12cm]{../assets/threejs-editor.png}
-	\caption{ Shows translate gizmos along the x, y and z axis as well as gizmos that translate the cube along the xy, xz, yz and frustum plane. \cite{threejseditor} }
+	\caption{ Shows translate gizmos along the x, y and z axis as well as gizmos that translate the cube along the xy, xz, yz and frustum plane \cite{threejseditor}.}
 \end{figure}
 \begin{figure}[]
   \centering
   \includegraphics[width=12cm]{../assets/x3dom-gizmo-example.png}
-	\caption{ Shows an official x3dom tutorial for using sensors to create gizmos. \cite{x3dgizmo} }
+	\caption{ Shows an official x3dom tutorial for using sensors to create gizmos \cite{x3dgizmo}. }
 	\label{fig:x3dgizmo}
 \end{figure}
 
@@ -345,9 +345,9 @@ different applications.
 \subsubsection{Component Editor}
 \label{component-editor30}
 
-On the 12th of June 2015 the x3dom maintainers released their Component Editor. \cite{componenteditor}
+On the 12th of June 2015 the x3dom maintainers released their Component Editor \cite{componenteditor}.
 It was released after the the work on \gls{SceGraToo} started.
-Its development took about a year and three people working on it part-time. \cite{componenteditoreffort}
+Its development took about a year and three people working on it part-time \cite{componenteditoreffort}.
 Although it does offer all the wanted scene composition features, it lacks the ability to:
 
 \begin{itemize*}
@@ -380,8 +380,8 @@ Conversion between the formats may be possible, but meta information like \glspl
 \subsubsection{Real-Time Collaborative Scientific WebGL Visualization with Web Sockets}
 \label{rtcswvwws}
 
-Using web sockets instead of AJAX is an well performing approach.
-\cite{Marion:2012:RCS:2338714.2338721} Especially the cut down on latency. It is
+Using web sockets instead of AJAX is an well performing approach
+\cite{Marion:2012:RCS:2338714.2338721}. Especially the cut down on latency. It is
 over all very similar to the approach that was considered for SceGraToo, but not
 implemented due to time constraints. In the end the differences between
 SceGraToo's requirements and theirs outweigh the similarities. Besides visualizing a scene,
