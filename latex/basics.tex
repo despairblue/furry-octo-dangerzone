@@ -6,9 +6,9 @@
 \subsection{Scene-Graph}\label{scene-graph}
 
 Scene-graphs can be used to group and organize \gls{3D} objects, their properties and
-concerning transformations. A gls{DAG} can be used to represent a scene-graph.
-It starts with a root node that is associated with one or more children. Each
-child can be an object or a group, again containing more children. A group can
+concerning transformations. A \gls{DAG} can be used to represent a scene-graph.
+It starts with a root node that is associated with one or more child nodes. Each
+child node can be an object or a group, again containing more child nodes. A group can
 contain associated transformation information, like \emph{translation},
 \emph{rotation} or \emph{scaling}. This structure has certain advantages
 compared to applying all transformations to the raw meshes and sending
@@ -23,11 +23,11 @@ above definition and there are three types of nodes:
 
 \subsubsection{Culling}\label{culling}
 
-Before using structures like scene-graphs, all polygons would be sent to
-the \gls{GPU} and the \gls{GPU} would need to test which polygons are actually in the
-view and thus need to be rendered. The problem of this approach is
+Before using structures like scene-graphs, all polygons were sent to
+the \gls{GPU}. The \gls{GPU} would then test which polygons are actually in the
+view and had to be rendered. The problem of this approach is
 that this information was only known after doing a lot of calculations
-for every polygon already.\\
+for every polygon.\\
 With a scene-graph it is possible to start from the root and traverse the
 graph, testing the bounding box of each group and only sending it to the
 \gls{GPU} if it is completely visible. If it is not, the whole sub-tree is not
@@ -47,17 +47,17 @@ lifting and unburden the \gls{GPU}.
 
 \subsubsection{Transformations}\label{transformations}
 
-Another advantage is the way transformations work. Instead of applying
+Another advantage of scene-graphs is the way transformations work. Instead of applying
 them to the meshes directly, and keeping track of what meshes belong to
 the same object (like the chassis, the tires and the windows of a
 car), they can simply be nested under the same transformation group. The
-transformation thus applies to all objects associated with that group.
+transformation thus applies to all objects contained by the group.
 
 \subsubsection{Reuse}\label{reuse}
 
 With the ability to address nodes it is possible to reuse their
-information. If you have a car, it would be enough to have only one node
-containing the geometry for a tire, all other tires are merely addressing
+information. For a car, it would be enough to have only one node
+containing the geometry for a tire, all other tires are merely referencing
 the tire with the geometry information (see listing \ref{list:defuse}).
 That way the memory footprint of an application can be reduced.
 
@@ -97,11 +97,11 @@ That way the memory footprint of an application can be reduced.
 
 
 \subsection{X3D}
-\label{x3d} \gls{X3D} \cite{x3d} is the \gls{XML} representation of \gls{VRML} which was designed as a
-universal interactive \gls{3D} exchange format, much like \gls{HTML} is for written
+\label{x3d} \gls{X3D} \cite{x3d} is the \acr{XML} representation of \acr{VRML} which was designed as a
+universal interactive \gls{3D} exchange format, much like \acr{HTML} is for textual
 documents or \acrshort{SVG} for vector graphics. Due to its \gls{XML} structure it can be
-integrated in \gls{HTML} documents, thus the Frauenhofer Institute pursued to
-implement a runtime that could interpret and visualize \gls{X3D} in the browser, by
+integrated in \gls{HTML} documents. The Frauenhofer Institute pursued to
+implement a environment that could interpret and visualize \gls{X3D} in the browser, by
 using a \gls{WebGL} context. It is called x3dom \cite{x3dom} and it is extensively used
 by SceGraToo, the tool that arose from this thesis.
 
@@ -119,7 +119,7 @@ different approaches to describe the same thing:
 \end{itemize*}
 
 \begin{longtable}[c]{@{}lll@{}}
-  \caption{The matrix in this table classifies x3dom together with other common web technologies \cite{x3dom}.\label{tab:feature_matrix}}\\
+  \caption{The matrix in this table classifies x3dom together with other web standards concerning computer graphics \cite{x3dom}.\label{tab:feature_matrix}}\\
   \toprule
   & 2D & \gls{3D} \tabularnewline
   \midrule
@@ -129,15 +129,15 @@ different approaches to describe the same thing:
   \bottomrule
 \end{longtable}
 
-As can be seen in table \ref{tab:feature_matrix} x3dom complements the already existing technologies
+As can be seen in table \ref{tab:feature_matrix}, x3dom complements the already existing technologies
 perfectly.
 
 \clearpage
 \subsection{SSIML}
 \label{ssiml}
 
-Heterogeneous developer groups, groups that are comprised of people from
-different backgrounds (programmers, \gls{3D} designers) have their difficulties
+Heterogeneous developer groups, groups comprising people from
+different backgrounds (e.g.~programmers and \gls{3D} designers), have their difficulties
 working together. They work in different domains and use different tools
 adjusted to that domain. \cite{Glinz:2015:SUS:2802768.2802838}
 
@@ -145,20 +145,20 @@ SSIML is a graphical approach to unify the scene-graph model and the the
 application model, thus making the communication between the different
 parties easier.
 
-It also serves as a code generation template.
+It also serves as a code generation template for \gls{R3D}, as mentioned in Section \ref{motivation}.
 
 \begin{figure}
   \centering
   \includegraphics[width=12cm]{../assets/SSIML.png}
-	\caption{This figure shows the graphical editor for SSIML. In particular it shows a scene comprising a bike. \cite{roundtrip3dwebsite}}
+	\caption{This figure shows the graphical editor for SSIML. In particular it shows a scene describing a bike. \cite{roundtrip3dwebsite}}
 	\label{fig:ssimldiagram}
 \end{figure}
 
 \subsection{Roundtrip 3D}\label{roundtrip-3d}
 
-As stated above, when developing \gls{3D} applications, many different
-developers are involved, i.e.~\gls{3D} designers, programmers and, ideally,
-also software designers (see figure \ref{fig:ssimldiagram}).
+As stated above, when developing \gls{3D} applications, many different kinds of
+developers are involved, i.e.~\gls{3D} designers, programmers and, ideally, 
+software designers. Figure \ref{fig:ssimldiagram} shows the \gls{R3D} editor with an example \gls{SSIML} diagram.
 
 % TODO: convert to pdf
 % \includegraphics{../assets/csrd2014.svg}\\
@@ -177,7 +177,7 @@ else's.
 \subsection{Related Work}
 \label{related-work}
 
-The next section examines efforts and applications in the field of
+This section examines existing efforts and applications in the field of
 
 \begin{itemize*}
   \item collaborative remote working on \gls{3D} models and
@@ -195,27 +195,27 @@ The next section examines efforts and applications in the field of
 \end{figure}
 
 This simple \gls{3D} editor allows the user to add and remove colored blocks to a
-scene. The synchronization is leveraging meteor's database collection
+scene. A scene can be opened and edited by multiple users simultaneously. The synchronization is leveraging meteor's database collection
 subscription features. Meteor applications are comprised of a client side and a
-server side. The client can subscribe to database collections and gets
-automatically notified of changes to that collection by the server. The only
-thing that actually is synchronized is an array of \emph{boxes}. A box is an
+server side part. The client can subscribe to database collections and
+automatically gets notified of changes to that collection by the server. The only
+thing that is synchronized is an array of \emph{boxes}. A box is an
 object with an x, y and z property describing its position. When a box is
 added to the collection the collection is synchronized with the server. The
-server informs all other browser instances that show this scene of the new box.
+server informs all other browser instances that show this scene that this box was added to the \emph{boxes} collection.
 These browser instances reevaluate the template that renders the x3dom scene to
 the \gls{DOM} and the the \gls{DOM} is updated to contain the new box, thus synchronizing
-the scene with the browser instance. \cite{3dmeteor}
+all browser instances. \cite{3dmeteor}
 
 \subsubsection{Blender Plugin}
 \label{blender-plugin}
 
 As part of an asset management system the Université du Québec à
-Montréal implemented a plugin for Blender for collaborative working. An
+Montréal implemented a plugin for Blender to enable collaborative working. An
 artist can record changes to wire-meshes and store them on a server.
 Another artist can download these changes and apply them to his working
-copy. The change sets are a simple list of vertices and their movement in the
-x, y and z space (see listing \ref{blenderplugin}). \cite{LCR07}
+copy. A set of changes is a simple list of vertices and their movement in the
+x, y and z direction (see listing \ref{blenderplugin}). \cite{LCR07}
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg]{text}
@@ -224,16 +224,16 @@ x, y and z space (see listing \ref{blenderplugin}). \cite{LCR07}
 309 [0.2123, 0.1001, 0.0000]
 311 [0.3029, 0.1429, 0.0000]
   \end{minted}
-  \caption{This shows a change set of 4 polygons and how they where moved.}
+  \caption{This shows a set of changes of 4 polygons and how they where moved.}
   \label{blenderplugin}
 \end{listing}
 
-These are saved on the server and another user working on the same
+These sets are saved on the server. Another user working on the same
 object can apply them to his working copy. They can actually be applied
 to any object that has the same number of vertices. That is also a
 shortcoming. Adding or removing vertices cannot be handled by the
 plugin. It is also not in real time, so it is more comparable to version
-control system like \gls{git} just for \gls{3D} models.
+control system like \gls{git}, but for \gls{3D} models.
 
 \subsubsection{Gizmos}\label{gizmos}
 
@@ -241,7 +241,7 @@ Gizmos, also called manipulators, are handles or bounding boxes with
 handles that manipulate their containing objects in a predefined way when
 dragged. \cite{wikigizmo}
 
-In \gls{X3D} gizmos can be realized with specialized X3DDragSensorNodes \cite{x3ddragsensornode}, like:
+In \gls{X3D}, gizmos can be realized with specialized X3DDragSensorNodes \cite{x3ddragsensornode}, like:
 
 \begin{description*}
 \item[SphereSensor]
@@ -253,7 +253,7 @@ In \gls{X3D} gizmos can be realized with specialized X3DDragSensorNodes \cite{x3
 \end{description*}
 
 The sensors track drag events on their siblings. In the example in figure
-\ref{fig:x3dgizmo} (which is taken directly from the x3dom website) the
+\ref{fig:x3dgizmo}, which is taken directly from the x3dom website, the
 PlaneSensor tracks drag events on the cones and the cylinder that make up the
 cyan handle. Part of the structure of the scene can be seen in listing
 \ref{planesensor}.

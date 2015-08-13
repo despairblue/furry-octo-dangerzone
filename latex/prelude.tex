@@ -24,8 +24,8 @@ The problem that arises is that each object is usually in the center of
 its own coordinate system. So they need to be translated, rotated and
 maybe even scaled, to result in the desired scene (e.g.~a car where the tires
 are in the places they belong to and not in the center of the chassis).
-The structure is mostly generated. Attribute values of respective nodes,
-such as transformation nodes, need to be adjusted in order to compose the
+The scene structure (see Listing \ref{list:x3dscene}) is mostly generated. Attribute values of respective nodes,
+such as transform nodes, need to be adjusted in order to compose the
 overall \gls{3D} scene.
 
 % \includegraphics{Picture of a car with the tires in the center}\\
@@ -40,7 +40,7 @@ about origin of coordinate system, scaling and orientation} (no there isn't, sti
 not sure what to put here). However, we cannot assume that these conventions are
 always met. The main problem is, that \gls{3D} transformations, such as translation,
 orientation and scale of single \gls{3D} geometries, need to be adjusted. So far,
-there is no graphical tool that meets both of these requirements:
+there is no graphical tool that meets both of the following requirements:
 
 \begin{itemize*}
   \item User friendly and straight forward composition functionalities for \gls{X3D} scenes and
@@ -49,32 +49,33 @@ there is no graphical tool that meets both of these requirements:
 
 \begin{figure}
   \begin{minipage}{.5\textwidth}
-    \includegraphics[width=0.9\textwidth]{../assets/wheel1.png}
-  	\caption{One possible orientation.}
-  	\label{fig:wheel1}
+    \centering
+    \includegraphics[width=0.9\textwidth]{../assets/wheel1.png}\\
+    a)
   \end{minipage}
   \begin{minipage}{.5\textwidth}
-  	\includegraphics[width=0.9\textwidth]{../assets/wheel2.png}
-  	\caption{Another possible orientation.}
-  	\label{fig:wheel2}
+    \centering
+  	\includegraphics[width=0.9\textwidth]{../assets/wheel2.png}\\
+    b)
   \end{minipage}\\
   \begin{minipage}{.5\textwidth}
-  	\includegraphics[width=0.9\textwidth]{../assets/wheel3.png}
-  	\caption{Yet another possible orientation.}
-  	\label{fig:wheel3}
+    \centering
+  	\includegraphics[width=0.9\textwidth]{../assets/wheel3.png}\\
+    c)
   \end{minipage}
   \begin{minipage}{.5\textwidth}
-  	\includegraphics[width=0.9\textwidth]{../assets/wheel4.png}
-  	\caption{An improbable orientation, unless the \gls{3D} artist was very confused.}
-  	\label{fig:wheel4}
+    \centering
+  	\includegraphics[width=0.9\textwidth]{../assets/wheel4.png}\\
+    d)
   \end{minipage}
-  \caption*{Four possible orientations the \gls{3D} model of a wheel could have.}
+  \caption{Pictures 1 - 3 show common orientations the \gls{3D} model of a wheel could have. Picture 4 shoes the worst case.}
+	\label{fig:wheel}
 \end{figure}
 
-Figures \ref{fig:wheel1} - \ref{fig:wheel4} demonstrate multiple orientatins a \gls{3D} model of a wheel can have. \ref{fig:wheel1} to \ref{fig:wheel3} are common
-orientations, since it is disputable which of these could be considered be the
+Figure \ref{fig:wheel} demonstrates multiple orientations a \gls{3D} model of a wheel can have. Picture a) to c) are common
+orientations, since it is disputable which of these could be considered the
 norm. But if one depends on art from 3rd parties, the orientation and position
-could be completely arbitrary like in figure \ref{fig:wheel4}
+could be completely arbitrary like in picture d).
 
 These properties could be added and adjusted via any text editor by opening the
 generated \gls{X3D} file, but the resulting work-flow is not user-friendly. The
@@ -90,17 +91,17 @@ following list explains the work-flow using just a text editor.
 \end{enumerate*}
 
 Tools like Maya or Blender could also be used for this, but their import
-and export filter discard important meta-data that is necessary for the
+and export filters discard important meta-data that is necessary for the
 round-trip transformation. This is what \gls{SceGraToo} is meant to be. \gls{SceGraToo} addresses both of these issues. It allows for loading the root \gls{X3D} file and changing all transformations, containing the inline nodes,
 using mouse interactions. For fine grained control \gls{SceGraToo} also
 contains a tree view that allows the user to input exact attributes for
-translations, rotations and scale.
+translations, rotations and scale (see Figure \ref{fig:tree-view}).
 
 \subsection{Scope}\label{scope}
 
-This thesis addresses two issues:
+The provided application (\gls{SceGraToo}) addresses two issues:
 
 \begin{enumerate*}
-  \item Allowing for composing generated \gls{X3D} scenes (with focus on usability). E.g., besides a \gls{3D} view, a tree view for fine grained editing should not only visualize the \gls{3D} scene's structure, but also allow for entering concrete coordinate values.
+  \item Allowing the composition of generated \gls{X3D} scenes (with focus on usability). E.g., accompanying the \gls{3D} view, a tree view for fine grained editing, that should not only visualize the \gls{3D} scene's structure, but also allow for entering concrete coordinate values.
   \item During the editing process, the preservation of all information/meta-data must be guaranteed.
 \end{enumerate*}
