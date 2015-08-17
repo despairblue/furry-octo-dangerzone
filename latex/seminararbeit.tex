@@ -83,6 +83,8 @@
 % put all figures at the end
 \usepackage[nomarkers,figuresonly]{endfloat}
 \renewcommand{\efloatseparator}{\mbox{}}
+% fancy headers
+\usepackage{fancyhdr}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Titel, Autor, Seminar, Semester, Dozent %
@@ -124,8 +126,8 @@
 }
 
 % Pagestyle:
-\pagestyle{myheadings}
-\markright{\myauthor: \mytitleShort}
+\pagestyle{fancy}
+% \markright{\myauthor: \section}
 
 % start indexing
 \makeindex

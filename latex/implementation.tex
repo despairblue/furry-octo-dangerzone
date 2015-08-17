@@ -8,7 +8,7 @@ In the following sections the technology that was eventually used to implement \
 
 \subsection{Server}
 
-The server has a really small interface, meaning it does not have a lot of routes it servers.
+The server has a small interface, meaning it does not have a lot of routes it serves.
 When it receives a \texttt{GET} request from a client it tries to match the request to one of its routes.
 If no route matches it tries to find a static files that matches the requested route URL.
 If it finds the file, the file is served to the client.
@@ -50,12 +50,12 @@ AngularJS is used for:
 \paragraph{Bootstrapping}
 \label{par:Bootstrapping and Routing}
 
-Web application need to be bootstrapped. That means there must be one entrypoint
-that starts the JavaScript that makes up the application. And this entrypoint
+Web applications need to be bootstrapped. There has to be one entry-point
+for starting the the application. And this entry-point
 needs to be called after all scripts, that are referenced in the \gls{HTML}
 document, have been downloaded from the server. Angular accomplishes this by
-subscribing to the \texttt{DOMContentLoaded} event. Angular will then look for a
-\gls{DOM} element with an ng-app attributes. That attribute is set by the
+subscribing to the \texttt{DOMContentLoaded} event. Angular will then look for
+\gls{DOM} elements with an \textt{ng-app} attribute. That attribute is set by the
 developer and tells angular, that the corresponding DOM element is supposed to
 contain an application and the application's name. The bootstrapping process is
 described in Figure~\ref{fig:angularbootstrap}.
@@ -67,7 +67,7 @@ described in Figure~\ref{fig:angularbootstrap}.
   \label{fig:angularbootstrap}
 \end{figure}
 
-The code from Listing \ref{list:bootstrap} is for initializing SceGraToo. In the \texttt{config}
+The code from Listing \ref{list:bootstrap} initializes SceGraToo. In the \texttt{config}
 function, routes are defined. When a link is clicked, the browser will not issue a
 request to the server and load that page. Instead, a new controller takes over and
 renders a different template. The advantage of this approach is that the user
@@ -263,7 +263,7 @@ calculates the changes that need to be done to update the \gls{DOM} and applies 
 
 If the tree-view changes the scene-graph, the process is repeated. Listing
 \ref{list:checkbox} show a check box component. It receives a property called
-\texttt{owner}. That is a scene-graph node. Nodes in x3dom have the render
+\texttt{owner}. That is a scene-graph node. Nodes in X3DOM have the render
 attribute. If a attribute is true, that node and all its children, with their render attribute sent to true, are rendered,
 if not, they are not visible. The component is showing the state of the the
 \texttt{owner}'s render attribute's state. When the user clicks the check box, the

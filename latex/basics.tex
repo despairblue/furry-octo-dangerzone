@@ -5,7 +5,7 @@
 
 % TODO: put text here
 
-This section examines fundamental and underlying technologies needed to comprehend the described problems and their solutions. 
+This section examines fundamental and underlying technologies needed to comprehend the described problems and their solutions.
 
 \subsection{Scene-Graph}\label{scene-graph}
 
@@ -57,7 +57,7 @@ the same object (like the chassis, the tires and the windows of a
 car), they can simply be nested under the same transformation group. The
 transformation thus applies to all objects contained by the group.
 
-\subsubsection{Reuse}\label{reuse}
+\subsubsection{Reusing Nodes or Subtrees}\label{reuse}
 
 With the ability to address nodes it is possible to reuse them (and all contained information and child nodes). For a car, it would be enough to have only one node
 containing the geometry for a tire, all other tires are merely referencing
@@ -94,7 +94,7 @@ That way the memory footprint and the overall complexity of an application can b
   </Transform>
 </Group>
   \end{minted}
-  \caption{Example \gls{X3D} group, showing the use of \texttt{def} and \texttt{use}. Figure~\ref{fig:defuse} shows the rendered car.}
+  \caption{Example \gls{X3D} group, showing the use of \texttt{def} and \texttt{use} attributes . Figure~\ref{fig:defuse} shows the rendered car.}
   \label{list:defuse}
 \end{listing}
 
@@ -106,19 +106,19 @@ That way the memory footprint and the overall complexity of an application can b
 \end{figure}
 
 
-\subsection{X3D}
+\subsection{Declarative Scene Description via X3D}
 \label{x3d} \gls{X3D} \cite{x3d} is the \acr{XML} representation of \acr{VRML} which was designed as a
 universal interactive \gls{3D} exchange format, much like what \acr{HTML} is for textual
 documents or \acrshort{SVG} for vector graphics. Due to its \gls{XML} structure it can be
 integrated in \gls{HTML} documents. The Frauenhofer Institute pursued to
 implement an environment that could interpret and visualize \gls{X3D} in the browser, by
-using a \gls{WebGL} context. It is called x3dom \cite{x3dom} and it is extensively used
+using a \gls{WebGL} context. It is called X3DOM \cite{x3dom} and it is extensively used
 by SceGraToo, the tool that arose from this thesis.
 
-\subsection{X3dom}
+\subsection{Declarative Scene Description for the Web via X3DOM}
 \label{par:x3dom}
 
-As said in the previous section, x3dom was developed by the Frauenhofer
+As said in the previous section, X3DOM was developed by the Frauenhofer
 Institute to realize the vision that started \gls{VRML} in the first place: \emph{mark
 up interactive \gls{3D} content for the web}. On the web there are two entirely
 different approaches to describe 2D or 3D graphics:
@@ -129,21 +129,21 @@ different approaches to describe 2D or 3D graphics:
 \end{itemize*}
 
 \begin{longtable}[c]{@{}lll@{}}
-  \caption{The matrix in this table classifies x3dom together with other web standards concerning computer graphics \cite{x3dom}.\label{tab:feature_matrix}}\\
+  \caption{The matrix in this table classifies X3DOM together with other web standards concerning computer graphics \cite{x3dom}.\label{tab:feature_matrix}}\\
   \toprule
   & 2D & \gls{3D} \tabularnewline
   \midrule
   \endhead
-  Declarative & \gls{SVG} \cite{svg} & x3dom \cite{x3dom} \tabularnewline
+  Declarative & \gls{SVG} \cite{svg} & X3DOM \cite{x3dom} \tabularnewline
   Imperative  & Canvas \cite{canvas} & \gls{WebGL} \cite{webgl} \tabularnewline
   \bottomrule
 \end{longtable}
 
-As can be seen in Table \ref{tab:feature_matrix}, x3dom complements the already existing technologies
+As can be seen in Table \ref{tab:feature_matrix}, X3DOM complements the already existing technologies
 perfectly.
 
 \clearpage
-\subsection{SSIML}
+\subsection{3D Application Modeling via SSIML}
 \label{ssiml}
 
 Heterogeneous developer groups, are comprised of people with
@@ -155,13 +155,12 @@ SSIML is a graphical approach to unify the scene-graph model and the
 application model, thus making the communication between the different
 parties easier.
 
-Going further, it also serves as a code generation template for \gls{R3D}, as mentioned in Section \ref{motivation}.
 
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{../assets/SSIML.png}
-	\caption{This Figure shows the graphical editor for SSIML. In particular it shows a scene describing a bike \cite{roundtrip3dwebsite}}.
-	\label{fig:ssimldiagram}
+  \caption{This Figure shows the graphical editor for SSIML. In particular it shows a scene describing a bike \cite{roundtrip3dwebsite}}.
+  \label{fig:ssimldiagram}
 \end{figure}
 
 \subsection{Roundtrip 3D}\label{roundtrip-3d}
@@ -178,13 +177,19 @@ Figure \ref{fig:csrd} shows the proposed work-flow.
 \end{figure}
 
 Roundtrip3D was a research project that, amongst others, resulted in a
-graphical editor for \gls{SSIML} models. It offers an
-approach for merging a developer's changes back into the main model.
+graphical editor for \gls{SSIML} models.
+These SSIML models are used as input to generate source code, such as JavaScript, Java or C++, and an \gls{X3D} file describing the scene.
+These code bases are further refined by the respective developers, i.e 3D designers or programmers.
+R3D offers an approach for merging the developers' changes back into the main model.
 After all working copies are merged back into the main model (dropping
-unwanted or conflicting changes), all working copies are regenerated and
-delivered to the individual developers. After each round-trip, every
+unwanted or conflicting changes), all code bases are regenerated, including the developers refinements and
+delivered to the individual developers.
+After this step, every
 developer has a copy of the project that is consistent with everyone
 else's. \cite{Jung:2015:SDA:2802768.2802837}
+It is paramount that the tools used to refine the scene must not autonomously change scene-information that is relevant for the round trip process.
+Such changes are for instance automatically renaming nodes, restructuring the scene-graph's by adding group nodes or removing comments or attributes.
+This thesis addresses issues by proposing a new 3D composition tool that retains all scene-information.
 
 \subsection{Related Work}
 \label{related-work}
@@ -192,7 +197,7 @@ else's. \cite{Jung:2015:SDA:2802768.2802837}
 As described in section~\ref{motivation}, efforts in the following fields are essential for this work.
 
 \begin{itemize*}
-  \item Collaborative remote working on \gls{3D} models.
+  \item Collaborative working on \gls{3D} models.
   \item Online \gls{3D} editors.
 \end{itemize*}
 
@@ -215,11 +220,11 @@ thing that is synchronized is an array of \emph{boxes}. A box is an
 object with an x, y, z and a color property, describing its position. When a box is
 added to the collection, the collection is synchronized with the server. The
 server informs all other browser instances that show this scene, that this box was added to the \emph{boxes} collection.
-These browser instances reevaluate the template that renders the x3dom scene to
+These browser instances reevaluate the template that renders the X3DOM scene to
 the \gls{DOM} and update the \gls{DOM} to contain the new box, thus synchronizing
 all browser instances. \cite{3dmeteor}
 
-\subsubsection{Blender Plug-in}
+\subsubsection{Collaborative Working with Blender}
 \label{blender-plugin}
 
 As part of an asset management system, the Université du Québec à
@@ -251,27 +256,26 @@ control systems, like \gls{git}, but for \gls{3D} models.
 
 Gizmos, also called manipulators, are handles or bounding boxes with
 handles that manipulate their containing objects in a predefined way when
-being dragged. \cite{wikigizmo}
+being dragged (Figures \ref{blender} to \ref{fig:x3dgizmo}). \cite{wikigizmo}
 
 In \gls{X3D}, gizmos can be realized with specialized X3DDragSensorNodes \cite{x3ddragsensornode}, like:
 
 \begin{description*}
 \item[SphereSensor]
-  SphereSensor converts pointing device motion into a spherical rotation around the origin of the local coordinate system \cite{spheresensor}.
+  ``SphereSensor converts pointing device motion into a spherical rotation around the origin of the local coordinate system \cite{spheresensor}.''
 \item[CylinderSensor]
-  The CylinderSensor node converts pointer motion (for example, from a mouse) into rotation values, using an invisible cylinder of infinite height, aligned with local Y-axis \cite{cylindersensor}.
+  ``The CylinderSensor node converts pointer motion (for example, from a mouse) into rotation values, using an invisible cylinder of infinite height, aligned with local Y-axis'' \cite{cylindersensor}.
 \item[PlaneSensor]
-  PlaneSensor converts pointing device motion into 2D translation, parallel to the local Z=0 plane. Hint: You can constrain translation output to one axis by setting the respective minPosition and maxPosition members to equal values for that axis \cite{planesensor}.
+  ``\texttt{PlaneSensor} converts pointing device motion into 2D translation, parallel to the local Z=0 plane. \cite{planesensor}.''
 \end{description*}
 
 The sensors track drag events on their siblings. In the example in
 Figure~\ref{fig:x3dgizmo}, the
-PlaneSensor tracks drag events on the cones and the cylinder that make up the
+\texttt{PlaneSensor} tracks drag events on the cones and the cylinder that make up the
 cyan handle. Part of the structure of the scene can be seen in Listing
 \ref{planesensor}.
-
 Every time it detects a drag event, it converts it into a 2D
-transformation and raises an \texttt{onOutPutChange} event.\\
+transformation and raises an \texttt{onOutPutChange} event.
 The callback \texttt{processTranslationGizmoEvent} is registered as an event handler.
 In this function the position of the handle is adjusted to make it
 follow the drag movement, also the position of the teapot is adjusted.
@@ -281,9 +285,6 @@ touchable and interactable, make it easier for users to find their way
 around the application. Instead of having to learn keyboard shortcuts,
 users simply use their intuition and knowledge about how to interact with
 objects in the real world.
-
-Figures \ref{blender} to \ref{fig:x3dgizmo} show different gizmos from
-different applications.
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg,linenos=true]{html}
@@ -312,7 +313,7 @@ different applications.
   </transform>
 </group>
   \end{minted}
-  \caption{This features the group containing a planeSensor, that is part of the scene depicted in Figure \ref{fig:x3dgizmo}.}
+  \caption{\texttt{PlaneSensor} node to register drag event on its siblings. This is part of the scene depicted in Figure \ref{fig:x3dgizmo}.}
   \label{planesensor}
 \end{listing}
 
@@ -348,7 +349,7 @@ different applications.
 \begin{figure}[]
   \centering
   \includegraphics[width=12cm]{../assets/x3dom-gizmo-example.png}
-	\caption{ An official x3dom tutorial for using X3D sensors to create gizmos \cite{x3dgizmo}. }
+	\caption{ An official X3DOM tutorial for using X3D sensors to create gizmos \cite{x3dgizmo}. }
 	\label{fig:x3dgizmo}
 \end{figure}
 
@@ -357,7 +358,7 @@ different applications.
 \subsubsection{Component Editor}
 \label{component-editor30}
 
-On the 12th of June 2015 the x3dom maintainers released their Component Editor \cite{componenteditor}.
+The X3DOM maintainers released their Component Editor \cite{componenteditor}.
 It was released after the the work on \gls{SceGraToo} started.
 Its development took about a year and three people working on it part-time \cite{componenteditoreffort}.
 Although it does offer all the wanted scene composition features, it lacks the ability to:
@@ -365,11 +366,12 @@ Although it does offer all the wanted scene composition features, it lacks the a
 \begin{itemize*}
   \item Load an existing \gls{X3D} file,
   \item serialize 3D scenes to \gls{X3D} files and
-  \item upload \gls{X3D} files that can be included as inlines.
+  \item upload \gls{X3D} files that can be included as inline nodes.
 \end{itemize*}
 
-Scenes can only be deserialized and serialized as a \gls{JSON} representation (see Listing~\ref{componenteditorjson}).
+Scenes can only be deserialized and serialized as \gls{JSON} representations (see Listing~\ref{componenteditorjson}).
 Conversion between the formats may be possible, but meta information like \glspl{ID} in comments would be lost.
+And these are important for the round-trip process (see \ref{roundtrip-3d})
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg,linenos=true]{json}
@@ -392,7 +394,7 @@ Conversion between the formats may be possible, but meta information like \glspl
 \subsubsection{Real-Time Collaborative Scientific WebGL Visualization with Web Sockets}
 \label{rtcswvwws}
 
-Using web sockets instead of AJAX is an well promising approach performance wise
+Using web sockets instead of AJAX is a promising approach performance wise
 \cite{Marion:2012:RCS:2338714.2338721}. Especially the cut down on latency. It is
 over all very similar to the approach that was considered for SceGraToo, but not
 implemented due to its complexity. In the end, the differences between
@@ -404,7 +406,7 @@ clients on every change, or sending change sets, which poses a challenging task.
 They visualize a specific dataset in a threejs's specific \gls{JSON} format
 \cite{threejs-format}. \gls{SceGraToo} only needs to render \gls{X3D} scenes. Converting the
 scene into another format and having it rendered by another scene graph framework
-is unnecessary, since x3dom is pretty good at this.
+is unnecessary, since X3DOM is pretty good at this.
 
 \subsubsection{ParaViewWeb}
 \label{paraviewweb-pvweb}

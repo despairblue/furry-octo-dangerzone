@@ -6,25 +6,28 @@
 % TODO: skizze wie dom rendering funktioniert oder auch nicht, da es ziemlich uninteressant ist
 
 \gls{SceGraToo} uses a client server architecture. The scene data is stored on the server
-and is to be extended by \gls{X3D} files that are uploaded from within a web browser.
-
+and is to be extended by \gls{X3D} files that are uploaded using a web browser.
 In the following sections the initial design concept of \gls{SceGraToo} is illustrated.
 
 \subsection{Server}
 \label{server}
 
-% TODO: put text here
-This section examines technologies that were considered for \gls{SceGraToo}'s implementation.
+In the following I'll state the server requirements and the technology that were considered for the implementation.
+
+% \subsection(Requirements)
+
+% TODO: requirements?
+% The 
+% \begin{itemize}
+%   \item 
+% \end{itemize}
 
 \subsubsection{Node.js}
 \begin{quote}
   ``Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.'' \cite{nodejs}
 \end{quote}
 
-Node.js is used because it is inherently straight forward writing small servers with it, and
-SceGraToo's server is not going to be complex. \footnote{Complex servers can be
-written in Node.js as well.}
-
+Node.js allows for the straight forward implementation of web servers.
 Listing \ref{list:nodejs} shows a server that looks up users from the database and returns them as \gls{JSON} to the browser.
 
 \begin{listing}
@@ -55,7 +58,7 @@ http.createServer((request, response) => {
 
 Koa is used to make writing the server, and using asynchronouse functions in request handlers simpler and clearer.
 See Listing \ref{list:koajs} for the same example from Listing \ref{list:nodejs} written with koajs.
-It is not only shorter, but also more straight forward.
+It is not only more concise, but also more straight forward.
 
 \begin{listing}
   \begin{minted}[breaklines,bgcolor=bg,linenos=true]{javascript}
@@ -75,6 +78,8 @@ app.listen(3000)
 
 \subsection{Client}
 \label{client}
+
+% TODO: requirements
 
 \epigraph{``I conclude that there are two ways of constructing a software design:
 One way is to make it so simple that there are obviously no deficiencies
@@ -124,7 +129,7 @@ versa.
   \item[scene-graph:]
     The \gls{X3D} representation of the scene as part of the \gls{DOM}, see Listing~\ref{list:x3dscene} and the screenshot in Figure \ref{fig:x3dom-dom} from the Chrome DevTools.
   \item[scene-graph-node:]
-    A specific scene graph node (e.g.~\texttt{inline}, \texttt{transform} or \texttt{scene}).
+    A specific scene graph node (e.g.~\texttt{inline}, \texttt{transform} or \texttt{scene} node).
   \item[tree-view-component:]
     Comprises all functionality related to parsing the scene-graph and creating the tree-view out of individual tree-view-node-components.
   \item[tree-view:]
@@ -154,7 +159,7 @@ versa.
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{../assets/treeview-dom.png}
-  \caption{About half of the \gls{DOM} elements that make up a tree-view of only three tree-view-nodes: a \texttt{scene}, a \texttt{transform} and an \texttt{inline}.}
+  \caption{About half of the \gls{DOM} elements that make up a tree-view of only three tree-view-nodes: a \texttt{scene}, \texttt{transform} and \texttt{inline} node.}
   \label{fig:treeview-dom}
 \end{figure}
 
@@ -371,7 +376,7 @@ react's implementation in any way:
   </li>
 </ol>
   \end{minted}
-  \caption{New Virtual DOM}
+  \caption{Virtual DOM with newly created \textt{li} node.}
   \label{newvirtdom}
 \end{listing}
 
@@ -393,13 +398,13 @@ represent the current state of the scene-graph.
 \paragraph{Data Binding}
 \label{data-binding}
 
-Another idea is to utilize templates and data binding. Frameworks (like
+Another approach is to utilize templates and data binding. Frameworks (like
 angular) or web components implementations (like polymer)
 support templates and two way data binding. Following only
 angular directives are examined, but the same should be possible with web
 components.
 
-An angular directive consists of a mostly logicless template and some
+An angular directive consists of a template and some
 JavaScript containing logic for creating the directive or reacting to
 events.
 
@@ -489,10 +494,11 @@ node: {
   \label{list:angular4}
 \end{listing}
 
+% TODO: reword
 
-Again, this is not an accurate depiction of how angular works internally, it is
-the mental model a developer, working with angular, has.
 
+
+This is an minimal example to demonstrate how angular directives work from a programmer's point of view.
 The scene-graph is traversed and, for each eligible child node, a new
 \texttt{treenode} is created. The double braces are angular's syntax
 to denote data-binding in templates. Data from the elements scope is

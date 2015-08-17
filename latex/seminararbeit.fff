@@ -35,8 +35,8 @@
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{../assets/SSIML.png}
-\caption{This Figure shows the graphical editor for SSIML. In particular it shows a scene describing a bike \cite{roundtrip3dwebsite}}.
-\label{fig:ssimldiagram}
+  \caption{This Figure shows the graphical editor for SSIML. In particular it shows a scene describing a bike \cite{roundtrip3dwebsite}}.
+  \label{fig:ssimldiagram}
 \end{figure}
 \efloatseparator
  
@@ -91,7 +91,7 @@
 \begin{figure}[]
   \centering
   \includegraphics[width=12cm]{../assets/x3dom-gizmo-example.png}
-\caption{ An official x3dom tutorial for using X3D sensors to create gizmos \cite{x3dgizmo}. }
+\caption{ An official X3DOM tutorial for using X3D sensors to create gizmos \cite{x3dgizmo}. }
 \label{fig:x3dgizmo}
 \end{figure}
 \efloatseparator
@@ -115,7 +115,7 @@
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{../assets/treeview-dom.png}
-  \caption{About half of the \gls{DOM} elements that make up a tree-view of only three tree-view-nodes: a \texttt{scene}, a \texttt{transform} and an \texttt{inline}.}
+  \caption{About half of the \gls{DOM} elements that make up a tree-view of only three tree-view-nodes: a \texttt{scene}, \texttt{transform} and \texttt{inline} node.}
   \label{fig:treeview-dom}
 \end{figure}
 \efloatseparator
